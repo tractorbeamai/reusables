@@ -1,1 +1,1 @@
-export * from "./lib/agents.js";
+export * from "./lib/agents";

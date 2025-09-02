@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["index.js"]
+}

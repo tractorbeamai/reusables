@@ -1,42 +1,21 @@
-import pluginNx from "@nx/eslint-plugin";
-import tseslint from "typescript-eslint";
-import configAuto from "@tractorbeamai/eslint-config/auto";
-import { workspaceRoot } from "@nx/devkit";
+/* eslint-disable import-x/no-named-as-default-member */
 
-export default tseslint.config(
+import tseslint from "typescript-eslint";
+import configTractorbeam from "@tractorbeamai/eslint-config";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig(
   {
     ignores: ["**/dist", "pnpm-lock.yaml"],
   },
+  configTractorbeam,
   {
     plugins: { "@typescript-eslint": tseslint.plugin },
     languageOptions: {
-      parser: tseslint.parser,
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: workspaceRoot,
+        tsconfigRootDir: __dirname,
       },
     },
   },
-  {
-    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-    plugins: {
-      nx: pluginNx,
-    },
-    rules: {
-      "nx/enforce-module-boundaries": [
-        "error",
-        {
-          enforceBuildableLibDependency: true,
-          allow: ["^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$"],
-          depConstraints: [
-            {
-              sourceTag: "*",
-              onlyDependOnLibsWithTags: ["*"],
-            },
-          ],
-        },
-      ],
-    },
-  },
-  configAuto
 );

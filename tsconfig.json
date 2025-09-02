@@ -3,14 +3,10 @@
   "compileOnSave": false,
   "files": [],
   "references": [
-    {
-      "path": "./packages/llm"
-    },
-    {
-      "path": "./packages/eslint-config"
-    },
-    {
-      "path": "./packages/agents"
-    }
+    { "path": "./packages/llm" },
+    { "path": "./packages/eslint-config" },
+    { "path": "./packages/prettier-config/" },
+    { "path": "./packages/agents" },
+    { "path": "./tsconfig.repo-config.json" }
   ]
 }

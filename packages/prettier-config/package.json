@@ -1,0 +1,33 @@
+{
+  "name": "@tractorbeamai/prettier-config",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Tractorbeam's shared Prettier config",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tractorbeamai/reusables",
+    "directory": "packages/prettier-config"
+  },
+  "homepage": "https://github.com/tractorbeamai/reusables/blob/main/packages/prettier-config/README.md",
+  "author": {
+    "name": "Tractorbeam AI, Inc.",
+    "url": "https://tractorbeam.ai"
+  },
+  "exports": "./index.js",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "prettier": ">=3.0.0"
+  },
+  "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "prettier-plugin-pkg": "^0.21.2",
+    "prettier-plugin-sh": "^0.18.0",
+    "prettier-plugin-sql": "^0.19.2"
+  },
+  "devDependencies": {
+    "prettier": ">= 3.0.0"
+  }
+}

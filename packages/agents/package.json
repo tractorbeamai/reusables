@@ -8,11 +8,18 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "development": "./src/index.ts",
-      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js",
       "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "types": "./dist/index.d.ts"
     }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "vitest",
+    "build": "vite build",
+    "dev": "vite dev"
   },
   "files": [
     "dist",

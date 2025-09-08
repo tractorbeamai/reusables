@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.base.json",
+  "display": "Tractorbeam (Node 22)",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "module": "nodenext",
+    "target": "ES2023"
+  }
+}

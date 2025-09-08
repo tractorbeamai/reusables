@@ -1,7 +1,7 @@
-import baseConfig from "../../eslint.config.ts";
+import workspaceConfig from "../../eslint.config.ts";
 import { defineConfig } from "eslint/config";
 
-export default defineConfig(baseConfig, {
+export default defineConfig(workspaceConfig, {
   rules: {
     "import-x/no-named-as-default-member": "off",
   },

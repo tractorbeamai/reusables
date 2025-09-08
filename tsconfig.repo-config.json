@@ -4,5 +4,9 @@
     "allowJs": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["eslint.config.ts", "packages/*/eslint.config.ts"]
+  "include": [
+    "eslint.config.ts",
+    "packages/*/eslint.config.ts",
+    "vitest.workspace.ts"
+  ]
 }

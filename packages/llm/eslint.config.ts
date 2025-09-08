@@ -1,4 +1,4 @@
 import { defineConfig } from "eslint/config";
-import config from "../../eslint.config.ts";
+import workspaceConfig from "../../eslint.config.ts";
 
-export default defineConfig(config);
+export default defineConfig(workspaceConfig);

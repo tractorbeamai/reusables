@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // Re-export everything from the individual modules
 export * from "./types";
 export * from "./agent";
@@ -10,3 +11,11 @@ export * from "./utils";
 // Also export the Agent and AgentBuilder as default-like exports
 export { Agent } from "./agent";
 export { AgentBuilder } from "./agent-builder";
+=======
+/**
+ *
+ */
+export function agents(): string {
+  return "agents";
+}
+>>>>>>> Stashed changes

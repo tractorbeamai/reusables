@@ -19,6 +19,7 @@ export default defineConfig([
       yoda: ["error", "never"],
       "sort-imports": "off",
       "sort-keys": "off",
+      "func-style": "off",
     },
   },
 

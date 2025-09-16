@@ -95,7 +95,7 @@ function mapContent(content: Anthropic.ContentBlockParam[]): ContentBlock[] {
         }
         default: {
           throw new Error(
-            `Unsupported content block type: ${JSON.stringify(block, null, 2)}`,
+            `Unsupported content block type: ${JSON.stringify(block, null, 2)}`
           );
         }
       }
@@ -104,7 +104,7 @@ function mapContent(content: Anthropic.ContentBlockParam[]): ContentBlock[] {
 }
 
 function convertContentBlock(
-  block?: ContentBlock | string,
+  block?: ContentBlock | string
 ): Anthropic.ContentBlockParam | string {
   if (!block) {
     return "";
@@ -159,7 +159,7 @@ function convertContentBlock(
       }
 
       throw new Error(
-        `Unsupported document type: ${JSON.stringify(block.source)}`,
+        `Unsupported document type: ${JSON.stringify(block.source)}`
       );
     }
     case "toolUse": {
@@ -178,7 +178,7 @@ function convertContentBlock(
           typeof block.content === "string"
             ? block.content
             : block.content?.map(
-                (block) => convertContentBlock(block) as Anthropic.TextBlock,
+                (block) => convertContentBlock(block) as Anthropic.TextBlock
               ),
         is_error: block.isError,
       };
@@ -192,7 +192,7 @@ function convertContentBlock(
     }
     default: {
       throw new Error(
-        `Unsupported content block type: ${JSON.stringify(block, null, 2)}`,
+        `Unsupported content block type: ${JSON.stringify(block, null, 2)}`
       );
     }
   }
@@ -202,9 +202,9 @@ function convertMessages(messages: BaseMessage[]): Anthropic.MessageParam[] {
   return messages
     .filter(
       (
-        msg,
+        msg
       ): msg is Omit<BaseMessage, "role"> & { role: "user" | "assistant" } =>
-        msg.role !== "system",
+        msg.role !== "system"
     )
     .map((msg) => ({
       role: msg.role,
@@ -246,7 +246,7 @@ export class AnthropicProvider extends BaseLLMProvider {
 
   async generate(
     input: string | BaseMessage[],
-    options?: Partial<GenerateOptions>,
+    options?: Partial<GenerateOptions>
   ): Promise<GenerateResponse> {
     try {
       const messageArray = convertStringToMessages("user", input);
@@ -287,7 +287,7 @@ export class AnthropicProvider extends BaseLLMProvider {
 
   async *stream(
     input: string | BaseMessage[],
-    options?: Partial<GenerateOptions>,
+    options?: Partial<GenerateOptions>
   ): AsyncGenerator<PartialReturn, GenerateResponse, unknown> {
     try {
       const messageArray = convertStringToMessages("user", input);
@@ -320,7 +320,7 @@ export class AnthropicProvider extends BaseLLMProvider {
         ) {
           if (partialBlockType !== undefined) {
             throw new Error(
-              "Unexpected text start before previous block completed",
+              "Unexpected text start before previous block completed"
             );
           }
           partialBlockType = "text";
@@ -347,7 +347,7 @@ export class AnthropicProvider extends BaseLLMProvider {
         ) {
           if (partialBlockType !== undefined) {
             throw new Error(
-              "Unexpected tool use start before previous block completed",
+              "Unexpected tool use start before previous block completed"
             );
           }
           partialBlockType = "toolUse";
@@ -392,7 +392,7 @@ export class AnthropicProvider extends BaseLLMProvider {
         ) {
           if (partialBlockType !== undefined) {
             throw new Error(
-              "Unexpected thinking start before previous block completed",
+              "Unexpected thinking start before previous block completed"
             );
           }
           yield {
@@ -452,7 +452,7 @@ export class AnthropicProvider extends BaseLLMProvider {
 
   async *iterate(
     input: string | BaseMessage[],
-    options: IterateGenerateOptions,
+    options: IterateGenerateOptions
   ): AsyncGenerator<PartialReturn, GenerateResponse, unknown> {
     return yield* iterateFromMethods(this, input, options);
   }

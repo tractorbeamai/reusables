@@ -1,9 +1,6 @@
 import { z } from "zod";
 import type { ToolDefinition } from "./types";
 
-/**
- * A thinking/reasoning tool for the agent's internal monologue
- */
 export const thinkTool: ToolDefinition<{ thought: string }, void> = {
   name: "think",
   description:
@@ -21,9 +18,6 @@ export const thinkTool: ToolDefinition<{ thought: string }, void> = {
   },
 };
 
-/**
- * A calculation tool using mathjs or similar
- */
 export const calculateTool: ToolDefinition<{ expression: string }, number> = {
   name: "calculate",
   description: "Perform mathematical calculations",
@@ -32,8 +26,6 @@ export const calculateTool: ToolDefinition<{ expression: string }, number> = {
   }),
   handler: async (input) => {
     try {
-      // In a real implementation, you'd use mathjs or similar
-      // For now, we'll use a simple eval (DO NOT use eval in production without proper sandboxing!)
       const result = Function(`"use strict"; return (${input.expression})`)();
 
       if (typeof result !== "number" || !isFinite(result)) {
@@ -58,9 +50,6 @@ export const calculateTool: ToolDefinition<{ expression: string }, number> = {
   },
 };
 
-/**
- * A memory/storage tool for persisting information
- */
 export const memoryTool: ToolDefinition<
   { action: "store" | "retrieve" | "list"; key?: string; value?: unknown },
   unknown
@@ -73,7 +62,6 @@ export const memoryTool: ToolDefinition<
     value: z.unknown().optional().describe("Value to store"),
   }),
   handler: async (input, context) => {
-    // Get or initialize memory from context
     const memory =
       (context.metadata.memory as Map<string, unknown>) ||
       new Map<string, unknown>();
@@ -111,9 +99,6 @@ export const memoryTool: ToolDefinition<
   },
 };
 
-/**
- * A decision/conclusion tool for finalizing results
- */
 export const concludeTool: ToolDefinition<
   { decision: string; confidence: number; reasoning?: string },
   { decision: string; confidence: number; reasoning?: string }
@@ -136,9 +121,6 @@ export const concludeTool: ToolDefinition<
   },
 };
 
-/**
- * A web search tool (would integrate with a search API)
- */
 export const webSearchTool: ToolDefinition<
   { query: string; maxResults?: number },
   Array<{ title: string; url: string; snippet: string }>
@@ -155,8 +137,6 @@ export const webSearchTool: ToolDefinition<
       .describe("Maximum number of results"),
   }),
   handler: async (input) => {
-    // This would integrate with a real search API
-    // For now, return mock results
     return {
       success: true,
       data: [
@@ -171,9 +151,6 @@ export const webSearchTool: ToolDefinition<
   },
 };
 
-/**
- * Create a custom tool with validation
- */
 export function createTool<TInput, TOutput>(config: {
   name: string;
   description: string;

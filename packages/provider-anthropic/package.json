@@ -1,5 +1,5 @@
 {
-  "name": "@tractorbeamai/agents",
+  "name": "@tractorbeamai/provider-anthropic",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -16,8 +16,10 @@
     }
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
     "@tractorbeamai/llm": "workspace:*",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.23.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

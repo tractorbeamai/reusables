@@ -30,13 +30,9 @@ export class Agent extends EventEmitter {
     this.config = config;
     this.toolRegistry = new ToolRegistry();
 
-    // Register all tools
     this.toolRegistry.registerMany(config.tools);
   }
 
-  /**
-   * Execute the agent loop
-   */
   async execute(
     options: AgentExecutionOptions = {}
   ): Promise<AgentExecutionResult> {
@@ -50,7 +46,6 @@ export class Agent extends EventEmitter {
     const messageManager = new MessageManager(initialMessages);
     const executionMetadata = { ...metadata };
 
-    // Add system prompt if provided
     if (this.config.systemPrompt) {
       messageManager.addMessage(
         MessageManager.createSystemMessage(this.config.systemPrompt)
@@ -63,7 +58,6 @@ export class Agent extends EventEmitter {
 
     try {
       while (iteration < maxIterations) {
-        // Check if we should abort
         if (signal?.aborted) {
           throw new Error("Execution aborted");
         }
@@ -71,10 +65,8 @@ export class Agent extends EventEmitter {
         iteration++;
         this.emit("iteration", iteration);
 
-        // Get current messages
         const messages = messageManager.getMessages();
 
-        // Call LLM provider
         const llmResponse = await this.config.llmProvider.generateResponse({
           messages,
           tools: this.toolRegistry.getAll(),
@@ -82,24 +74,19 @@ export class Agent extends EventEmitter {
           metadata: executionMetadata,
         });
 
-        // Add the response to messages
         messageManager.addMessage(llmResponse.message);
         this.emit("message", llmResponse.message);
 
-        // Handle message callbacks
         if (this.config.onMessage) {
           await this.config.onMessage(llmResponse.message);
         }
 
-        // Extract and execute tool calls
         const toolCalls = MessageManager.extractToolCalls(llmResponse.message);
 
         if (toolCalls.length === 0) {
-          // No tool calls, agent is done
           break;
         }
 
-        // Execute tool calls in parallel
         const toolResults = await Promise.all(
           toolCalls.map(async (toolCall) => {
             this.emit("toolCall", toolCall.name, toolCall.input);
@@ -118,7 +105,6 @@ export class Agent extends EventEmitter {
 
             this.emit("toolResult", toolCall.name, result);
 
-            // Handle tool call callbacks
             if (this.config.onToolCall) {
               await this.config.onToolCall(
                 toolCall.name,
@@ -134,7 +120,6 @@ export class Agent extends EventEmitter {
           })
         );
 
-        // Add tool results as messages
         const toolResultContents: MessageContent[] = toolResults.map(
           ({ toolCall, result }) =>
             MessageManager.createToolResultContent(
@@ -151,7 +136,6 @@ export class Agent extends EventEmitter {
           content: toolResultContents,
         });
 
-        // Stream events if requested
         if (stream) {
           const event: AgentStreamEvent = {
             type: "tool_result",
@@ -187,15 +171,11 @@ export class Agent extends EventEmitter {
     }
   }
 
-  /**
-   * Execute the agent with streaming support
-   */
   async *stream(
     options: AgentExecutionOptions = {}
   ): AsyncGenerator<AgentStreamEvent, AgentExecutionResult, unknown> {
     const events: AgentStreamEvent[] = [];
 
-    // Set up event collectors
     const messageHandler = (message: Message) => {
       const event: AgentStreamEvent = {
         type: "message",
@@ -232,25 +212,20 @@ export class Agent extends EventEmitter {
       events.push(event);
     };
 
-    // Register event handlers
     this.on("message", messageHandler);
     this.on("toolCall", toolCallHandler);
     this.on("toolResult", toolResultHandler);
     this.on("error", errorHandler);
 
     try {
-      // Execute the agent
       const executionPromise = this.execute({ ...options, stream: true });
 
-      // Yield events as they come in
       let lastYieldedIndex = 0;
       while (true) {
-        // Yield new events
         while (lastYieldedIndex < events.length) {
           yield events[lastYieldedIndex++];
         }
 
-        // Check if execution is complete
         if (executionPromise) {
           const result = await Promise.race([
             executionPromise,
@@ -258,7 +233,6 @@ export class Agent extends EventEmitter {
           ]);
 
           if (result) {
-            // Execution complete
             yield {
               type: "complete",
               data: result,
@@ -268,11 +242,9 @@ export class Agent extends EventEmitter {
           }
         }
 
-        // Small delay to prevent busy waiting
         await new Promise((resolve) => setTimeout(resolve, 10));
       }
     } finally {
-      // Clean up event handlers
       this.off("message", messageHandler);
       this.off("toolCall", toolCallHandler);
       this.off("toolResult", toolResultHandler);
@@ -280,30 +252,18 @@ export class Agent extends EventEmitter {
     }
   }
 
-  /**
-   * Add a new tool to the agent
-   */
   addTool(tool: ToolDefinition): void {
     this.toolRegistry.register(tool);
   }
 
-  /**
-   * Remove a tool from the agent
-   */
   removeTool(name: string): boolean {
     return this.toolRegistry.unregister(name);
   }
 
-  /**
-   * Get all registered tools
-   */
   getTools(): ToolDefinition[] {
     return this.toolRegistry.getAll();
   }
 
-  /**
-   * Create a simple agent with common tools
-   */
   static createWithCommonTools(
     config: Omit<AgentConfig, "tools"> & { tools?: ToolDefinition[] }
   ): Agent {

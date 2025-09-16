@@ -1,49 +1,108 @@
 # @tractorbeamai/agents
 
-A flexible, agent-agnostic TypeScript framework for building AI agents with arbitrary tool calls, prompts, and message handling. Inspired by the [Agent Client Protocol](https://github.com/zed-industries/agent-client-protocol) but designed to be general-purpose for any scenario.
+A flexible, agent-agnostic TypeScript framework for building AI agents with tool execution, message handling, and LLM provider integration.
 
-## Features
+## Architecture Overview
 
-- 🔧 **Flexible Tool System**: Define and register custom tools with Zod schema validation
-- 🔄 **Agent Loop**: Robust execution loop with configurable iteration limits
-- 📨 **Message Management**: Comprehensive message tracking and formatting
-- 🌊 **Streaming Support**: Real-time event streaming for responsive UIs
-- 🏗️ **Builder Pattern**: Intuitive agent configuration with fluent API
-- 🎯 **Type-Safe**: Full TypeScript support with comprehensive type definitions
-- 🔌 **LLM Agnostic**: Works with any LLM provider through a simple interface
+This package is part of a modular AI agent ecosystem:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Applications                         │
+│            (Editors, IDEs, Custom Apps)                  │
+└────────────────────┬────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────┐
+│              @tractorbeamai/acp                         │
+│         (Agent Client Protocol Server)                   │
+│    Standardized API following zed-industries/ACP        │
+└────────────────────┬────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────┐
+│            @tractorbeamai/agents                        │
+│         (Agent Framework - This Package)                 │
+│   • Agent execution loop                                 │
+│   • Tool registry & execution                           │
+│   • Message management                                   │
+│   • Streaming support                                    │
+└────────────────────┬────────────────────────────────────┘
+                     │
+┌────────────────────▼────────────────────────────────────┐
+│              @tractorbeamai/llm                         │
+│         (Provider Abstraction Layer)                     │
+│   • Common types (messages, tools, content blocks)      │
+│   • Base provider interface                              │
+│   • Streaming protocols                                  │
+└────────────────────┬────────────────────────────────────┘
+                     │
+        ┌────────────┴────────────┬─────────────┐
+        │                         │             │
+┌───────▼──────┐  ┌───────────────▼──┐  ┌──────▼──────┐
+│  @provider-  │  │    @provider-    │  │  @provider- │
+│  anthropic   │  │     openai       │  │   gemini    │
+└──────────────┘  └──────────────────┘  └─────────────┘
+```
 
 ## Installation
 
 ```bash
-npm install @tractorbeamai/agents
+npm install @tractorbeamai/agents @tractorbeamai/llm @tractorbeamai/provider-anthropic
 # or
-pnpm add @tractorbeamai/agents
+pnpm add @tractorbeamai/agents @tractorbeamai/llm @tractorbeamai/provider-anthropic
 ```
 
 ## Quick Start
 
 ```typescript
-import { AgentBuilder, MessageManager } from "@tractorbeamai/agents";
+import {
+  AgentBuilder,
+  MessageManager,
+  LlmProviderAdapter,
+} from "@tractorbeamai/agents";
+import { AnthropicProvider } from "@tractorbeamai/provider-anthropic";
 
-// Create an agent with common tools
+// Create a provider and adapt it for agents
+const anthropicProvider = new AnthropicProvider({
+  apiKey: process.env.ANTHROPIC_API_KEY!,
+  model: "claude-3-5-haiku-latest",
+});
+const llmProvider = new LlmProviderAdapter(anthropicProvider);
+
+// Build an agent with built-in tools
 const agent = AgentBuilder.create()
   .name("MyAssistant")
   .systemPrompt("You are a helpful assistant.")
-  .llmProvider(myLLMProvider) // Your LLM provider from @tractorbeamai/llm
-  .addCommonTools() // Adds think, calculate, memory, conclude tools
+  .llmProvider(llmProvider)
+  .addCommonTools() // Adds think, calculate, memory, conclude
   .build();
 
 // Execute the agent
 const result = await agent.execute({
   initialMessages: [MessageManager.createUserMessage("What is 2 + 2?")],
 });
+
+console.log("Result:", result.messages[result.messages.length - 1]);
 ```
 
 ## Core Concepts
 
+### Agents
+
+Agents orchestrate the execution loop between LLMs and tools:
+
+```typescript
+const agent = new Agent({
+  name: "DataAnalyst",
+  systemPrompt: "You analyze data and provide insights.",
+  llmProvider: myProvider,
+  tools: [analysisTool, visualizationTool],
+  maxIterations: 20,
+});
+```
+
 ### Tools
 
-Tools are functions that agents can call to perform actions or retrieve information:
+Tools are functions that agents can execute to perform actions:
 
 ```typescript
 import { createTool } from "@tractorbeamai/agents";
@@ -56,54 +115,109 @@ const weatherTool = createTool({
     location: z.string(),
     units: z.enum(["celsius", "fahrenheit"]),
   }),
-  handler: async (input) => {
-    // Your implementation
-    return { temperature: 22, condition: "sunny" };
+  handler: async (input, context) => {
+    const response = await fetchWeather(input.location, input.units);
+    return response;
   },
 });
 ```
 
 ### Messages
 
-The system uses a flexible message format compatible with OpenAI/Anthropic APIs:
+Messages follow a unified format compatible across providers:
 
 ```typescript
 interface Message {
   role: "system" | "user" | "assistant" | "tool";
-  content: string | MessageContent | MessageContent[];
+  content: ContentBlock[];
+}
+
+// Content blocks can be text, tool use, or tool results
+type ContentBlock =
+  | { type: "text"; text: string }
+  | { type: "toolUse"; id: string; name: string; input: unknown }
+  | { type: "toolResult"; toolUseId: string; content: string | object };
+```
+
+### Provider Integration
+
+The `LlmProviderAdapter` bridges any `@llm` provider to the agent framework:
+
+```typescript
+// Use any provider from the @llm ecosystem
+import { OpenAIProvider } from "@tractorbeamai/provider-openai";
+import { GeminiProvider } from "@tractorbeamai/provider-gemini";
+
+const openaiAdapter = new LlmProviderAdapter(new OpenAIProvider(config));
+const geminiAdapter = new LlmProviderAdapter(new GeminiProvider(config));
+
+// Switch providers without changing agent code
+agent.llmProvider = openaiAdapter;
+```
+
+## Built-in Tools
+
+The framework includes several utility tools:
+
+### Think Tool
+
+Internal reasoning and planning:
+
+```typescript
+{
+  name: "think",
+  description: "Reason through a problem or plan approach",
+  input: { thought: string }
 }
 ```
 
-### Agent Configuration
+### Calculate Tool
 
-Use the builder pattern for easy configuration:
+Mathematical computations:
 
 ```typescript
-const agent = AgentBuilder.create()
-  .name("DocumentAnalyzer")
-  .description("Analyzes documents for compliance")
-  .systemPrompt("You are a document analysis expert...")
-  .maxIterations(20)
-  .addTool(customTool)
-  .onMessage((message) => console.log("New message:", message))
-  .onToolCall((name, input, result) => console.log(`Tool ${name} called`))
-  .onError((error) => console.error("Error:", error))
-  .llmProvider(llmProvider)
-  .build();
+{
+  name: "calculate",
+  description: "Perform mathematical calculations",
+  input: { expression: string }
+}
 ```
 
-## Common Tools
+### Memory Tool
 
-The framework includes several built-in tools:
+Persistent storage during execution:
 
-- **think**: Internal reasoning and planning
-- **calculate**: Mathematical calculations
-- **memory**: Store and retrieve information during execution
-- **conclude**: Make final decisions with confidence levels
+```typescript
+{
+  name: "memory",
+  description: "Store and retrieve information",
+  input: {
+    action: "store" | "retrieve" | "list",
+    key?: string,
+    value?: unknown
+  }
+}
+```
+
+### Conclude Tool
+
+Final decisions with confidence:
+
+```typescript
+{
+  name: "conclude",
+  description: "Make a final decision",
+  input: {
+    decision: string,
+    confidence: number, // 0-1
+    reasoning?: string
+  }
+}
+```
 
 ## Streaming
 
-For real-time updates, use the streaming API:
+Real-time streaming for responsive UIs:
 
 ```typescript
 const stream = agent.stream({
@@ -111,53 +225,37 @@ const stream = agent.stream({
 });
 
 for await (const event of stream) {
-  console.log(`[${event.type}]`, event.data);
-  // Handle: 'message', 'tool_call', 'tool_result', 'error', 'complete'
+  switch (event.type) {
+    case "message":
+      console.log("New message:", event.data);
+      break;
+    case "tool_call":
+      console.log("Calling tool:", event.data);
+      break;
+    case "tool_result":
+      console.log("Tool result:", event.data);
+      break;
+    case "complete":
+      console.log("Execution complete");
+      break;
+  }
 }
 ```
 
 ## Advanced Usage
 
-### Custom Tool with Validation
+### Custom Tool Registry
 
 ```typescript
-const analysisStool = createTool({
-  name: "analyze_data",
-  description: "Perform data analysis",
-  inputSchema: z.object({
-    data: z.array(z.number()),
-    method: z.enum(["mean", "median", "std"]),
-    options: z
-      .object({
-        precision: z.number().optional(),
-      })
-      .optional(),
-  }),
-  handler: async (input, context) => {
-    // Access conversation history
-    const messages = context.messages;
+import { ToolRegistry } from "@tractorbeamai/agents";
 
-    // Access metadata
-    const metadata = context.metadata;
+const registry = new ToolRegistry();
+registry.register(customTool);
+registry.registerMany([tool1, tool2, tool3]);
 
-    // Perform analysis
-    return calculateStats(input.data, input.method);
-  },
-});
-```
-
-### Tool Registry
-
-Manage tools dynamically:
-
-```typescript
-// Add tool at runtime
+// Dynamic tool management
 agent.addTool(newTool);
-
-// Remove tool
 agent.removeTool("tool_name");
-
-// Get all tools
 const tools = agent.getTools();
 ```
 
@@ -166,61 +264,149 @@ const tools = agent.getTools();
 ```typescript
 const manager = new MessageManager();
 
-// Add messages
+// Build conversation
+manager.addMessage(MessageManager.createSystemMessage("You are helpful"));
 manager.addMessage(MessageManager.createUserMessage("Hello"));
 manager.addMessage(MessageManager.createAssistantMessage("Hi there!"));
 
 // Query messages
 const userMessages = manager.getMessagesByRole("user");
 const lastMessage = manager.getLastMessage();
+const stats = manager.getStats(); // tokens, tool calls, etc.
 
 // Extract tool calls
-const toolCalls = MessageManager.extractToolCalls(message);
+const toolCalls = MessageManager.extractToolCalls(assistantMessage);
+```
 
-// Format for display
-console.log(MessageManager.formatForDisplay(message));
+### Error Handling
+
+```typescript
+const agent = AgentBuilder.create()
+  .name("RobustAgent")
+  .llmProvider(provider)
+  .onError((error) => {
+    console.error("Agent error:", error);
+    // Custom error handling
+  })
+  .build();
+
+// Tools can also handle errors
+const safeTool = createTool({
+  name: "safe_operation",
+  handler: async (input) => {
+    try {
+      return await riskyOperation(input);
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+  },
+});
+```
+
+## ACP Integration
+
+Expose agents via the Agent Client Protocol:
+
+```typescript
+import { AcpServer } from "@tractorbeamai/acp";
+
+const server = new AcpServer(agent, {
+  capabilities: {
+    tools: true,
+    streaming: true,
+    contextManagement: true,
+  },
+});
+
+// Handle ACP requests
+const response = await server.handleRequest({
+  jsonrpc: "2.0",
+  id: 1,
+  method: "execute",
+  params: { messages: [...] },
+});
 ```
 
 ## Examples
 
-See the `examples/` directory for complete examples:
+See the `examples/` directory for complete implementations:
 
-- `basic-usage.ts`: Simple agent with common tools
-- `document-analysis-agent.ts`: Complex document compliance checking
+- `basic-usage.ts` - Simple agent with common tools
+- `document-analysis-agent.ts` - Complex document processing
+- `streaming-example.ts` - Real-time streaming responses
+- `custom-tools.ts` - Building custom tools
+- `multi-provider.ts` - Switching between LLM providers
 
 ## API Reference
 
 ### AgentBuilder
 
-- `.name(name: string)`: Set agent name
-- `.description(desc: string)`: Set agent description
-- `.systemPrompt(prompt: string)`: Set system prompt
-- `.llmProvider(provider: LLMProvider)`: Set LLM provider
-- `.maxIterations(max: number)`: Set max iterations
-- `.addTool(tool: ToolDefinition)`: Add a tool
-- `.addTools(tools: ToolDefinition[])`: Add multiple tools
-- `.addCommonTools()`: Add built-in tools
-- `.onMessage(handler)`: Set message handler
-- `.onToolCall(handler)`: Set tool call handler
-- `.onError(handler)`: Set error handler
-- `.build()`: Build the agent
+Fluent API for agent configuration:
 
-### Agent
+```typescript
+AgentBuilder.create()
+  .name(string)              // Agent identifier
+  .description(string)        // Agent purpose
+  .systemPrompt(string)       // System instructions
+  .llmProvider(LLMProvider)   // LLM provider instance
+  .maxIterations(number)      // Max execution cycles
+  .addTool(ToolDefinition)    // Add single tool
+  .addTools(ToolDefinition[]) // Add multiple tools
+  .addCommonTools()           // Add built-in tools
+  .onMessage(handler)         // Message callback
+  .onToolCall(handler)        // Tool execution callback
+  .onError(handler)           // Error callback
+  .build()                    // Create agent instance
+```
 
-- `.execute(options)`: Execute the agent
-- `.stream(options)`: Execute with streaming
-- `.addTool(tool)`: Add tool dynamically
-- `.removeTool(name)`: Remove tool
-- `.getTools()`: Get all tools
+### Agent Methods
+
+```typescript
+agent.execute(options); // Run agent to completion
+agent.stream(options); // Stream execution events
+agent.addTool(tool); // Add tool at runtime
+agent.removeTool(name); // Remove tool
+agent.getTools(); // List all tools
+```
 
 ### MessageManager
 
-- `.addMessage(message)`: Add a message
-- `.getMessages()`: Get all messages
-- `.getMessagesByRole(role)`: Filter by role
-- `.getLastMessage()`: Get last message
-- `.clear()`: Clear all messages
+```typescript
+manager.addMessage(message); // Add to conversation
+manager.getMessages(); // Get all messages
+manager.getMessagesByRole(role); // Filter by role
+manager.getLastMessage(); // Get most recent
+manager.getLastNMessages(n); // Get last N
+manager.clear(); // Clear history
+manager.onMessage(listener); // Message listener
+MessageManager.createUserMessage(text); // Helper constructors
+MessageManager.extractToolCalls(msg); // Parse tool calls
+MessageManager.formatForDisplay(msg); // Human-readable format
+```
+
+## Contributing
+
+Contributions welcome! Please ensure:
+
+1. Tests pass: `pnpm test`
+2. Linting passes: `pnpm lint`
+3. Types are properly defined
+4. Documentation is updated
 
 ## License
 
 MIT
+
+## Related Packages
+
+- [@tractorbeamai/llm](../llm) - Provider abstraction layer
+- [@tractorbeamai/provider-anthropic](../provider-anthropic) - Anthropic/Claude provider
+- [@tractorbeamai/acp](../acp) - Agent Client Protocol server
+
+## References
+
+- [Agent Client Protocol](https://github.com/zed-industries/agent-client-protocol) - Protocol specification
+- [Examples](./examples) - Complete usage examples

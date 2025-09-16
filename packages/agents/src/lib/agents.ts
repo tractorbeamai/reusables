@@ -6,6 +6,7 @@ export * from "./tool-registry";
 export * from "./message-manager";
 export * from "./common-tools";
 export * from "./utils";
+export * from "./llm-providers/llm-adapter";
 
 // Also export the Agent and AgentBuilder as default-like exports
 export { Agent } from "./agent";

@@ -4,9 +4,6 @@ import type { ToolDefinition, ToolContext, ToolResult } from "./types";
 export class ToolRegistry {
   private tools: Map<string, ToolDefinition> = new Map();
 
-  /**
-   * Register a new tool
-   */
   register<TInput = unknown, TOutput = unknown>(
     tool: ToolDefinition<TInput, TOutput>
   ): void {
@@ -16,46 +13,28 @@ export class ToolRegistry {
     this.tools.set(tool.name, tool as ToolDefinition);
   }
 
-  /**
-   * Register multiple tools at once
-   */
   registerMany(tools: ToolDefinition[]): void {
     for (const tool of tools) {
       this.register(tool);
     }
   }
 
-  /**
-   * Unregister a tool
-   */
   unregister(name: string): boolean {
     return this.tools.delete(name);
   }
 
-  /**
-   * Get a tool by name
-   */
   get(name: string): ToolDefinition | undefined {
     return this.tools.get(name);
   }
 
-  /**
-   * Get all registered tools
-   */
   getAll(): ToolDefinition[] {
     return Array.from(this.tools.values());
   }
 
-  /**
-   * Check if a tool is registered
-   */
   has(name: string): boolean {
     return this.tools.has(name);
   }
 
-  /**
-   * Execute a tool
-   */
   async execute(
     name: string,
     input: unknown,
@@ -109,9 +88,6 @@ export class ToolRegistry {
     }
   }
 
-  /**
-   * Get tool definitions in a format suitable for LLM providers
-   */
   getToolDefinitions(): Array<{
     name: string;
     description: string;

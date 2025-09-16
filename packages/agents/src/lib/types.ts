@@ -1,8 +1,10 @@
 import { z } from "zod";
+import type { BaseMessage, ContentBlock, Role, Tool } from "@tractorbeamai/llm";
 
-// Base message types following a structure similar to OpenAI/Anthropic
-export type Role = "system" | "user" | "assistant" | "tool";
+// Re-export types from @llm for convenience
+export type { BaseMessage as Message, ContentBlock as MessageContent, Role };
 
+// Agent-specific content types that extend @llm
 export interface TextContent {
   type: "text";
   text: string;
@@ -22,29 +24,14 @@ export interface ToolResultContent {
   is_error?: boolean;
 }
 
-export type MessageContent =
-  | string
-  | TextContent
-  | ToolUseContent
-  | ToolResultContent;
-
-export interface Message {
-  role: Role;
-  content: MessageContent | MessageContent[];
-  name?: string;
-  metadata?: Record<string, unknown>;
-}
-
-// Tool definition system
-export interface ToolDefinition<TInput = unknown, TOutput = unknown> {
-  name: string;
-  description: string;
+// Tool definition with handler (extends @llm Tool)
+export interface ToolDefinition<TInput = unknown, TOutput = unknown>
+  extends Omit<Tool, "zodInputSchema"> {
   inputSchema: z.ZodSchema<TInput>;
   handler: (
     input: TInput,
     context: ToolContext
   ) => Promise<ToolResult<TOutput>>;
-  // Optional configuration
   config?: {
     maxRetries?: number;
     timeout?: number;
@@ -53,7 +40,7 @@ export interface ToolDefinition<TInput = unknown, TOutput = unknown> {
 }
 
 export interface ToolContext {
-  messages: Message[];
+  messages: BaseMessage[];
   metadata: Record<string, unknown>;
   signal?: AbortSignal;
 }
@@ -65,14 +52,14 @@ export interface ToolResult<T = unknown> {
   metadata?: Record<string, unknown>;
 }
 
-// LLM Provider abstraction
+// LLM Provider interface for agents (simplified to use @llm types)
 export interface LLMProvider {
   name: string;
   generateResponse(request: LLMRequest): Promise<LLMResponse>;
 }
 
 export interface LLMRequest {
-  messages: Message[];
+  messages: BaseMessage[];
   tools?: ToolDefinition[];
   toolChoice?: "auto" | "none" | { type: "tool"; name: string };
   maxTokens?: number;
@@ -82,7 +69,7 @@ export interface LLMRequest {
 }
 
 export interface LLMResponse {
-  message: Message;
+  message: BaseMessage;
   usage?: {
     promptTokens: number;
     completionTokens: number;
@@ -99,7 +86,7 @@ export interface AgentConfig {
   tools: ToolDefinition[];
   llmProvider: LLMProvider;
   maxIterations?: number;
-  onMessage?: (message: Message) => void | Promise<void>;
+  onMessage?: (message: BaseMessage) => void | Promise<void>;
   onToolCall?: (
     toolName: string,
     input: unknown,
@@ -110,14 +97,14 @@ export interface AgentConfig {
 
 // Agent execution
 export interface AgentExecutionOptions {
-  initialMessages?: Message[];
+  initialMessages?: BaseMessage[];
   metadata?: Record<string, unknown>;
   signal?: AbortSignal;
   stream?: boolean;
 }
 
 export interface AgentExecutionResult {
-  messages: Message[];
+  messages: BaseMessage[];
   iterations: number;
   metadata: Record<string, unknown>;
   error?: Error;
@@ -129,4 +116,3 @@ export interface AgentStreamEvent {
   data: unknown;
   timestamp: Date;
 }
-

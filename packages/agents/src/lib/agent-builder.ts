@@ -15,49 +15,31 @@ export class AgentBuilder {
     maxIterations: 20,
   };
 
-  /**
-   * Set the agent name
-   */
   name(name: string): this {
     this.config.name = name;
     return this;
   }
 
-  /**
-   * Set the agent description
-   */
   description(description: string): this {
     this.config.description = description;
     return this;
   }
 
-  /**
-   * Set the system prompt
-   */
   systemPrompt(prompt: string): this {
     this.config.systemPrompt = prompt;
     return this;
   }
 
-  /**
-   * Set the LLM provider
-   */
   llmProvider(provider: LLMProvider): this {
     this.config.llmProvider = provider;
     return this;
   }
 
-  /**
-   * Set the maximum number of iterations
-   */
   maxIterations(max: number): this {
     this.config.maxIterations = max;
     return this;
   }
 
-  /**
-   * Add a tool to the agent
-   */
   addTool(tool: ToolDefinition): this {
     if (!this.config.tools) {
       this.config.tools = [];
@@ -66,9 +48,6 @@ export class AgentBuilder {
     return this;
   }
 
-  /**
-   * Add multiple tools
-   */
   addTools(tools: ToolDefinition[]): this {
     if (!this.config.tools) {
       this.config.tools = [];
@@ -77,9 +56,6 @@ export class AgentBuilder {
     return this;
   }
 
-  /**
-   * Add a simple tool with just a function
-   */
   addSimpleTool<TInput = unknown, TOutput = unknown>(
     name: string,
     description: string,
@@ -95,9 +71,6 @@ export class AgentBuilder {
     return this.addTool(tool as ToolDefinition);
   }
 
-  /**
-   * Add common tools (think, calculate, memory, conclude)
-   */
   addCommonTools(): this {
     const {
       thinkTool,
@@ -109,17 +82,11 @@ export class AgentBuilder {
     return this.addTools([thinkTool, calculateTool, memoryTool, concludeTool]);
   }
 
-  /**
-   * Set message handler
-   */
   onMessage(handler: (message: Message) => void | Promise<void>): this {
     this.config.onMessage = handler;
     return this;
   }
 
-  /**
-   * Set tool call handler
-   */
   onToolCall(
     handler: (
       toolName: string,
@@ -131,17 +98,11 @@ export class AgentBuilder {
     return this;
   }
 
-  /**
-   * Set error handler
-   */
   onError(handler: (error: Error) => void | Promise<void>): this {
     this.config.onError = handler;
     return this;
   }
 
-  /**
-   * Build the agent
-   */
   build(): Agent {
     if (!this.config.name) {
       throw new Error("Agent name is required");
@@ -156,9 +117,6 @@ export class AgentBuilder {
     return new Agent(this.config as AgentConfig);
   }
 
-  /**
-   * Create a new builder instance
-   */
   static create(): AgentBuilder {
     return new AgentBuilder();
   }

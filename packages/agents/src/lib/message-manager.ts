@@ -13,61 +13,37 @@ export class MessageManager {
     this.messages = [...initialMessages];
   }
 
-  /**
-   * Add a message to the conversation
-   */
   addMessage(message: Message): void {
     this.messages.push(message);
     this.notifyListeners(message);
   }
 
-  /**
-   * Add multiple messages
-   */
   addMessages(messages: Message[]): void {
     for (const message of messages) {
       this.addMessage(message);
     }
   }
 
-  /**
-   * Get all messages
-   */
   getMessages(): Message[] {
     return [...this.messages];
   }
 
-  /**
-   * Get messages by role
-   */
   getMessagesByRole(role: Message["role"]): Message[] {
     return this.messages.filter((m) => m.role === role);
   }
 
-  /**
-   * Get the last message
-   */
   getLastMessage(): Message | undefined {
     return this.messages[this.messages.length - 1];
   }
 
-  /**
-   * Get the last N messages
-   */
   getLastNMessages(n: number): Message[] {
     return this.messages.slice(-n);
   }
 
-  /**
-   * Clear all messages
-   */
   clear(): void {
     this.messages = [];
   }
 
-  /**
-   * Add a message listener
-   */
   onMessage(listener: (message: Message) => void): () => void {
     this.messageListeners.push(listener);
     return () => {
@@ -78,9 +54,6 @@ export class MessageManager {
     };
   }
 
-  /**
-   * Create a user message
-   */
   static createUserMessage(
     content: string | MessageContent | MessageContent[]
   ): Message {
@@ -90,9 +63,6 @@ export class MessageManager {
     };
   }
 
-  /**
-   * Create an assistant message
-   */
   static createAssistantMessage(
     content: string | MessageContent | MessageContent[]
   ): Message {
@@ -102,9 +72,6 @@ export class MessageManager {
     };
   }
 
-  /**
-   * Create a system message
-   */
   static createSystemMessage(content: string): Message {
     return {
       role: "system",
@@ -112,9 +79,6 @@ export class MessageManager {
     };
   }
 
-  /**
-   * Create a tool use message content
-   */
   static createToolUseContent(
     name: string,
     input: unknown,
@@ -128,9 +92,6 @@ export class MessageManager {
     };
   }
 
-  /**
-   * Create a tool result message content
-   */
   static createToolResultContent(
     toolUseId: string,
     content: string | object,
@@ -144,9 +105,6 @@ export class MessageManager {
     };
   }
 
-  /**
-   * Extract tool calls from a message
-   */
   static extractToolCalls(message: Message): ToolUseContent[] {
     const content = Array.isArray(message.content)
       ? message.content
@@ -157,9 +115,6 @@ export class MessageManager {
     );
   }
 
-  /**
-   * Format messages for display
-   */
   static formatForDisplay(message: Message): string {
     const formatContent = (content: MessageContent): string => {
       if (typeof content === "string") return content;
@@ -188,9 +143,6 @@ export class MessageManager {
     return `${message.role.toUpperCase()}: ${formatted}`;
   }
 
-  /**
-   * Get conversation statistics
-   */
   getStats(): {
     totalMessages: number;
     messagesByRole: Record<string, number>;

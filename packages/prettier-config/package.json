@@ -1,0 +1,38 @@
+{
+  "name": "@tractorbeam/prettier-config",
+  "version": "0.1.0",
+  "description": "Shared Prettier configuration for Tractorbeam projects",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "lint:types": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "prettier-plugin-packagejson": "^2.5.19",
+    "prettier-plugin-tailwindcss": "^0.6.14"
+  },
+  "devDependencies": {
+    "@tractorbeam/typescript-config": "workspace:*",
+    "prettier": "^3.5.3",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "prettier": ">=3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

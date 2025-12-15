@@ -1,0 +1,81 @@
+{
+  "name": "@tractorbeam/eslint-config",
+  "version": "0.1.0",
+  "description": "Shared ESLint configuration for Tractorbeam projects",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./base": {
+      "types": "./dist/base.d.ts",
+      "default": "./dist/base.js"
+    },
+    "./typescript": {
+      "types": "./dist/typescript.d.ts",
+      "default": "./dist/typescript.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    },
+    "./tanstack-router": {
+      "types": "./dist/tanstack-router.d.ts",
+      "default": "./dist/tanstack-router.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
+    },
+    "./playwright": {
+      "types": "./dist/playwright.d.ts",
+      "default": "./dist/playwright.js"
+    },
+    "./prettier": {
+      "types": "./dist/prettier.d.ts",
+      "default": "./dist/prettier.js"
+    }
+  },
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "lint:eslint": "eslint src --max-warnings=0",
+    "lint:types": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.39.2",
+    "@tanstack/eslint-plugin-router": "^1.141.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import-lite": "^0.3.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-playwright": "^2.4.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.25",
+    "eslint-plugin-regexp": "^2.10.0",
+    "eslint-plugin-unicorn": "^62.0.0",
+    "globals": "^16.5.0",
+    "typescript-eslint": "^8.49.0"
+  },
+  "devDependencies": {
+    "@tractorbeam/typescript-config": "workspace:*",
+    "@types/eslint": "^9.6.1",
+    "@types/eslint-plugin-jsx-a11y": "^6.10.1",
+    "@types/node": "^22.19.3",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "eslint": ">= 9",
+    "typescript-eslint": ">= 8"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

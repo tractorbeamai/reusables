@@ -1,6 +1,11 @@
 {
   "name": "@tractorbeamai/reusables",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tractorbeamai/reusables.git"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "changeset": "changeset",

@@ -1,6 +1,28 @@
 {
   "name": "@tractorbeam/typescript-config",
   "version": "0.1.0",
+  "description": "Shared tsconfig presets for Tractorbeam projects",
+  "keywords": [
+    "tractorbeam",
+    "tractorbeamai",
+    "typescript",
+    "tsconfig",
+    "tsconfig-bases",
+    "react",
+    "nextjs",
+    "vite",
+    "tanstack"
+  ],
+  "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/typescript-config#readme",
+  "bugs": {
+    "url": "https://github.com/tractorbeamai/reusables/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tractorbeamai/reusables.git",
+    "directory": "packages/typescript-config"
+  },
+  "license": "MIT",
   "type": "module",
   "exports": {
     "./node": "./node.json",

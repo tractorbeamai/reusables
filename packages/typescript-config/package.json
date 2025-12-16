@@ -22,10 +22,6 @@
     "url": "git+https://github.com/tractorbeamai/reusables.git",
     "directory": "packages/typescript-config"
   },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -44,5 +40,9 @@
   ],
   "dependencies": {
     "@tsconfig/bases": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

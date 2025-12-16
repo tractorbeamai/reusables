@@ -3,4 +3,3 @@
   "extends": "@tractorbeam/typescript-config/node",
   "include": ["src/**/*.ts"]
 }
-

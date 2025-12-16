@@ -11,8 +11,7 @@
     "lint:eslint": "turbo run lint:eslint",
     "lint:prettier": "prettier --check .",
     "lint:types": "turbo run lint:types",
-    "release": "turbo run build && changeset publish",
-    "version-packages": "changeset version"
+    "release": "turbo run build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",

@@ -4,7 +4,9 @@ on:
   push:
     branches: [main]
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   release:
@@ -21,6 +23,7 @@ jobs:
         with:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
+
       - uses: changesets/action@v1
         with:
           publish: pnpm release

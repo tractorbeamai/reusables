@@ -2,7 +2,7 @@
 
 Shared `tsconfig` presets for Tractorbeam projects.
 
-## Installation
+## Install
 
 ```bash
 pnpm add -D @tractorbeam/typescript-config
@@ -18,7 +18,7 @@ In your project’s `tsconfig.json`:
 }
 ```
 
-## Available presets
+## Presets
 
 - `@tractorbeam/typescript-config/node.json`
 - `@tractorbeam/typescript-config/node22.json`

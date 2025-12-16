@@ -20,8 +20,9 @@ pnpm add -D jiti
 
 ```typescript
 // eslint.config.ts
-import { base, react, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
+
+import { base, react, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -55,8 +56,9 @@ export default defineConfig([
 The `typescript` config uses type-checked linting, which requires `tsconfigRootDir` to be set in your config:
 
 ```typescript
-import { base, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
+
+import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -76,9 +78,10 @@ export default defineConfig([
 If you have JavaScript files alongside TypeScript, disable type checking for them:
 
 ```typescript
-import { base, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
+
+import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -97,8 +100,9 @@ export default defineConfig([
 Use `extends` to apply configs to specific file patterns:
 
 ```typescript
-import { base, playwright, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
+
+import { base, playwright, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -117,8 +121,9 @@ export default defineConfig([
 Override any rules by adding them after `extends`:
 
 ```typescript
-import { base, react, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
+
+import { base, react, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -143,8 +148,9 @@ Use ESLint's built-in ignore utilities:
 
 ```typescript
 import { includeIgnoreFile } from "@eslint/compat";
-import { base, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig, globalIgnores } from "eslint/config";
+
+import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -164,8 +170,9 @@ export default defineConfig([
 For monorepos with multiple `tsconfig.json` files, configure the `project` array:
 
 ```typescript
-import { base, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
+
+import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,

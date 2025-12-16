@@ -2,7 +2,7 @@
 
 Shared Prettier configuration for Tractorbeam projects.
 
-## Installation
+## Install
 
 ```bash
 pnpm add -D @tractorbeam/prettier-config prettier
@@ -10,7 +10,7 @@ pnpm add -D @tractorbeam/prettier-config prettier
 
 ## Usage
 
-### ESM (`prettier.config.js`)
+### `prettier.config.js` (ESM)
 
 ```js
 import config from "@tractorbeam/prettier-config";
@@ -18,3 +18,10 @@ import config from "@tractorbeam/prettier-config";
 export default config;
 ```
 
+### `package.json`
+
+```json
+{
+  "prettier": "@tractorbeam/prettier-config"
+}
+```

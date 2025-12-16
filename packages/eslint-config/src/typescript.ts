@@ -39,7 +39,7 @@ export const typescript: Linter.Config[] = defineConfig([
       "unicorn/no-null": "off",
       "unicorn/prevent-abbreviations": "off",
       "unicorn/no-abusive-eslint-disable": "off",
-      "unicorn/no-array-sort": "off"
+      "unicorn/no-array-sort": "off",
     },
   },
 ]);

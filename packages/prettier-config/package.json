@@ -2,6 +2,25 @@
   "name": "@tractorbeam/prettier-config",
   "version": "0.1.0",
   "description": "Shared Prettier configuration for Tractorbeam projects",
+  "keywords": [
+    "tractorbeam",
+    "tractorbeamai",
+    "prettier",
+    "prettierconfig",
+    "prettier-config",
+    "tailwind",
+    "sort-imports"
+  ],
+  "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/prettier-config#readme",
+  "bugs": {
+    "url": "https://github.com/tractorbeamai/reusables/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tractorbeamai/reusables.git",
+    "directory": "packages/prettier-config"
+  },
+  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {

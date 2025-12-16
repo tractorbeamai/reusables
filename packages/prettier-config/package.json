@@ -1,6 +1,6 @@
 {
   "name": "@tractorbeam/prettier-config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared Prettier configuration for Tractorbeam projects",
   "keywords": [
     "tractorbeam",

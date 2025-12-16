@@ -14,6 +14,9 @@ const config: Config = {
     "<THIRD_PARTY_MODULES>",
     "",
     "^types$",
+    "@tractorbeam/(.*)$",
+    "@/components/ui/(.*)$",
+
     "^@/(.*)$",
     "",
     "^[./]",
@@ -22,4 +25,3 @@ const config: Config = {
 };
 
 export default config;
-

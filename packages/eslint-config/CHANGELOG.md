@@ -1,5 +1,11 @@
 # @tractorbeam/eslint-config
 
+## 0.2.0
+
+### Minor Changes
+
+- a8cad87: add `eslint-plugin-depend`
+
 ## 0.1.3
 
 ### Patch Changes

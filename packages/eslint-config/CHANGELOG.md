@@ -1,5 +1,11 @@
 # @tractorbeam/eslint-config
 
+## 0.2.1
+
+### Patch Changes
+
+- e65f7d8: remove postinstall script
+
 ## 0.2.0
 
 ### Minor Changes

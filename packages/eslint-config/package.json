@@ -1,6 +1,6 @@
 {
   "name": "@tractorbeam/eslint-config",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Shared ESLint configuration for Tractorbeam projects",
   "keywords": [
     "tractorbeam",

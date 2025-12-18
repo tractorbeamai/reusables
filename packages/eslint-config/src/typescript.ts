@@ -13,6 +13,7 @@ export const typescript: Linter.Config[] = defineConfig([
       tseslint.configs.stylisticTypeChecked,
       pluginUnicorn.configs.recommended,
       pluginRegexp.configs["flat/recommended"],
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       pluginImportLite.configs.recommended,
     ],
     languageOptions: {

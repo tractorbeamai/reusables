@@ -1,6 +1,7 @@
-import type { Config } from "prettier";
-
-const config: Config = {
+/**
+ * @type {import("prettier").Config}
+ */
+const config = {
   plugins: [
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-packagejson",
@@ -16,7 +17,6 @@ const config: Config = {
     "^types$",
     "@tractorbeam/(.*)$",
     "@/components/ui/(.*)$",
-
     "^@/(.*)$",
     "",
     "^[./]",

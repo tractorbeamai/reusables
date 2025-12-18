@@ -1,5 +1,0 @@
-{
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@tractorbeam/typescript-config/node",
-  "include": ["src/**/*.ts"]
-}

@@ -32,19 +32,20 @@ export const typescript: Linter.Config[] = defineConfig([
       "@typescript-eslint/only-throw-error": [
         "error",
         {
-          "allow": [
+          allow: [
             {
-              "from": "package",
-              "package": "@tanstack/router-core",
-              "name": "Redirect"
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "Redirect",
             },
             {
-              "from": "package",
-              "package": "@tanstack/router-core",
-              "name": "NotFoundError"
-            }
-          ]
-        }],
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "NotFoundError",
+            },
+          ],
+        },
+      ],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

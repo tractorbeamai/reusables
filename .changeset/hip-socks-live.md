@@ -2,4 +2,4 @@
 "@tractorbeam/prettier-config": patch
 ---
 
-fix(prettier-config): remove build dependency from prettier-config package
+remove typescript to eliminate build step and improve downstream compatibility

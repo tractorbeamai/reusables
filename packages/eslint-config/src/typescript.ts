@@ -13,6 +13,7 @@ export const typescript: Linter.Config[] = defineConfig([
       tseslint.configs.stylisticTypeChecked,
       pluginUnicorn.configs.recommended,
       pluginRegexp.configs["flat/recommended"],
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       pluginImportLite.configs.recommended,
     ],
     languageOptions: {
@@ -23,10 +24,29 @@ export const typescript: Linter.Config[] = defineConfig([
     rules: {
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/restrict-template-expressions": "off",
+
       "@typescript-eslint/ban-ts-comment": "warn",
-      "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-empty-object-type": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
+
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/only-throw-error": [
+        "error",
+        {
+          allow: [
+            {
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "Redirect",
+            },
+            {
+              from: "package",
+              package: "@tanstack/router-core",
+              name: "NotFoundError",
+            },
+          ],
+        },
+      ],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
@@ -35,6 +55,7 @@ export const typescript: Linter.Config[] = defineConfig([
           destructuredArrayIgnorePattern: "^_",
         },
       ],
+
       "unicorn/no-nested-ternary": "off",
       "unicorn/no-null": "off",
       "unicorn/prevent-abbreviations": "off",

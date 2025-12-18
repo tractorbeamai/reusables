@@ -22,11 +22,11 @@
   },
   "license": "MIT",
   "type": "module",
-  "exports": "./src/index.js",
+  "main": "./main.cjs",
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "prettier-plugin-packagejson": "^2.5.19",
-    "prettier-plugin-tailwindcss": "^0.6.14"
+    "prettier-plugin-packagejson": "^2.5.20",
+    "prettier-plugin-tailwindcss": "^0.7.2"
   },
   "peerDependencies": {
     "prettier": ">=3.0.0"

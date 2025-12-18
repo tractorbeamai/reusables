@@ -1,11 +1,11 @@
 /**
  * @type {import("prettier").Config}
  */
-const config = {
+module.exports = {
   plugins: [
-    "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-packagejson",
-    "prettier-plugin-tailwindcss",
+    require.resolve("@ianvs/prettier-plugin-sort-imports"),
+    require.resolve("prettier-plugin-packagejson"),
+    require.resolve("prettier-plugin-tailwindcss"),
   ],
   importOrder: [
     "^(@/env)$",
@@ -21,7 +21,5 @@ const config = {
     "",
     "^[./]",
   ],
-  importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
+  importOrderParserPlugins: ["typescript", "jsx"],
 };
-
-export default config;

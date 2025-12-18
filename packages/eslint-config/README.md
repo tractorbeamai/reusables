@@ -51,28 +51,6 @@ export default defineConfig([
 
 ## Customization
 
-### Setting `tsconfigRootDir` (Required)
-
-The `typescript` config uses type-checked linting, which requires `tsconfigRootDir` to be set in your config:
-
-```typescript
-import { defineConfig } from "eslint/config";
-
-import { base, typescript } from "@tractorbeam/eslint-config";
-
-export default defineConfig([
-  base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: {
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
-]);
-```
-
 ### Disabling Type Checking for JS Files
 
 If you have JavaScript files alongside TypeScript, disable type checking for them:
@@ -85,12 +63,7 @@ import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: { tsconfigRootDir: import.meta.dirname },
-    },
-  },
+  typescript,
   { files: ["**/*.js"], extends: [tseslint.configs.disableTypeChecked] },
 ]);
 ```
@@ -106,12 +79,7 @@ import { base, playwright, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: { tsconfigRootDir: import.meta.dirname },
-    },
-  },
+  eslint,
   { files: ["**/e2e/**/*.ts"], extends: [playwright] },
 ]);
 ```
@@ -127,12 +95,7 @@ import { base, react, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: { tsconfigRootDir: import.meta.dirname },
-    },
-  },
+  typescript,
   {
     extends: [react],
     rules: {
@@ -154,37 +117,9 @@ import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: { tsconfigRootDir: import.meta.dirname },
-    },
-  },
+typescript
   includeIgnoreFile(".gitignore"),
   globalIgnores(["dist/**", "*.gen.ts"]),
-]);
-```
-
-## Monorepo Setup
-
-For monorepos with multiple `tsconfig.json` files, configure the `project` array:
-
-```typescript
-import { defineConfig } from "eslint/config";
-
-import { base, typescript } from "@tractorbeam/eslint-config";
-
-export default defineConfig([
-  base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.eslint.json", "./packages/*/tsconfig.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
 ]);
 ```
 

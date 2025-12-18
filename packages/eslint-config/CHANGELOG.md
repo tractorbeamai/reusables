@@ -1,5 +1,11 @@
 # @tractorbeam/eslint-config
 
+## 0.1.3
+
+### Patch Changes
+
+- 91e3bdf: resolve issues, update dependencies
+
 ## 0.1.2
 
 ### Patch Changes

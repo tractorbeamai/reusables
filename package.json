@@ -18,18 +18,16 @@
     "lint:types": "turbo run lint:types",
     "release": "turbo run build && changeset publish"
   },
+  "prettier": "@tractorbeam/prettier-config",
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
-    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "@changesets/cli": "^2.29.8",
     "@tractorbeam/prettier-config": "workspace:*",
-    "eslint": "^9.39.0",
-    "jiti": "^2.0.0",
-    "prettier": "^3.2.5",
-    "prettier-plugin-packagejson": "^2.5.19",
-    "prettier-plugin-tailwindcss": "^0.6.14",
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1",
+    "prettier": "^3.7.4",
     "turbo": "^2.6.3"
   },
-  "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501",
+  "packageManager": "pnpm@10.26.0",
   "engines": {
     "node": ">=22"
   }

@@ -75,6 +75,7 @@
     "@eslint/js": "^9.39.2",
     "@tanstack/eslint-plugin-router": "^1.141.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-depend": "^1.4.0",
     "eslint-plugin-import-lite": "^0.4.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-playwright": "^2.4.0",

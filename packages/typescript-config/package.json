@@ -31,7 +31,8 @@
     "./react": "./react.json",
     "./next": "./next.json",
     "./tanstack-start": "./tanstack-start.json",
-    "./vite": "./vite.json"
+    "./vite": "./vite.json",
+    "./cloudflare-workers": "./cloudflare-workers.json"
   },
   "files": [
     "*.json",

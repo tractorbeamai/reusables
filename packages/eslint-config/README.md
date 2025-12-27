@@ -24,18 +24,7 @@ import { defineConfig } from "eslint/config";
 
 import { base, react, typescript } from "@tractorbeam/eslint-config";
 
-export default defineConfig([
-  base,
-  {
-    extends: [typescript],
-    languageOptions: {
-      parserOptions: {
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
-  react,
-]);
+export default defineConfig([base, typescript, react]);
 ```
 
 ## Available Configs

@@ -29,14 +29,15 @@ export default defineConfig([base, typescript, react]);
 
 ## Available Configs
 
-| Config           | Description                              | File Patterns                   |
-| ---------------- | ---------------------------------------- | ------------------------------- |
-| `base`           | ESLint recommended rules                 | All files                       |
-| `typescript`     | TypeScript, unicorn, regexp, import-lite | `**/*.ts`, `**/*.tsx`           |
-| `react`          | React, hooks, a11y, react-compiler       | `**/*.tsx`, `**/*.jsx`          |
-| `tanstackRouter` | TanStack Router plugin                   | `**/*.tsx`, `**/*.jsx`          |
-| `node`           | Node.js globals                          | All files                       |
-| `playwright`     | Playwright testing rules                 | No default (use with `extends`) |
+| Config              | Description                              | File Patterns                   |
+| ------------------- | ---------------------------------------- | ------------------------------- |
+| `base`              | ESLint recommended rules                 | All files                       |
+| `typescript`        | TypeScript, unicorn, regexp, import-lite | `**/*.ts`, `**/*.tsx`           |
+| `react`             | React, hooks, a11y, react-compiler       | `**/*.tsx`, `**/*.jsx`          |
+| `tanstackRouter`    | TanStack Router plugin                   | `**/*.tsx`, `**/*.jsx`          |
+| `node`              | Node.js globals                          | All files                       |
+| `cloudflareWorkers` | Cloudflare Workers globals               | All files                       |
+| `playwright`        | Playwright testing rules                 | No default (use with `extends`) |
 
 ## Customization
 

@@ -27,3 +27,4 @@ In your project’s `tsconfig.json`:
 - `@tractorbeam/typescript-config/next.json`
 - `@tractorbeam/typescript-config/tanstack-start.json`
 - `@tractorbeam/typescript-config/vite.json`
+- `@tractorbeam/typescript-config/cloudflare-workers.json`

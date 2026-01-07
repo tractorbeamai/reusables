@@ -1,5 +1,11 @@
 # @tractorbeam/eslint-config
 
+## 0.3.0
+
+### Minor Changes
+
+- 14b5ff6: Add Cloudflare Workers configs for ESLint and TypeScript
+
 ## 0.2.1
 
 ### Patch Changes

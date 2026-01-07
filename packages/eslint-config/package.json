@@ -50,6 +50,10 @@
       "types": "./dist/node.d.ts",
       "default": "./dist/node.js"
     },
+    "./cloudflare-workers": {
+      "types": "./dist/cloudflare-workers.d.ts",
+      "default": "./dist/cloudflare-workers.js"
+    },
     "./playwright": {
       "types": "./dist/playwright.d.ts",
       "default": "./dist/playwright.js"

@@ -553,6 +553,9 @@ Each component gets a generated `.meta.json`:
 - **Style variant**: `new-york` only
 - **Hosting**: Bundled with docs site, same package
 - **Monorepo placement**: `packages/registry/` (supports more than just UI components)
+- **Initial upstreams**: shadcn + COSS from day 1
+- **Initial component set**: All of COSS, curated subset of shadcn
+- **Docs site tech**: Vite + TanStack Start (like tractorbeamai/marketing)
 - **Docs format**: Inline block comments in component files
 - **Merge strategy**: Use `replace` mode (full copy + track drift), no fragile AST merging
 - **Versioning**: Follow whatever shadcn does

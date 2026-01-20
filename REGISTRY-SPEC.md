@@ -8,16 +8,16 @@ A codegen-based shadcn registry that inherits from upstream registries (shadcn/u
 2. **Local overrides** - Modify components while tracking what changed
 3. **On-demand sync** - Fetch upstream updates, merge intelligently
 4. **Self-documenting** - Each component includes docs + implementation
-5. **Redistributable** - Publish as `@tractorbeam` (or `@tb`) registry
+5. **Redistributable** - Publish as `@tractorbeam` registry
 
 ## File Structure
 
 ```
-packages/ui/
+packages/registry/
 ├── registry.config.ts      # Upstream sources, overrides config
 ├── upstream.lock.json      # Tracks upstream versions/hashes (generated)
 ├── registry/
-│   └── default/            # Style variant (could have multiple)
+│   └── new-york/           # Style variant (new-york only)
 │       ├── button/
 │       │   ├── button.tsx          # Implementation with embedded docs
 │       │   └── button.meta.json    # Generated: tracks upstream diff
@@ -40,8 +40,8 @@ import { defineRegistry } from './scripts/types'
 
 export default defineRegistry({
   name: 'tractorbeam',
-  namespace: '@tb',          // or '@tractorbeam'
-  homepage: 'https://ui.tractorbeam.io',
+  namespace: '@tractorbeam',
+  homepage: 'https://tractorbeam.io/registry',
 
   // Upstream registries to inherit from (in priority order)
   upstreams: [
@@ -130,7 +130,7 @@ For `registry:page` and `registry:file` types, the `target` property is required
 
 ```json
 {
-  "path": "registry/default/pages/dashboard.tsx",
+  "path": "registry/new-york/pages/dashboard.tsx",
   "type": "registry:page",
   "target": "app/dashboard/page.tsx"
 }
@@ -155,7 +155,7 @@ overrides: {
 Full copy of upstream with local modifications. Tracked via git diff. Docs are embedded.
 
 ```tsx
-// registry/default/button/button.tsx
+// registry/new-york/button/button.tsx
 // Copied from upstream, then modified locally
 // Upstream: https://ui.shadcn.com/r/button.json @ abc123
 
@@ -206,11 +206,11 @@ export default defineRegistry({
       // Files
       files: [
         {
-          path: 'registry/default/data-table/data-table.tsx',
+          path: 'registry/new-york/data-table/data-table.tsx',
           type: 'registry:component',
         },
         {
-          path: 'registry/default/data-table/columns.tsx',
+          path: 'registry/new-york/data-table/columns.tsx',
           type: 'registry:component',
         },
       ],
@@ -268,7 +268,7 @@ export default defineRegistry({
       description: 'Debounce a value or callback.',
       files: [
         {
-          path: 'registry/default/hooks/use-debounce.ts',
+          path: 'registry/new-york/hooks/use-debounce.ts',
           type: 'registry:hook',
         },
       ],
@@ -295,7 +295,7 @@ export default defineRegistry({
       description: 'A dashboard page template.',
       files: [
         {
-          path: 'registry/default/pages/dashboard.tsx',
+          path: 'registry/new-york/pages/dashboard.tsx',
           type: 'registry:page',
           target: 'app/dashboard/page.tsx',
         },
@@ -309,9 +309,9 @@ export default defineRegistry({
 ### File Structure for Local Items
 
 ```
-packages/ui/
+packages/registry/
 ├── registry/
-│   └── default/
+│   └── new-york/
 │       ├── button/              # From upstream (replace mode)
 │       │   └── button.tsx
 │       ├── data-table/          # Local creation
@@ -354,7 +354,7 @@ The build process generates files that conform to the shadcn registry schemas.
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "tractorbeam",
-  "homepage": "https://ui.tractorbeam.io",
+  "homepage": "https://tractorbeam.io/registry",
   "items": [
     {
       "name": "button",
@@ -365,7 +365,7 @@ The build process generates files that conform to the shadcn registry schemas.
       "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
       "files": [
         {
-          "path": "registry/default/button/button.tsx",
+          "path": "registry/new-york/button/button.tsx",
           "type": "registry:component"
         }
       ]
@@ -526,7 +526,7 @@ The build process removes these patterns from upstream docs:
 Each component gets a generated `.meta.json`:
 
 ```json
-// registry/default/button/button.meta.json
+// registry/new-york/button/button.meta.json
 {
   "name": "button",
   "upstream": {
@@ -547,27 +547,16 @@ Each component gets a generated `.meta.json`:
 }
 ```
 
-## Open Questions
-
-1. **Namespace**: `@tractorbeam` vs `@tb` vs something else?
-
-2. **Style variants**: Support multiple styles (default, new-york) or just one?
-
-3. **Where to host**:
-   - Vercel (static)?
-   - Bundled with docs site?
-   - Standalone package?
-
-4. **Monorepo placement**:
-   - `packages/ui/` in reusables?
-   - Separate repo?
-
 ## Resolved
 
+- **Namespace**: `@tractorbeam`
+- **Style variant**: `new-york` only
+- **Hosting**: Bundled with docs site, same package
+- **Monorepo placement**: `packages/registry/` (supports more than just UI components)
 - **Docs format**: Inline block comments in component files
 - **Merge strategy**: Use `replace` mode (full copy + track drift), no fragile AST merging
 - **Versioning**: Follow whatever shadcn does
-- **Consumer setup**: Standard shadcn registry - no special config, just `npx shadcn add @namespace/component`
+- **Consumer setup**: Standard shadcn registry - no special config, just `npx shadcn add @tractorbeam/component`
 - **Multi-file components**: Blocks handle this natively in the registry spec
 - **Tailwind/CSS config**: Registry handles merging natively
 - **Conflict resolution**: Human resolves manually when multiple upstreams have same item

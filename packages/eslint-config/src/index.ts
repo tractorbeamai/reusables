@@ -7,3 +7,4 @@ export { cloudflareWorkers } from "./cloudflare-workers/index.js";
 export { playwright } from "./playwright/index.js";
 export { prettier } from "./prettier/index.js";
 export { ui } from "./ui/index.js";
+export { zod } from "./zod/index.js";

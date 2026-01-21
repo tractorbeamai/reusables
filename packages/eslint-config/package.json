@@ -65,6 +65,10 @@
     "./ui": {
       "types": "./dist/ui.d.ts",
       "default": "./dist/ui.js"
+    },
+    "./zod": {
+      "types": "./dist/zod.d.ts",
+      "default": "./dist/zod.js"
     }
   },
   "files": [
@@ -92,6 +96,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "eslint-plugin-regexp": "^2.10.0",
     "eslint-plugin-unicorn": "^62.0.0",
+    "eslint-plugin-zod": "^3.0.2",
     "@typescript-eslint/utils": "^8.50.0",
     "globals": "^16.5.0",
     "typescript-eslint": "^8.50.0"

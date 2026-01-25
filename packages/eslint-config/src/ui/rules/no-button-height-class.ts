@@ -29,7 +29,9 @@ const WIDTH_PATTERN = new RegExp(`\\bw-(?!full\\b)${VALUE_PATTERN}`);
 const SIZE_PATTERN = new RegExp(`\\bsize-(?!full\\b)${VALUE_PATTERN}`);
 
 // min-h-* classes (except min-h-full, min-h-0)
-const MIN_HEIGHT_PATTERN = new RegExp(`\\bmin-h-(?!full\\b|0\\b)${VALUE_PATTERN}`);
+const MIN_HEIGHT_PATTERN = new RegExp(
+  `\\bmin-h-(?!full\\b|0\\b)${VALUE_PATTERN}`,
+);
 
 // max-h-* classes (except max-h-full, max-h-none)
 const MAX_HEIGHT_PATTERN = new RegExp(
@@ -37,7 +39,9 @@ const MAX_HEIGHT_PATTERN = new RegExp(
 );
 
 // min-w-* classes (except min-w-full, min-w-0)
-const MIN_WIDTH_PATTERN = new RegExp(`\\bmin-w-(?!full\\b|0\\b)${VALUE_PATTERN}`);
+const MIN_WIDTH_PATTERN = new RegExp(
+  `\\bmin-w-(?!full\\b|0\\b)${VALUE_PATTERN}`,
+);
 
 // max-w-* classes (except max-w-full, max-w-none)
 const MAX_WIDTH_PATTERN = new RegExp(
@@ -58,8 +62,7 @@ export const noButtonHeightClass = createRule({
   meta: {
     type: "suggestion",
     docs: {
-      description:
-        "Prefer size prop over sizing classes on Button components",
+      description: "Prefer size prop over sizing classes on Button components",
     },
     messages: {
       preferSizeProp:

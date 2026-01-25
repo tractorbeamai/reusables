@@ -8,8 +8,11 @@ The `@types/eslint` types don't recognize typescript-eslint nodes. Always import
 
 ```typescript
 // ✅ Correct
-import { AST_NODE_TYPES, ESLintUtils, TSESTree } from "@typescript-eslint/utils";
-
+import {
+  AST_NODE_TYPES,
+  ESLintUtils,
+  TSESTree,
+} from "@typescript-eslint/utils";
 // ❌ Avoid - types don't support TS nodes properly
 import type { Rule } from "eslint";
 ```
@@ -20,9 +23,13 @@ import type { Rule } from "eslint";
 const createRule = ESLintUtils.RuleCreator.withoutDocs;
 
 export const myRule = createRule({
-  meta: { /* ... */ },
-  defaultOptions: [],  // Required even if empty
-  create(context) { /* ... */ },
+  meta: {
+    /* ... */
+  },
+  defaultOptions: [], // Required even if empty
+  create(context) {
+    /* ... */
+  },
 });
 ```
 
@@ -125,6 +132,7 @@ const MAX_HEIGHT_PATTERN = /\bmax-h-(?!full\b|none\b)(\d+|\[.+?\]|\d+\/\d+)/;
 ```
 
 Pattern components:
+
 - `\b` - word boundary
 - `(?!full\b)` - negative lookahead, exclude "full"
 - `\d+` - numeric values (h-10)

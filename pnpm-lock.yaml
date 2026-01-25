@@ -115,11 +115,7 @@ importers:
         specifier: ^0.7.2
         version: 0.7.2(@ianvs/prettier-plugin-sort-imports@4.7.0(prettier@3.7.4))(prettier@3.7.4)
 
-  packages/typescript-config:
-    dependencies:
-      '@tsconfig/bases':
-        specifier: ^1.0.16
-        version: 1.0.16
+  packages/typescript-config: {}
 
 packages:
 
@@ -411,9 +407,6 @@ packages:
     resolution: {integrity: sha512-E5QSLvoS8By2UajtUE64CNp22LVyzdqNyR/ponVV+yxONWHC3IzDUUHKBnPxW1yVwRT88qQoJYV0RJL6noW25A==}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
-
-  '@tsconfig/bases@1.0.16':
-    resolution: {integrity: sha512-BcuvYcRrWHm8/ZxFmUYQyIp74a7kEiNCw+e557bGnNUbqzzi/sw4BfwT8zbA9RPnDy4yPXSf3krJNjW8uRB4zA==}
 
   '@types/eslint-plugin-jsx-a11y@6.10.1':
     resolution: {integrity: sha512-5RtuPVe0xz8BAhrkn2oww6Uw885atf962Q4fqZo48QdO3EQA7oCEDSXa6optgJ1ZMds3HD9ITK5bfm4AWuoXFQ==}
@@ -2330,8 +2323,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  '@tsconfig/bases@1.0.16': {}
 
   '@types/eslint-plugin-jsx-a11y@6.10.1(jiti@2.6.1)':
     dependencies:

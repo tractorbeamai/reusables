@@ -39,9 +39,6 @@
     "package.json",
     "README.md"
   ],
-  "dependencies": {
-    "@tsconfig/bases": "^1.0.16"
-  },
   "publishConfig": {
     "access": "public",
     "provenance": true

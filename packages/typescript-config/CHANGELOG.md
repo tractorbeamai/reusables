@@ -1,5 +1,11 @@
 # @tractorbeam/typescript-config
 
+## 0.3.0
+
+### Minor Changes
+
+- ef64c60: Inline @tsconfig/bases configs to fix extends resolution issues in consuming packages
+
 ## 0.2.0
 
 ### Minor Changes

@@ -109,20 +109,20 @@ This ensures we stay 100% compatible with the shadcn CLI and schema.
 
 shadcn registries support multiple item types. We need to handle all of them:
 
-| Type | Description | Docs Embedding |
-|------|-------------|----------------|
-| `registry:component` | UI components | Yes |
-| `registry:ui` | UI primitives, single-file components | Yes |
-| `registry:block` | Complex multi-file components | Yes |
-| `registry:hook` | React hooks | Yes |
-| `registry:lib` | Utility libraries | Yes |
-| `registry:page` | Routes and pages (requires `target`) | Yes |
-| `registry:file` | Generic files (requires `target`) | No |
-| `registry:style` | Design system styles | No (CSS/JSON) |
-| `registry:theme` | Complete themes | No (CSS/JSON) |
-| `registry:font` | Font configurations | No |
-| `registry:base` | Base configuration | No |
-| `registry:item` | Universal/cross-framework | Depends |
+| Type                 | Description                           | Docs Embedding |
+| -------------------- | ------------------------------------- | -------------- |
+| `registry:component` | UI components                         | Yes            |
+| `registry:ui`        | UI primitives, single-file components | Yes            |
+| `registry:block`     | Complex multi-file components         | Yes            |
+| `registry:hook`      | React hooks                           | Yes            |
+| `registry:lib`       | Utility libraries                     | Yes            |
+| `registry:page`      | Routes and pages (requires `target`)  | Yes            |
+| `registry:file`      | Generic files (requires `target`)     | No             |
+| `registry:style`     | Design system styles                  | No (CSS/JSON)  |
+| `registry:theme`     | Complete themes                       | No (CSS/JSON)  |
+| `registry:font`      | Font configurations                   | No             |
+| `registry:base`      | Base configuration                    | No             |
+| `registry:item`      | Universal/cross-framework             | Depends        |
 
 ### File Target Property
 
@@ -192,55 +192,56 @@ export default defineRegistry({
   local: [
     {
       // Required
-      name: 'data-table',
-      type: 'registry:component',
+      name: "data-table",
+      type: "registry:component",
 
       // Metadata
-      title: 'Data Table',
-      description: 'A powerful data table with sorting, filtering, and pagination.',
-      author: 'tractorbeam <https://tractorbeam.io>',
-      docs: 'Markdown documentation for the component.',
-      categories: ['tables', 'data'],
-      meta: { complexity: 'advanced' },
+      title: "Data Table",
+      description:
+        "A powerful data table with sorting, filtering, and pagination.",
+      author: "tractorbeam <https://tractorbeam.io>",
+      docs: "Markdown documentation for the component.",
+      categories: ["tables", "data"],
+      meta: { complexity: "advanced" },
 
       // Files
       files: [
         {
-          path: 'registry/new-york/data-table/data-table.tsx',
-          type: 'registry:component',
+          path: "registry/new-york/data-table/data-table.tsx",
+          type: "registry:component",
         },
         {
-          path: 'registry/new-york/data-table/columns.tsx',
-          type: 'registry:component',
+          path: "registry/new-york/data-table/columns.tsx",
+          type: "registry:component",
         },
       ],
 
       // Dependencies
-      dependencies: ['@tanstack/react-table'],
-      devDependencies: ['@types/some-package'],
-      registryDependencies: ['button', 'input', 'select'],
+      dependencies: ["@tanstack/react-table"],
+      devDependencies: ["@types/some-package"],
+      registryDependencies: ["button", "input", "select"],
 
       // Styling
       cssVars: {
         theme: {
-          'font-table': 'monospace',
+          "font-table": "monospace",
         },
         light: {
-          'table-header': '220 14% 96%',
+          "table-header": "220 14% 96%",
         },
         dark: {
-          'table-header': '220 14% 10%',
+          "table-header": "220 14% 10%",
         },
       },
       css: {
-        '@layer components': {
-          '.data-table': {
-            '@apply border rounded-lg': {},
+        "@layer components": {
+          ".data-table": {
+            "@apply border rounded-lg": {},
           },
         },
-        '@keyframes shimmer': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
+        "@keyframes shimmer": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
         },
       },
       tailwind: {
@@ -248,7 +249,7 @@ export default defineRegistry({
         theme: {
           extend: {
             colors: {
-              table: 'hsl(var(--table-header))',
+              table: "hsl(var(--table-header))",
             },
           },
         },
@@ -256,54 +257,54 @@ export default defineRegistry({
 
       // Environment
       envVars: {
-        NEXT_PUBLIC_TABLE_PAGE_SIZE: '20',
+        NEXT_PUBLIC_TABLE_PAGE_SIZE: "20",
       },
     },
 
     // Hook example
     {
-      name: 'use-debounce',
-      type: 'registry:hook',
-      title: 'useDebounce',
-      description: 'Debounce a value or callback.',
+      name: "use-debounce",
+      type: "registry:hook",
+      title: "useDebounce",
+      description: "Debounce a value or callback.",
       files: [
         {
-          path: 'registry/new-york/hooks/use-debounce.ts',
-          type: 'registry:hook',
+          path: "registry/new-york/hooks/use-debounce.ts",
+          type: "registry:hook",
         },
       ],
     },
 
     // Style example (can use `extends`)
     {
-      name: 'tractorbeam',
-      type: 'registry:style',
-      title: 'Tractorbeam Style',
-      description: 'Our brand style with custom colors and tokens.',
-      extends: 'new-york',  // Inherit from another style
+      name: "tractorbeam",
+      type: "registry:style",
+      title: "Tractorbeam Style",
+      description: "Our brand style with custom colors and tokens.",
+      extends: "new-york", // Inherit from another style
       cssVars: {
-        light: { primary: '220 90% 56%' },
-        dark: { primary: '220 90% 66%' },
+        light: { primary: "220 90% 56%" },
+        dark: { primary: "220 90% 66%" },
       },
     },
 
     // Page example (requires target)
     {
-      name: 'dashboard-page',
-      type: 'registry:page',
-      title: 'Dashboard',
-      description: 'A dashboard page template.',
+      name: "dashboard-page",
+      type: "registry:page",
+      title: "Dashboard",
+      description: "A dashboard page template.",
       files: [
         {
-          path: 'registry/new-york/pages/dashboard.tsx',
-          type: 'registry:page',
-          target: 'app/dashboard/page.tsx',
+          path: "registry/new-york/pages/dashboard.tsx",
+          type: "registry:page",
+          target: "app/dashboard/page.tsx",
         },
       ],
-      registryDependencies: ['card', 'data-table', 'chart'],
+      registryDependencies: ["card", "data-table", "chart"],
     },
   ],
-})
+});
 ```
 
 ### File Structure for Local Items
@@ -329,16 +330,17 @@ For styles and other non-code items, we skip docs embedding and just redistribut
 ```ts
 upstreams: [
   {
-    name: 'shadcn',
-    registry: 'https://ui.shadcn.com',
-    include: ['button', 'card', 'input'],
+    name: "shadcn",
+    registry: "https://ui.shadcn.com",
+    include: ["button", "card", "input"],
     // Styles to pass through unchanged
-    passthrough: ['new-york', 'default'],
+    passthrough: ["new-york", "default"],
   },
-]
+];
 ```
 
 The build process for passthrough items:
+
 1. Fetch upstream registry JSON
 2. Copy files as-is (no docs embedding)
 3. Update registry dependencies to point to our namespace
@@ -412,9 +414,7 @@ Note: The `content` field is populated by the build process - we don't write it 
         "button": {
           "hash": "abc123def456",
           "fetchedAt": "2025-01-15T10:30:00Z",
-          "files": [
-            { "path": "button.tsx", "hash": "..." }
-          ]
+          "files": [{ "path": "button.tsx", "hash": "..." }]
         }
       }
     }
@@ -436,13 +436,14 @@ Both are populated from upstream docs. The code comment travels with the file in
 The `docs` field is for the CLI experience. Code comments are for developers reading the source. We want both.
 
 The build process:
+
 1. Fetches upstream docs markdown (e.g., `https://coss.com/ui/docs/components/frame.md`)
 2. Strips interactive elements (`<ComponentPreview>`, `<CodeTabs>`, etc.)
 3. Embeds as a block comment at the top of the component file
 
 ### Example Output
 
-```tsx
+````tsx
 /**
  * @name Frame
  * @description A framed container for grouping related information.
@@ -488,11 +489,12 @@ The build process:
  * Header and footer sections with title and description slots.
  */
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
 
 // ... implementation
-```
+````
 
 ### Docs URL Pattern
 
@@ -501,21 +503,22 @@ Configure where to fetch docs for each upstream:
 ```ts
 upstreams: [
   {
-    name: 'coss',
-    registry: 'https://ui.coss.com',
-    docsUrl: 'https://coss.com/ui/docs/components/{name}.md',
+    name: "coss",
+    registry: "https://ui.coss.com",
+    docsUrl: "https://coss.com/ui/docs/components/{name}.md",
   },
   {
-    name: 'shadcn',
-    registry: 'https://ui.shadcn.com',
-    docsUrl: 'https://ui.shadcn.com/docs/components/{name}.md',
+    name: "shadcn",
+    registry: "https://ui.shadcn.com",
+    docsUrl: "https://ui.shadcn.com/docs/components/{name}.md",
   },
-]
+];
 ```
 
 ### Stripping Interactive Elements
 
 The build process removes these patterns from upstream docs:
+
 - `<ComponentPreview ... />`
 - `<CodeTabs>...</CodeTabs>`
 - `<ComponentSource ... />`
@@ -588,8 +591,8 @@ name: Registry Sync
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Daily at 6am UTC
-  workflow_dispatch:      # Manual trigger
+    - cron: "0 6 * * *" # Daily at 6am UTC
+  workflow_dispatch: # Manual trigger
 
 jobs:
   sync:
@@ -603,8 +606,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "pnpm"
 
       - run: pnpm install
 
@@ -621,7 +624,7 @@ jobs:
         if: steps.sync.outputs.updated == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
-          title: 'chore(registry): sync upstream components'
+          title: "chore(registry): sync upstream components"
           body: |
             Automated sync from upstream registries.
 
@@ -659,6 +662,7 @@ The `--ci` flag enables non-interactive mode:
 ### Outputs
 
 The sync script outputs for CI:
+
 - `updated`: boolean, whether any items were updated
 - `updated_items`: markdown list of what was updated
 - `has_conflicts`: boolean, whether conflicts were skipped
@@ -667,6 +671,7 @@ The sync script outputs for CI:
 ## Implementation Phases
 
 ### Phase 1: Basic Sync + Build
+
 - [ ] `registry.config.ts` schema
 - [ ] Fetch upstream registry JSON
 - [ ] Download component files
@@ -674,16 +679,19 @@ The sync script outputs for CI:
 - [ ] Build registry JSON output
 
 ### Phase 2: Override Support
+
 - [ ] `replace` mode (copy + track)
 - [ ] Diff detection (local vs upstream)
 - [ ] `registry:diff` command
 
 ### Phase 3: Interactive Sync
+
 - [ ] Detect upstream changes
 - [ ] Interactive merge prompts
 - [ ] Conflict resolution
 
 ### Phase 4: Docs Embedding
+
 - [ ] Fetch upstream docs markdown
 - [ ] Strip interactive elements
 - [ ] Embed as block comments in component files
@@ -694,6 +702,7 @@ The sync script outputs for CI:
 ## References
 
 ### shadcn Registry Docs
+
 - [Introduction](https://ui.shadcn.com/docs/registry)
 - [Getting Started](https://ui.shadcn.com/docs/registry/getting-started)
 - [registry.json Schema](https://ui.shadcn.com/docs/registry/registry-json)
@@ -703,9 +712,11 @@ The sync script outputs for CI:
 - [Registry Directory](https://ui.shadcn.com/docs/directory)
 
 ### JSON Schemas
+
 - [registry.json schema](https://ui.shadcn.com/schema/registry.json)
 - [registry-item.json schema](https://ui.shadcn.com/schema/registry-item.json)
 
 ### Templates & Examples
+
 - [Official Registry Template](https://github.com/shadcn-ui/registry-template)
 - [COSS UI](https://github.com/cosscom/coss)

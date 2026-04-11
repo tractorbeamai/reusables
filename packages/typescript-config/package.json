@@ -32,10 +32,12 @@
     "./next": "./next.json",
     "./tanstack-start": "./tanstack-start.json",
     "./vite": "./vite.json",
-    "./cloudflare-workers": "./cloudflare-workers.json"
+    "./cloudflare-workers": "./cloudflare-workers.json",
+    "./presets": "./presets.ts"
   },
   "files": [
     "*.json",
+    "*.ts",
     "package.json",
     "README.md"
   ],

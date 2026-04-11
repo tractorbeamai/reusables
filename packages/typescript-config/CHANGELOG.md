@@ -1,5 +1,11 @@
 # @tractorbeam/typescript-config
 
+## 0.4.0
+
+### Minor Changes
+
+- bdb5046: Add `./presets` export with a map of all preset configs for programmatic access.
+
 ## 0.3.0
 
 ### Minor Changes

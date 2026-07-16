@@ -1,9 +1,5 @@
-import {
-  AST_NODE_TYPES,
-  ESLintUtils,
-  TSESTree,
-} from "@typescript-eslint/utils";
-import * as ts from "typescript";
+import { AST_NODE_TYPES, ESLintUtils, TSESTree } from "@typescript-eslint/utils";
+import ts from "typescript";
 
 const createRule = ESLintUtils.RuleCreator.withoutDocs;
 
@@ -21,11 +17,7 @@ function isLucideIconType(type: ts.Type, checker: ts.TypeChecker): boolean {
     typeName.includes("ForwardRefExoticComponent")
   ) {
     // Check if it's from lucide-react by examining the full type string
-    const fullType = checker.typeToString(
-      type,
-      undefined,
-      ts.TypeFormatFlags.NoTruncation,
-    );
+    const fullType = checker.typeToString(type, undefined, ts.TypeFormatFlags.NoTruncation);
     if (fullType.includes("lucide-react") || fullType.includes("Lucide")) {
       return true;
     }
@@ -37,18 +29,12 @@ function isLucideIconType(type: ts.Type, checker: ts.TypeChecker): boolean {
     const returnType = checker.getReturnTypeOfSignature(sig);
     const returnTypeName = checker.typeToString(returnType);
     // React elements from icon components
-    if (
-      returnTypeName.includes("Element") ||
-      returnTypeName.includes("ReactNode")
-    ) {
+    if (returnTypeName.includes("Element") || returnTypeName.includes("ReactNode")) {
       // Check parameters for SVGProps or LucideProps
       for (const param of sig.parameters) {
         const paramType = checker.getTypeOfSymbol(param);
         const paramTypeName = checker.typeToString(paramType);
-        if (
-          paramTypeName.includes("LucideProps") ||
-          paramTypeName.includes("SVGProps")
-        ) {
+        if (paramTypeName.includes("LucideProps") || paramTypeName.includes("SVGProps")) {
           return true;
         }
       }

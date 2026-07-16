@@ -7,13 +7,10 @@
       "dependsOn": ["^build"]
     },
     "test": {
-      "outputs": ["coverage/**"],
+      "outputs": [],
       "dependsOn": []
     },
-    "lint": {},
-    "lint:eslint": {},
     "lint:types": {},
-    "//#lint:prettier": {},
     "dev": {
       "cache": false,
       "persistent": true

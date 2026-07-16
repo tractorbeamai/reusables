@@ -34,9 +34,7 @@ const reactPluginRules = {
   "react-perf/jsx-no-new-object-as-prop": "warn",
 } satisfies OxlintConfig["rules"];
 
-export default function oxlintConfig({
-  react = true,
-}: OxlintConfigOptions = {}) {
+export default function oxlintConfig({ react = true }: OxlintConfigOptions = {}) {
   return {
     plugins: react
       ? ["import", "jsx-a11y", "promise", "react", "react-perf"]

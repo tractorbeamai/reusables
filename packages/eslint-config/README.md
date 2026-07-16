@@ -67,11 +67,7 @@ import { defineConfig } from "eslint/config";
 
 import { base, playwright, typescript } from "@tractorbeam/eslint-config";
 
-export default defineConfig([
-  base,
-  eslint,
-  { files: ["**/e2e/**/*.ts"], extends: [playwright] },
-]);
+export default defineConfig([base, eslint, { files: ["**/e2e/**/*.ts"], extends: [playwright] }]);
 ```
 
 ### Overriding Rules

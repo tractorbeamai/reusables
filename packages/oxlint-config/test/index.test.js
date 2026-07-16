@@ -33,13 +33,7 @@ test("enables React linting by default with globally scoped rules first", () => 
   const config = oxlintConfig();
 
   // Assert
-  assert.deepEqual(config.plugins, [
-    "import",
-    "jsx-a11y",
-    "promise",
-    "react",
-    "react-perf",
-  ]);
+  assert.deepEqual(config.plugins, ["import", "jsx-a11y", "promise", "react", "react-perf"]);
   assert.deepEqual(Object.keys(config.rules), expectedRules);
 });
 

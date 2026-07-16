@@ -1,34 +1,32 @@
 {
   "name": "@tractorbeamai/reusables",
   "private": true,
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tractorbeamai/reusables.git"
   },
-  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "changeset": "changeset",
+    "check": "vp check && turbo run lint:types",
     "clean": "turbo run clean && rm -rf node_modules",
     "dev": "turbo run dev",
-    "format": "prettier --write .",
-    "lint": "turbo run lint:eslint lint:types lint:prettier",
-    "lint:eslint": "turbo run lint:eslint",
-    "lint:prettier": "prettier --check .",
+    "format": "vp fmt",
+    "lint": "vp check && turbo run lint:types",
+    "lint:format": "vp fmt --check",
+    "lint:oxlint": "vp lint",
     "lint:types": "turbo run lint:types",
-    "release": "turbo run build && changeset publish"
+    "release": "turbo run build && changeset publish",
+    "test": "turbo run test"
   },
-  "prettier": "@tractorbeam/prettier-config",
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
-    "@tractorbeam/prettier-config": "workspace:*",
-    "eslint": "^9.39.2",
-    "jiti": "^2.6.1",
-    "prettier": "^3.7.4",
-    "turbo": "^2.6.3"
+    "turbo": "^2.6.3",
+    "vite-plus": "0.2.4"
   },
-  "packageManager": "pnpm@10.26.0",
   "engines": {
-    "node": ">=22"
-  }
+    "node": "24.x"
+  },
+  "packageManager": "pnpm@10.26.0"
 }

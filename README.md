@@ -12,7 +12,7 @@ Shared configuration packages used across Tractorbeam projects.
 
 ## Requirements
 
-- Node `>= 22`
+- Node 24
 - pnpm (see `package.json#packageManager`)
 
 ## Commands

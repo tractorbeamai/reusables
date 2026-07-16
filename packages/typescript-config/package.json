@@ -3,26 +3,32 @@
   "version": "0.4.0",
   "description": "Shared tsconfig presets for Tractorbeam projects",
   "keywords": [
+    "nextjs",
+    "react",
+    "tanstack",
     "tractorbeam",
     "tractorbeamai",
-    "typescript",
     "tsconfig",
     "tsconfig-bases",
-    "react",
-    "nextjs",
-    "vite",
-    "tanstack"
+    "typescript",
+    "vite"
   ],
   "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/typescript-config#readme",
   "bugs": {
     "url": "https://github.com/tractorbeamai/reusables/issues"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tractorbeamai/reusables.git",
     "directory": "packages/typescript-config"
   },
-  "license": "MIT",
+  "files": [
+    "*.json",
+    "*.ts",
+    "package.json",
+    "README.md"
+  ],
   "type": "module",
   "exports": {
     "./node": "./node.json",
@@ -35,12 +41,6 @@
     "./cloudflare-workers": "./cloudflare-workers.json",
     "./presets": "./presets.ts"
   },
-  "files": [
-    "*.json",
-    "*.ts",
-    "package.json",
-    "README.md"
-  ],
   "publishConfig": {
     "access": "public",
     "provenance": true

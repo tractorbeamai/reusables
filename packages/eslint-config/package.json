@@ -3,27 +3,31 @@
   "version": "0.3.0",
   "description": "Shared ESLint configuration for Tractorbeam projects",
   "keywords": [
-    "tractorbeam",
-    "tractorbeamai",
     "eslint",
-    "eslintconfig",
     "eslint-config",
-    "typescript",
+    "eslintconfig",
+    "playwright",
+    "prettier",
     "react",
     "tanstack",
-    "playwright",
-    "prettier"
+    "tractorbeam",
+    "tractorbeamai",
+    "typescript"
   ],
   "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/eslint-config#readme",
   "bugs": {
     "url": "https://github.com/tractorbeamai/reusables/issues"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tractorbeamai/reusables.git",
     "directory": "packages/eslint-config"
   },
-  "license": "MIT",
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -71,14 +75,13 @@
       "default": "./dist/zod.js"
     }
   },
-  "files": [
-    "dist/**",
-    "README.md"
-  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist *.tsbuildinfo",
-    "lint:eslint": "eslint src --max-warnings=0",
     "lint:types": "tsc --noEmit",
     "prepublishOnly": "pnpm run build"
   },
@@ -111,9 +114,5 @@
   "peerDependencies": {
     "eslint": ">= 9",
     "typescript-eslint": ">= 8"
-  },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
   }
 }

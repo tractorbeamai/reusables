@@ -1,0 +1,63 @@
+# Repo-level policy-bot config; overrides the org default.
+# policy-bot is the single required repository check. CI and approval policy
+# stay independent so release PRs must satisfy both.
+# Docs: https://github.com/palantir/policy-bot
+
+policy:
+  approval:
+    - ci passed
+    - or:
+        - platform team skips review
+        - platform team approves
+        - renovate skips review
+        - one approval
+  disapproval:
+    requires:
+      organizations: ["tractorbeamai"]
+
+approval_rules:
+  - name: one approval
+    requires:
+      count: 1
+      organizations: ["tractorbeamai"]
+    options:
+      invalidate_on_push: true
+      ignore_update_merges: true
+      methods:
+        github_review: true
+        comments: ["/approve"]
+
+  - name: platform team approves
+    requires:
+      count: 1
+      teams: ["tractorbeamai/platform"]
+    options:
+      invalidate_on_push: true
+      allow_author: true
+      allow_contributor: true
+      methods:
+        github_review: true
+        comments: ["/approve"]
+
+  - name: platform team skips review
+    if:
+      has_author_in:
+        teams: ["tractorbeamai/platform"]
+    requires:
+      count: 0
+
+  - name: renovate skips review
+    if:
+      has_author_in:
+        users: ["renovate[bot]", "tractorbeam-renovate[bot]"]
+    requires:
+      count: 0
+
+  - name: ci passed
+    requires:
+      count: 0
+      conditions:
+        has_workflow_result:
+          workflows:
+            - ".github/workflows/ci.yml"
+          conclusions: ["success"]

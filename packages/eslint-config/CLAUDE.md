@@ -8,11 +8,7 @@ The `@types/eslint` types don't recognize typescript-eslint nodes. Always import
 
 ```typescript
 // ✅ Correct
-import {
-  AST_NODE_TYPES,
-  ESLintUtils,
-  TSESTree,
-} from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 // ❌ Avoid - types don't support TS nodes properly
 import type { Rule } from "eslint";
 ```

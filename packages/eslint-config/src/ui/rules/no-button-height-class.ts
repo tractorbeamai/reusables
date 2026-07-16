@@ -1,8 +1,4 @@
-import {
-  AST_NODE_TYPES,
-  ESLintUtils,
-  TSESTree,
-} from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 
 const createRule = ESLintUtils.RuleCreator.withoutDocs;
 
@@ -20,33 +16,25 @@ const createRule = ESLintUtils.RuleCreator.withoutDocs;
 const VALUE_PATTERN = "(\\d+|\\[.+?\\]|\\d+\\/\\d+)";
 
 // h-* classes (except h-full)
-const HEIGHT_PATTERN = new RegExp(`\\bh-(?!full\\b)${VALUE_PATTERN}`);
+const HEIGHT_PATTERN = new RegExp(`\\bh-(?!full\\b)${VALUE_PATTERN}`, "u");
 
 // w-* classes (except w-full)
-const WIDTH_PATTERN = new RegExp(`\\bw-(?!full\\b)${VALUE_PATTERN}`);
+const WIDTH_PATTERN = new RegExp(`\\bw-(?!full\\b)${VALUE_PATTERN}`, "u");
 
 // size-* classes (except size-full)
-const SIZE_PATTERN = new RegExp(`\\bsize-(?!full\\b)${VALUE_PATTERN}`);
+const SIZE_PATTERN = new RegExp(`\\bsize-(?!full\\b)${VALUE_PATTERN}`, "u");
 
 // min-h-* classes (except min-h-full, min-h-0)
-const MIN_HEIGHT_PATTERN = new RegExp(
-  `\\bmin-h-(?!full\\b|0\\b)${VALUE_PATTERN}`,
-);
+const MIN_HEIGHT_PATTERN = new RegExp(`\\bmin-h-(?!full\\b|0\\b)${VALUE_PATTERN}`, "u");
 
 // max-h-* classes (except max-h-full, max-h-none)
-const MAX_HEIGHT_PATTERN = new RegExp(
-  `\\bmax-h-(?!full\\b|none\\b)${VALUE_PATTERN}`,
-);
+const MAX_HEIGHT_PATTERN = new RegExp(`\\bmax-h-(?!full\\b|none\\b)${VALUE_PATTERN}`, "u");
 
 // min-w-* classes (except min-w-full, min-w-0)
-const MIN_WIDTH_PATTERN = new RegExp(
-  `\\bmin-w-(?!full\\b|0\\b)${VALUE_PATTERN}`,
-);
+const MIN_WIDTH_PATTERN = new RegExp(`\\bmin-w-(?!full\\b|0\\b)${VALUE_PATTERN}`, "u");
 
 // max-w-* classes (except max-w-full, max-w-none)
-const MAX_WIDTH_PATTERN = new RegExp(
-  `\\bmax-w-(?!full\\b|none\\b)${VALUE_PATTERN}`,
-);
+const MAX_WIDTH_PATTERN = new RegExp(`\\bmax-w-(?!full\\b|none\\b)${VALUE_PATTERN}`, "u");
 
 const PATTERNS = [
   HEIGHT_PATTERN,
@@ -79,10 +67,7 @@ export const noButtonHeightClass = createRule({
     return {
       JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
         // Check if element is <Button>
-        if (
-          node.name.type !== AST_NODE_TYPES.JSXIdentifier ||
-          node.name.name !== "Button"
-        ) {
+        if (node.name.type !== AST_NODE_TYPES.JSXIdentifier || node.name.name !== "Button") {
           return;
         }
 
@@ -107,10 +92,7 @@ export const noButtonHeightClass = createRule({
 
         // Check for sizing patterns in string literal or template literal
         const value = classNameAttr.value;
-        if (
-          value?.type === AST_NODE_TYPES.Literal &&
-          typeof value.value === "string"
-        ) {
+        if (value?.type === AST_NODE_TYPES.Literal && typeof value.value === "string") {
           if (hasDisallowedSizeClass(value.value)) {
             reportViolation();
           }
@@ -119,10 +101,7 @@ export const noButtonHeightClass = createRule({
         // Handle JSX expressions like className={...} or className={`...`}
         if (value?.type === AST_NODE_TYPES.JSXExpressionContainer) {
           const expr = value.expression;
-          if (
-            expr.type === AST_NODE_TYPES.Literal &&
-            typeof expr.value === "string"
-          ) {
+          if (expr.type === AST_NODE_TYPES.Literal && typeof expr.value === "string") {
             if (hasDisallowedSizeClass(expr.value)) {
               reportViolation();
             }

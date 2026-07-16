@@ -11,10 +11,8 @@ export const ui: Linter.Config[] = defineConfig([
       ui: {
         rules: {
           // Cast required: @typescript-eslint/utils RuleModule has stricter types than ESLint's Rule.RuleModule
-          "no-button-height-class":
-            noButtonHeightClass as unknown as Rule.RuleModule,
-          "no-icon-class-in-button":
-            noIconClassInButton as unknown as Rule.RuleModule,
+          "no-button-height-class": noButtonHeightClass as unknown as Rule.RuleModule,
+          "no-icon-class-in-button": noIconClassInButton as unknown as Rule.RuleModule,
         },
       },
     },

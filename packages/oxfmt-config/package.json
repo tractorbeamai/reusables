@@ -3,22 +3,26 @@
   "version": "0.0.0",
   "description": "Shared Oxfmt configuration for Tractorbeam projects",
   "keywords": [
-    "tractorbeam",
-    "tractorbeamai",
-    "oxfmt",
+    "config",
     "formatter",
-    "config"
+    "oxfmt",
+    "tractorbeam",
+    "tractorbeamai"
   ],
   "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/oxfmt-config#readme",
   "bugs": {
     "url": "https://github.com/tractorbeamai/reusables/issues"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tractorbeamai/reusables.git",
     "directory": "packages/oxfmt-config"
   },
-  "license": "MIT",
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -26,10 +30,10 @@
       "default": "./dist/index.js"
     }
   },
-  "files": [
-    "dist/**",
-    "README.md"
-  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist *.tsbuildinfo",
@@ -40,9 +44,5 @@
     "@tractorbeam/typescript-config": "workspace:*",
     "oxfmt": "^0.57.0",
     "typescript": "^5.9.3"
-  },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
   }
 }

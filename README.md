@@ -5,6 +5,8 @@ Shared configuration packages used across Tractorbeam projects.
 ## Packages
 
 - `@tractorbeam/eslint-config`: shared ESLint v9 flat config presets
+- `@tractorbeam/oxfmt-config`: shared Oxfmt configuration
+- `@tractorbeam/oxlint-config`: shared Oxlint configuration
 - `@tractorbeam/prettier-config`: shared Prettier config
 - `@tractorbeam/typescript-config`: shared `tsconfig` presets
 

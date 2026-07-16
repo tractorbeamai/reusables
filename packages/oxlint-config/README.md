@@ -13,22 +13,32 @@ pnpm add -D @tractorbeam/oxlint-config vite-plus
 ```typescript
 import { defineConfig } from "vite-plus";
 
-import config from "@tractorbeam/oxlint-config";
+import oxlintConfig from "@tractorbeam/oxlint-config";
 
 export default defineConfig({
-  lint: config,
+  lint: oxlintConfig(),
+});
+```
+
+React, React Performance, and JSX accessibility plugins and rules are enabled by default. Disable them for projects that do not use React:
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({ react: false }),
 });
 ```
 
 Compose repository-specific rules, ignores, and overrides in `vite.config.ts`:
 
 ```typescript
+const lint = oxlintConfig();
+
 export default defineConfig({
   lint: {
-    ...config,
+    ...lint,
     ignorePatterns: ["generated/**"],
     rules: {
-      ...config.rules,
+      ...lint.rules,
       "no-console": "off",
     },
   },

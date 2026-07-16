@@ -2,4 +2,4 @@
 "@tractorbeam/oxlint-config": minor
 ---
 
-Publish the shared Tractorbeam Oxlint rules and plugin configuration for Vite+ projects.
+Publish configurable shared Tractorbeam Oxlint rules and plugin presets for Vite+ projects, with React support enabled by default.

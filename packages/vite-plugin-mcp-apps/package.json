@@ -1,6 +1,6 @@
 {
   "name": "@tractorbeam/vite-plugin-mcp-apps",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Build filesystem-based MCP Apps as self-contained HTML files with Vite",
   "keywords": [
     "mcp",

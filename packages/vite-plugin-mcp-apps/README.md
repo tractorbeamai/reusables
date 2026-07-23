@@ -63,8 +63,10 @@ mcpApps({
 
 The plugin owns a dedicated MCP Apps build. It creates one isolated client environment per discovered app, then builds those environments serially. Every app receives an independent dependency graph and emits exactly one HTML file containing its JavaScript, CSS, and imported assets. JavaScript and CSS inlining is delegated to [`vite-plugin-singlefile`](https://github.com/richardtallent/vite-plugin-singlefile); this plugin retains MCP app discovery, isolated builds, output naming, and strict single-file validation.
 
-Library, SSR, watch, custom builder/environment, explicit input/output, manifest, source-map, public-directory copying, and code-splitting configurations are incompatible with this build.
+Normal Vite configuration continues to apply to every app, including plugins, `base`, `define`, resolution aliases, CSS and JSON handling, transforms, build targets, minification, and `build.outDir`. The default `base` is `./`, but an explicit project base is preserved.
 
-The plugin is build-only. During `vite dev` and `vp dev`, use each source `index.html` path directly. Public assets must be imported through the app graph so Vite can inline them.
+Library, SSR, watch, custom builder/environment, explicit input/output, externalized modules, manifest, source-map, public-directory copying, and code-splitting configurations are incompatible with this build.
+
+The plugin is build-only. During `vite dev` and `vp dev`, use each source `index.html` path directly. Public assets must be imported through the app graph so Vite can inline them. The build fails when a local URL remains in a standard HTML asset attribute, a configured `html.additionalAssetSources` attribute, or inline CSS.
 
 CSP metadata and apps that require external resource, connection, or frame domains are outside the single-file build path.

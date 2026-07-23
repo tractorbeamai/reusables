@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",
-    "oxfmt": "^0.57.0",
-    "typescript": "^5.9.3"
+    "oxfmt": "0.57.0",
+    "typescript": "5.9.3"
   }
 }

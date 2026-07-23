@@ -61,7 +61,7 @@ mcpApps({
 
 ## Build constraints
 
-The plugin owns a dedicated MCP Apps build. It creates one isolated client environment per discovered app, then builds those environments serially. Every app receives an independent dependency graph and emits exactly one HTML file containing its JavaScript, CSS, and imported assets.
+The plugin owns a dedicated MCP Apps build. It creates one isolated client environment per discovered app, then builds those environments serially. Every app receives an independent dependency graph and emits exactly one HTML file containing its JavaScript, CSS, and imported assets. JavaScript and CSS inlining is delegated to [`vite-plugin-singlefile`](https://github.com/richardtallent/vite-plugin-singlefile); this plugin retains MCP app discovery, isolated builds, output naming, and strict single-file validation.
 
 Library, SSR, watch, custom builder/environment, explicit input/output, manifest, source-map, public-directory copying, and code-splitting configurations are incompatible with this build.
 

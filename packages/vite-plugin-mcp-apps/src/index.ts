@@ -2,9 +2,10 @@ import { realpath } from "node:fs/promises";
 import path from "node:path";
 
 import type { BuildOptions, EnvironmentOptions, Plugin, UserConfig, ViteBuilder } from "vite";
+import { viteSingleFile } from "vite-plugin-singlefile";
 
 import { discoverApps, type DiscoveredApp } from "./discovery.js";
-import { inlineBundle } from "./inline.js";
+import { finalizeBundle } from "./output.js";
 
 /**
  * Options for the filesystem-based MCP Apps build.
@@ -58,24 +59,32 @@ export function mcpApps(options: McpAppsOptions = {}): Plugin {
       } satisfies EnvironmentOptions;
     },
     applyToEnvironment(environment) {
-      return apps.has(environment.name);
+      const app = apps.get(environment.name);
+
+      if (app === undefined) {
+        return false;
+      }
+
+      return [
+        viteSingleFile({
+          useRecommendedBuildConfig: false,
+        }),
+        {
+          name: "tractorbeam:mcp-app-output",
+          enforce: "post",
+          generateBundle: {
+            order: "post",
+            handler(_outputOptions, bundle) {
+              finalizeBundle(bundle, app);
+            },
+          },
+        },
+      ];
     },
     buildApp: {
       order: "pre",
       async handler(builder) {
         await buildApps(builder, apps);
-      },
-    },
-    generateBundle: {
-      order: "post",
-      handler(_outputOptions, bundle) {
-        const app = apps.get(this.environment.name);
-
-        if (app === undefined) {
-          throw new Error(`Unknown MCP Apps build environment: ${this.environment.name}`);
-        }
-
-        inlineBundle(bundle, app);
       },
     },
   };

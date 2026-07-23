@@ -1,7 +1,14 @@
 import { realpath } from "node:fs/promises";
 import path from "node:path";
 
-import type { BuildOptions, EnvironmentOptions, Plugin, UserConfig, ViteBuilder } from "vite";
+import type {
+  BuildOptions,
+  EnvironmentOptions,
+  HtmlAssetSource,
+  Plugin,
+  UserConfig,
+  ViteBuilder,
+} from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 
 import { discoverApps, type DiscoveredApp } from "./discovery.js";
@@ -24,6 +31,7 @@ export interface McpAppsOptions {
  */
 export function mcpApps(options: McpAppsOptions = {}): Plugin {
   let apps = new Map<string, DiscoveredApp>();
+  let additionalAssetSources: Record<string, HtmlAssetSource> | undefined;
 
   return {
     name: "tractorbeam:mcp-apps",
@@ -36,10 +44,11 @@ export function mcpApps(options: McpAppsOptions = {}): Plugin {
       const discoveredApps = await discoverApps(root, options.appsDirectory);
 
       apps = new Map(discoveredApps.map((app) => [app.environmentName, app]));
+      additionalAssetSources = config.html?.additionalAssetSources;
 
       return {
         appType: "mpa",
-        base: "./",
+        base: config.base ?? "./",
         builder: {},
         environments: Object.fromEntries(
           discoveredApps.map((app) => [app.environmentName, { consumer: "client" }]),
@@ -75,7 +84,7 @@ export function mcpApps(options: McpAppsOptions = {}): Plugin {
           generateBundle: {
             order: "post",
             handler(_outputOptions, bundle) {
-              finalizeBundle(bundle, app);
+              finalizeBundle(bundle, app, additionalAssetSources);
             },
           },
         },
@@ -110,8 +119,18 @@ function assertDedicatedBuild(config: UserConfig): void {
     build?.rolldownOptions?.output !== undefined,
     "build.rolldownOptions.output",
   );
+  addConflict(
+    conflicts,
+    build?.rolldownOptions?.external !== undefined,
+    "build.rolldownOptions.external",
+  );
   addConflict(conflicts, build?.rollupOptions?.input !== undefined, "build.rollupOptions.input");
   addConflict(conflicts, build?.rollupOptions?.output !== undefined, "build.rollupOptions.output");
+  addConflict(
+    conflicts,
+    build?.rollupOptions?.external !== undefined,
+    "build.rollupOptions.external",
+  );
   addConflict(conflicts, build?.assetsInlineLimit !== undefined, "build.assetsInlineLimit");
   addConflict(conflicts, build?.cssCodeSplit === true, "build.cssCodeSplit");
   addConflict(
@@ -141,10 +160,6 @@ function assertDedicatedBuild(config: UserConfig): void {
     build?.copyPublicDir !== undefined && build.copyPublicDir !== false,
     "build.copyPublicDir",
   );
-
-  if (config.base !== undefined && config.base !== "./") {
-    conflicts.push("base");
-  }
 
   if (conflicts.length > 0) {
     throw new Error(

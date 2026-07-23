@@ -44,6 +44,9 @@
     "test": "pnpm run build && node --test test/*.test.js"
   },
   "dependencies": {
+    "parse5": "^8.0.1",
+    "postcss": "^8.5.19",
+    "postcss-value-parser": "^4.2.0",
     "tinyglobby": "^0.2.17",
     "vite-plugin-singlefile": "^2.3.3"
   },

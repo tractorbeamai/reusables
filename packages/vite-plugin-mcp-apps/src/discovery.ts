@@ -2,6 +2,7 @@ import { lstat, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 
 import { glob } from "tinyglobby";
+import { normalizePath } from "vite";
 
 const DEFAULT_APPS_DIRECTORY = "src/mcp-apps";
 
@@ -57,7 +58,7 @@ export async function discoverApps(
     )
   )
     .filter((entry): entry is string => entry !== undefined)
-    .sort((left, right) => toPosix(left).localeCompare(toPosix(right), "en"));
+    .sort((left, right) => normalizePath(left).localeCompare(normalizePath(right), "en"));
 
   if (normalizedEntries.length === 0) {
     throw new Error(`MCP Apps directory contains no app entries: ${directory}`);
@@ -66,7 +67,7 @@ export async function discoverApps(
   const apps = normalizedEntries.map((input, index) => {
     assertWithinRoot(directory, input, "MCP app entry");
 
-    const relativeInput = toPosix(path.relative(directory, input));
+    const relativeInput = normalizePath(path.relative(directory, input));
 
     if (relativeInput === "index.html") {
       throw new Error(
@@ -114,8 +115,4 @@ function assertWithinRoot(root: string, candidate: string, label: string): void 
   }
 
   throw new Error(`${label} must remain inside the Vite project root: ${candidate}`);
-}
-
-function toPosix(value: string): string {
-  return value.split(path.sep).join(path.posix.sep);
 }

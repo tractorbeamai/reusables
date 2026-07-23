@@ -44,7 +44,8 @@
     "test": "pnpm run build && node --test test/*.test.js"
   },
   "dependencies": {
-    "tinyglobby": "^0.2.17"
+    "tinyglobby": "^0.2.17",
+    "vite-plugin-singlefile": "^2.3.3"
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",

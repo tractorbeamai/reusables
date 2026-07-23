@@ -192,6 +192,29 @@ test("fails when another plugin leaves a residual bundle asset", async () => {
   );
 });
 
+test("fails when generated scripts are removed without being inlined", async () => {
+  const project = await createProject({
+    "src/mcp-apps/weather/index.html": appHtml("Weather", "./main.js"),
+    "src/mcp-apps/weather/main.js": `document.body.dataset.app = "weather";`,
+  });
+  const incompatibleHtmlPlugin = {
+    name: "test:incompatible-html",
+    enforce: "post",
+    generateBundle(_outputOptions, bundle) {
+      for (const entry of Object.values(bundle)) {
+        if (entry.type === "asset" && entry.fileName.endsWith(".html")) {
+          entry.source = entry.source.replace(/\ssrc="([^"]+)"/u, " src='$1'");
+        }
+      }
+    },
+  };
+
+  await assert.rejects(
+    buildProject(project, { plugins: [incompatibleHtmlPlugin] }),
+    /Unresolved local scripts or styles: script src=/u,
+  );
+});
+
 test("rejects incompatible dedicated-build configuration", async () => {
   const project = await createProject({
     "src/mcp-apps/weather/index.html": appHtml("Weather", "./main.js"),

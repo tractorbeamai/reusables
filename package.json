@@ -21,9 +21,9 @@
     "test": "turbo run test"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.8",
-    "turbo": "2.9.14",
-    "vite-plus": "0.2.4"
+    "@changesets/cli": "2.31.1",
+    "turbo": "2.10.5",
+    "vite-plus": "0.2.5"
   },
   "engines": {
     "node": "24.x"

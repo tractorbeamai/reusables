@@ -44,6 +44,6 @@
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",
     "oxlint": "1.74.0",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   }
 }

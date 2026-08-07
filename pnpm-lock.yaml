@@ -63,8 +63,8 @@ importers:
         specifier: 2.10.0
         version: 2.10.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-unicorn:
-        specifier: 72.0.0
-        version: 72.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
+        specifier: 73.0.0
+        version: 73.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-zod:
         specifier: 4.8.0
         version: 4.8.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(oxlint@1.74.0(oxlint-tsgolint@0.24.0)(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)))(supports-color@7.2.0)(typescript@5.9.3)(zod@4.1.13)
@@ -1723,8 +1723,8 @@ packages:
     peerDependencies:
       eslint: '>=8.44.0'
 
-  eslint-plugin-unicorn@72.0.0:
-    resolution: {integrity: sha512-hqO6ksoOHO+ZhdseTuKRVQbx9U7PRO/cv8qAR1mctwzdVO2hYud8uS9luAhp43RJgziYgHAph8eHyipT8GL0ng==}
+  eslint-plugin-unicorn@73.0.0:
+    resolution: {integrity: sha512-V0YatLe9nkGhXEXKe2Qljb1EY0sJHwDV0HUF1NKFwtsHh/fU7qGHDgv+6fchzZcgU2/7noHo2gdjnmo0P2uDPw==}
     engines: {node: '>=22'}
     peerDependencies:
       eslint: '>=10.4'
@@ -4747,7 +4747,7 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
-  eslint-plugin-unicorn@72.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0)):
+  eslint-plugin-unicorn@73.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       '@eslint/css-tree': 4.0.4

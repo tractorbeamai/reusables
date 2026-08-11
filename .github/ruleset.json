@@ -1,6 +1,8 @@
 {
   "$schema": "https://tractorbeam.ai/schemas/github-ruleset.json",
   "name": "Require checks",
+  "target": "branch",
+  "enforcement": "active",
   "bypass_actors": [],
   "conditions": {
     "ref_name": {

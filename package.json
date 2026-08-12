@@ -11,7 +11,6 @@
     "changeset": "changeset",
     "check": "vp run workspace:check",
     "clean": "vp run workspace:clean",
-    "dev": "vp run workspace:dev",
     "format": "vp fmt",
     "lint": "vp run workspace:check",
     "lint:format": "vp fmt --check",

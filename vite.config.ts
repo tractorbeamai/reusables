@@ -30,10 +30,6 @@ export default defineConfig({
         cache: false,
         command: "vp run --filter './packages/**' clean",
       },
-      "workspace:dev": {
-        cache: false,
-        command: "vp run --filter './packages/**' --parallel dev",
-      },
       "workspace:lint": {
         command: "vp check",
         dependsOn: ["@tractorbeam/oxlint-config#build"],

@@ -16,9 +16,9 @@
     "test": "vp run -r test"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.8",
+    "@changesets/cli": "catalog:",
     "@tractorbeam/oxlint-config": "workspace:*",
-    "vite-plus": "0.2.4"
+    "vite-plus": "catalog:"
   },
   "engines": {
     "node": "24.x"

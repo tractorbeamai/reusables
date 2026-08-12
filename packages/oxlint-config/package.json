@@ -44,10 +44,10 @@
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",
-    "oxlint": "1.78.0",
-    "oxlint-plugin-anti-slop": "github:dmmulroy/anti-slop#b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0",
-    "oxlint-tsgolint": "7.0.2001",
-    "typescript": "5.9.3",
-    "vite-plus": "0.2.4"
+    "oxlint": "catalog:",
+    "oxlint-plugin-anti-slop": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

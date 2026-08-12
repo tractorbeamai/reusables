@@ -4,91 +4,208 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@changesets/cli':
+      specifier: 2.29.8
+      version: 2.29.8
+    '@eslint/js':
+      specifier: 10.0.1
+      version: 10.0.1
+    '@ianvs/prettier-plugin-sort-imports':
+      specifier: 4.7.0
+      version: 4.7.0
+    '@tanstack/eslint-plugin-router':
+      specifier: 1.141.0
+      version: 1.141.0
+    '@types/eslint':
+      specifier: 9.6.1
+      version: 9.6.1
+    '@types/eslint-plugin-jsx-a11y':
+      specifier: 6.10.1
+      version: 6.10.1
+    '@types/node':
+      specifier: 24.13.3
+      version: 24.13.3
+    '@typescript-eslint/utils':
+      specifier: 8.50.0
+      version: 8.50.0
+    eslint:
+      specifier: '>= 9'
+      version: 9.39.2
+    eslint-config-prettier:
+      specifier: 10.1.8
+      version: 10.1.8
+    eslint-plugin-depend:
+      specifier: 1.4.0
+      version: 1.4.0
+    eslint-plugin-import-lite:
+      specifier: 0.4.0
+      version: 0.4.0
+    eslint-plugin-jsx-a11y:
+      specifier: 6.10.2
+      version: 6.10.2
+    eslint-plugin-playwright:
+      specifier: 2.4.0
+      version: 2.4.0
+    eslint-plugin-react:
+      specifier: 7.37.5
+      version: 7.37.5
+    eslint-plugin-react-compiler:
+      specifier: 19.1.0-rc.2
+      version: 19.1.0-rc.2
+    eslint-plugin-react-hooks:
+      specifier: 7.0.1
+      version: 7.0.1
+    eslint-plugin-react-refresh:
+      specifier: 0.4.26
+      version: 0.4.26
+    eslint-plugin-regexp:
+      specifier: 2.10.0
+      version: 2.10.0
+    eslint-plugin-unicorn:
+      specifier: 72.0.0
+      version: 72.0.0
+    eslint-plugin-zod:
+      specifier: 4.8.0
+      version: 4.8.0
+    globals:
+      specifier: 17.7.0
+      version: 17.7.0
+    oxfmt:
+      specifier: 0.57.0
+      version: 0.57.0
+    oxlint:
+      specifier: 1.78.0
+      version: 1.78.0
+    oxlint-plugin-anti-slop:
+      specifier: github:dmmulroy/anti-slop#b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
+      version: 0.1.0
+    oxlint-tsgolint:
+      specifier: 7.0.2001
+      version: 7.0.2001
+    parse5:
+      specifier: 8.0.1
+      version: 8.0.1
+    postcss:
+      specifier: 8.5.19
+      version: 8.5.19
+    postcss-value-parser:
+      specifier: 4.2.0
+      version: 4.2.0
+    prettier:
+      specifier: '>=3.0.0'
+      version: 3.7.4
+    prettier-plugin-packagejson:
+      specifier: 2.5.20
+      version: 2.5.20
+    prettier-plugin-tailwindcss:
+      specifier: 0.7.2
+      version: 0.7.2
+    tinyglobby:
+      specifier: 0.2.17
+      version: 0.2.17
+    typescript:
+      specifier: 5.9.3
+      version: 5.9.3
+    typescript-eslint:
+      specifier: 8.50.0
+      version: 8.50.0
+    vite:
+      specifier: 8.1.5
+      version: 8.1.5
+    vite-plugin-singlefile:
+      specifier: 2.3.3
+      version: 2.3.3
+    vite-plus:
+      specifier: 0.2.4
+      version: 0.2.4
+
 importers:
 
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: 2.29.8
+        specifier: 'catalog:'
         version: 2.29.8(@types/node@25.0.3)
       '@tractorbeam/oxlint-config':
         specifier: workspace:*
         version: link:packages/oxlint-config
       vite-plus:
-        specifier: 0.2.4
+        specifier: 'catalog:'
         version: 0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/eslint-config:
     dependencies:
       '@eslint/js':
-        specifier: 10.0.1
+        specifier: 'catalog:'
         version: 10.0.1(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       '@tanstack/eslint-plugin-router':
-        specifier: 1.141.0
+        specifier: 'catalog:'
         version: 1.141.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       '@typescript-eslint/utils':
-        specifier: 8.50.0
+        specifier: 'catalog:'
         version: 8.50.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       eslint:
-        specifier: '>= 9'
+        specifier: 'catalog:'
         version: 9.39.2(jiti@2.6.1)(supports-color@7.2.0)
       eslint-config-prettier:
-        specifier: 10.1.8
+        specifier: 'catalog:'
         version: 10.1.8(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-depend:
-        specifier: 1.4.0
+        specifier: 'catalog:'
         version: 1.4.0
       eslint-plugin-import-lite:
-        specifier: 0.4.0
+        specifier: 'catalog:'
         version: 0.4.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(typescript@5.9.3)
       eslint-plugin-jsx-a11y:
-        specifier: 6.10.2
+        specifier: 'catalog:'
         version: 6.10.2(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-playwright:
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-react:
-        specifier: 7.37.5
+        specifier: 'catalog:'
         version: 7.37.5(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-react-compiler:
-        specifier: 19.1.0-rc.2
+        specifier: 'catalog:'
         version: 19.1.0-rc.2(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)
       eslint-plugin-react-hooks:
-        specifier: 7.0.1
+        specifier: 'catalog:'
         version: 7.0.1(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)
       eslint-plugin-react-refresh:
-        specifier: 0.4.26
+        specifier: 'catalog:'
         version: 0.4.26(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-regexp:
-        specifier: 2.10.0
+        specifier: 'catalog:'
         version: 2.10.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-unicorn:
-        specifier: 72.0.0
+        specifier: 'catalog:'
         version: 72.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-zod:
-        specifier: 4.8.0
-        version: 4.8.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)))(supports-color@7.2.0)(typescript@5.9.3)(zod@4.1.13)
+        specifier: 'catalog:'
+        version: 4.8.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@24.13.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)))(supports-color@7.2.0)(typescript@5.9.3)(zod@4.1.13)
       globals:
-        specifier: 17.7.0
+        specifier: 'catalog:'
         version: 17.7.0
       typescript-eslint:
-        specifier: 8.50.0
+        specifier: 'catalog:'
         version: 8.50.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
     devDependencies:
       '@tractorbeam/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@types/eslint':
-        specifier: 9.6.1
+        specifier: 'catalog:'
         version: 9.6.1
       '@types/eslint-plugin-jsx-a11y':
-        specifier: 6.10.1
+        specifier: 'catalog:'
         version: 6.10.1(jiti@2.6.1)(supports-color@7.2.0)
       '@types/node':
-        specifier: 25.0.3
-        version: 25.0.3
+        specifier: 'catalog:'
+        version: 24.13.3
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/oxfmt-config:
@@ -97,10 +214,10 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       oxfmt:
-        specifier: 0.57.0
+        specifier: 'catalog:'
         version: 0.57.0(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0))
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   packages/oxlint-config:
@@ -109,34 +226,34 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
       oxlint:
-        specifier: 1.78.0
+        specifier: 'catalog:'
         version: 1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0))
       oxlint-plugin-anti-slop:
-        specifier: github:dmmulroy/anti-slop#b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
+        specifier: 'catalog:'
         version: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
       oxlint-tsgolint:
-        specifier: 7.0.2001
+        specifier: 'catalog:'
         version: 7.0.2001
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       vite-plus:
-        specifier: 0.2.4
+        specifier: 'catalog:'
         version: 0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)
 
   packages/prettier-config:
     dependencies:
       '@ianvs/prettier-plugin-sort-imports':
-        specifier: 4.7.0
+        specifier: 'catalog:'
         version: 4.7.0(prettier@3.7.4)(supports-color@7.2.0)
       prettier:
-        specifier: '>=3.0.0'
+        specifier: 'catalog:'
         version: 3.7.4
       prettier-plugin-packagejson:
-        specifier: 2.5.20
+        specifier: 'catalog:'
         version: 2.5.20(prettier@3.7.4)
       prettier-plugin-tailwindcss:
-        specifier: 0.7.2
+        specifier: 'catalog:'
         version: 0.7.2(@ianvs/prettier-plugin-sort-imports@4.7.0(prettier@3.7.4)(supports-color@7.2.0))(prettier@3.7.4)
 
   packages/typescript-config: {}
@@ -144,35 +261,35 @@ importers:
   packages/vite-plugin-mcp-apps:
     dependencies:
       parse5:
-        specifier: 8.0.1
+        specifier: 'catalog:'
         version: 8.0.1
       postcss:
-        specifier: 8.5.19
+        specifier: 'catalog:'
         version: 8.5.19
       postcss-value-parser:
-        specifier: 4.2.0
+        specifier: 'catalog:'
         version: 4.2.0
       tinyglobby:
-        specifier: 0.2.17
+        specifier: 'catalog:'
         version: 0.2.17
       vite-plugin-singlefile:
-        specifier: 2.3.3
+        specifier: 'catalog:'
         version: 2.3.3(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))
     devDependencies:
       '@tractorbeam/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@types/node':
-        specifier: 24.13.3
+        specifier: 'catalog:'
         version: 24.13.3
       typescript:
-        specifier: 5.9.3
+        specifier: 'catalog:'
         version: 5.9.3
       vite:
-        specifier: 8.1.5
+        specifier: 'catalog:'
         version: 8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0)
       vite-plus:
-        specifier: 0.2.4
+        specifier: 'catalog:'
         version: 0.2.4(@types/node@24.13.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)
 
 packages:
@@ -3913,7 +4030,7 @@ snapshots:
 
   '@tanstack/eslint-plugin-router@1.141.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
     dependencies:
-      '@typescript-eslint/utils': 8.50.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
+      '@typescript-eslint/utils': 8.65.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       eslint: 9.39.2(jiti@2.6.1)(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
@@ -3973,6 +4090,7 @@ snapshots:
   '@types/node@25.0.3':
     dependencies:
       undici-types: 7.16.0
+    optional: true
 
   '@typescript-eslint/eslint-plugin@8.50.0(@typescript-eslint/parser@8.50.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)':
     dependencies:
@@ -4790,13 +4908,13 @@ snapshots:
       strip-indent: 4.1.1
       yaml: 2.9.0
 
-  eslint-plugin-zod@4.8.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)))(supports-color@7.2.0)(typescript@5.9.3)(zod@4.1.13):
+  eslint-plugin-zod@4.8.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@24.13.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)))(supports-color@7.2.0)(typescript@5.9.3)(zod@4.1.13):
     dependencies:
       '@eslint-zod/utils': 2.4.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       '@typescript-eslint/utils': 8.65.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
     optionalDependencies:
       eslint: 9.39.2(jiti@2.6.1)(supports-color@7.2.0)
-      oxlint: 1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0))
+      oxlint: 1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@24.13.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0))
       zod: 4.1.13
     transitivePeerDependencies:
       - supports-color
@@ -5567,6 +5685,31 @@ snapshots:
       oxlint-tsgolint: 0.24.0
       vite-plus: 0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)
 
+  oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@24.13.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)):
+    optionalDependencies:
+      '@oxlint/binding-android-arm-eabi': 1.78.0
+      '@oxlint/binding-android-arm64': 1.78.0
+      '@oxlint/binding-darwin-arm64': 1.78.0
+      '@oxlint/binding-darwin-x64': 1.78.0
+      '@oxlint/binding-freebsd-x64': 1.78.0
+      '@oxlint/binding-linux-arm-gnueabihf': 1.78.0
+      '@oxlint/binding-linux-arm-musleabihf': 1.78.0
+      '@oxlint/binding-linux-arm64-gnu': 1.78.0
+      '@oxlint/binding-linux-arm64-musl': 1.78.0
+      '@oxlint/binding-linux-ppc64-gnu': 1.78.0
+      '@oxlint/binding-linux-riscv64-gnu': 1.78.0
+      '@oxlint/binding-linux-riscv64-musl': 1.78.0
+      '@oxlint/binding-linux-s390x-gnu': 1.78.0
+      '@oxlint/binding-linux-x64-gnu': 1.78.0
+      '@oxlint/binding-linux-x64-musl': 1.78.0
+      '@oxlint/binding-openharmony-arm64': 1.78.0
+      '@oxlint/binding-win32-arm64-msvc': 1.78.0
+      '@oxlint/binding-win32-ia32-msvc': 1.78.0
+      '@oxlint/binding-win32-x64-msvc': 1.78.0
+      oxlint-tsgolint: 7.0.2001
+      vite-plus: 0.2.4(@types/node@24.13.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)
+    optional: true
+
   oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.4(@types/node@25.0.3)(jiti@2.6.1)(typescript@5.9.3)(vite@8.1.5(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.78.0
@@ -6083,7 +6226,8 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
-  undici-types@7.16.0: {}
+  undici-types@7.16.0:
+    optional: true
 
   undici-types@7.18.2: {}
 

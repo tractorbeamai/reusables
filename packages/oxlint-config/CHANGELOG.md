@@ -1,5 +1,11 @@
 # @tractorbeam/oxlint-config
 
+## 0.3.0
+
+### Minor Changes
+
+- de467b7: Build the anti-slop Oxlint plugin from a pinned GitHub dependency and enable all of its rules in the shared preset.
+
 ## 0.2.0
 
 ### Minor Changes

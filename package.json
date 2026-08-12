@@ -9,13 +9,9 @@
   "scripts": {
     "build": "vp run workspace:build",
     "changeset": "changeset",
-    "check": "vp run workspace:check",
+    "check": "vp check",
     "clean": "vp run workspace:clean",
     "format": "vp fmt",
-    "lint": "vp run workspace:check",
-    "lint:format": "vp fmt --check",
-    "lint:oxlint": "vp run workspace:lint:oxlint",
-    "lint:types": "vp run workspace:lint:types",
     "release": "vp run workspace:release",
     "test": "vp run workspace:test"
   },

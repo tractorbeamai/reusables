@@ -22,23 +22,10 @@ export default defineConfig({
     cache: true,
     tasks: {
       "workspace:build": "vp run --filter './packages/**' build",
-      "workspace:check": {
-        command: [],
-        dependsOn: ["workspace:lint", "workspace:lint:types"],
-      },
       "workspace:clean": {
         cache: false,
         command: "vp run --filter './packages/**' clean",
       },
-      "workspace:lint": {
-        command: "vp check",
-        dependsOn: ["@tractorbeam/oxlint-config#build"],
-      },
-      "workspace:lint:oxlint": {
-        command: "vp lint",
-        dependsOn: ["@tractorbeam/oxlint-config#build"],
-      },
-      "workspace:lint:types": "vp run --filter './packages/**' lint:types",
       "workspace:release": {
         cache: false,
         command: "changeset publish",

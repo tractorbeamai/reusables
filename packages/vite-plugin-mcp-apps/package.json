@@ -39,7 +39,6 @@
   "scripts": {
     "build": "vp pack",
     "clean": "rm -rf dist *.tsbuildinfo",
-    "lint:types": "tsc --noEmit",
     "prepublishOnly": "vp run build"
   },
   "dependencies": {

@@ -13,9 +13,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-env:
-  TURBO_TELEMETRY_DISABLED: "1"
-
 jobs:
   checks:
     name: Checks
@@ -32,9 +29,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm lint
-      - run: pnpm test
       - run: pnpm build
+      - run: pnpm check
+      - run: pnpm test
 
       - uses: reviewdog/action-actionlint@50842263c20a7c46bd0065b9e624d3c569db061e # v1.73.0
         with:

@@ -17,9 +17,9 @@ Shared configuration packages used across Tractorbeam projects.
 
 ## Commands
 
-- `pnpm lint`: run package linting via Turborepo
-- `pnpm build`: build packages that require compilation (e.g. `@tractorbeam/eslint-config`)
-- `pnpm format`: format repo files with Prettier
+- `pnpm build`: build packages that require compilation
+- `pnpm check`: check formatting, linting, and types with Vite+
+- `pnpm format`: format repository files with Vite+
 
 ## Publishing (internal)
 

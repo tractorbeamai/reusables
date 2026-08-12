@@ -23,7 +23,7 @@ const ALLOWED_META_PROPERTIES = new Set([
 ]);
 const IMAGE_CANDIDATE_PATTERN =
   /(?:^|\s|(?<=,))(?<url>[\w-]+\([^)]*\)|"[^"]*"|'[^']*'|[^,]\S*[^,])\s*(?:\s(?<descriptor>\w[^,]+))?(?:,|$)/gu;
-const STANDARD_ASSET_SOURCES: Readonly<Record<string, HtmlAssetSource>> = {
+const STANDARD_ASSET_SOURCES = {
   audio: { srcAttributes: ["src"] },
   embed: { srcAttributes: ["src"] },
   iframe: { srcAttributes: ["src"] },
@@ -58,7 +58,10 @@ const STANDARD_ASSET_SOURCES: Readonly<Record<string, HtmlAssetSource>> = {
   track: { srcAttributes: ["src"] },
   use: { srcAttributes: ["href", "xlink:href"] },
   video: { srcAttributes: ["poster", "src"] },
-};
+} satisfies Readonly<Record<string, HtmlAssetSource>>;
+const STANDARD_ASSET_SOURCE_BY_TAG = new Map<string, HtmlAssetSource>(
+  Object.entries(STANDARD_ASSET_SOURCES),
+);
 const URL_SCHEME_PATTERN = /^[a-z][a-z\d+.-]*:/iu;
 
 export function findUnresolvedReferences(
@@ -72,7 +75,7 @@ export function findUnresolvedReferences(
       element.attrs.map((attribute) => [attributeKey(attribute), attribute.value]),
     );
     const sources = [
-      STANDARD_ASSET_SOURCES[element.tagName],
+      STANDARD_ASSET_SOURCE_BY_TAG.get(element.tagName),
       additionalAssetSources?.[element.tagName],
     ];
 

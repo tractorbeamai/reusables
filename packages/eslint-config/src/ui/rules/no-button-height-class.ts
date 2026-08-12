@@ -92,8 +92,8 @@ export const noButtonHeightClass = createRule({
 
         // Check for sizing patterns in string literal or template literal
         const value = classNameAttr.value;
-        if (value?.type === AST_NODE_TYPES.Literal && typeof value.value === "string") {
-          if (hasDisallowedSizeClass(value.value)) {
+        if (value?.type === AST_NODE_TYPES.Literal && isQuotedLiteral(value.raw)) {
+          if (hasDisallowedSizeClass(String(value.value))) {
             reportViolation();
           }
         }
@@ -101,8 +101,8 @@ export const noButtonHeightClass = createRule({
         // Handle JSX expressions like className={...} or className={`...`}
         if (value?.type === AST_NODE_TYPES.JSXExpressionContainer) {
           const expr = value.expression;
-          if (expr.type === AST_NODE_TYPES.Literal && typeof expr.value === "string") {
-            if (hasDisallowedSizeClass(expr.value)) {
+          if (expr.type === AST_NODE_TYPES.Literal && isQuotedLiteral(expr.raw)) {
+            if (hasDisallowedSizeClass(String(expr.value))) {
               reportViolation();
             }
           }
@@ -119,3 +119,7 @@ export const noButtonHeightClass = createRule({
     };
   },
 });
+
+function isQuotedLiteral(raw: string): boolean {
+  return raw.startsWith('"') || raw.startsWith("'");
+}

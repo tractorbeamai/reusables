@@ -11,7 +11,7 @@ catalog:
   "@types/eslint": 9.6.1
   "@types/eslint-plugin-jsx-a11y": 6.10.1
   "@types/node": 24.13.3
-  "@typescript-eslint/utils": 8.50.0
+  "@typescript-eslint/utils": 8.67.0
   eslint: ">= 9"
   eslint-config-prettier: 10.1.8
   eslint-plugin-depend: 1.4.0
@@ -37,8 +37,8 @@ catalog:
   prettier-plugin-packagejson: 2.5.20
   prettier-plugin-tailwindcss: 0.7.2
   tinyglobby: 0.2.17
-  typescript: 5.9.3
-  typescript-eslint: 8.50.0
+  typescript: 6.0.3
+  typescript-eslint: 8.67.0
   vite: 8.1.5
   vite-plugin-singlefile: 2.3.3
   vite-plus: 0.2.4

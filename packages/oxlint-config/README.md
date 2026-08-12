@@ -2,6 +2,8 @@
 
 Shared Oxlint configuration for Tractorbeam projects.
 
+The preset enables every rule from [anti-slop](https://github.com/dmmulroy/anti-slop) at error severity. The plugin is built from a pinned GitHub dependency and registered automatically; its source is not vendored into this repository.
+
 ## Install
 
 ```bash
@@ -27,6 +29,8 @@ export default defineConfig({
   lint: oxlintConfig({ react: false }),
 });
 ```
+
+The shared configuration enables type-aware linting and TypeScript checking. It also warns when a file exceeds 1,000 lines or a function exceeds 150 lines.
 
 Compose repository-specific rules, ignores, and overrides in `vite.config.ts`:
 

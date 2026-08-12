@@ -22,12 +22,13 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
       - uses: voidzero-dev/setup-vp@250f29ce396baf5e8f24498e17c0dfdebabc26eb # v1
         with:
           cache: true
           node-version-file: package.json
           registry-url: "https://registry.npmjs.org"
+      - name: Expose pnpm for Changesets formatting
+        run: corepack enable pnpm
       - name: Install Changesets-compatible npm
         run: npm install -g npm@11.16.0
 

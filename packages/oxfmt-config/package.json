@@ -37,12 +37,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist *.tsbuildinfo",
-    "lint:types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "vp run build"
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",
-    "oxfmt": "0.62.0",
-    "typescript": "5.9.3"
+    "oxfmt": "catalog:",
+    "typescript": "catalog:"
   }
 }

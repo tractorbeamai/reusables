@@ -21,7 +21,7 @@ export const react: Linter.Config[] = defineConfig([
       globals: { ...globals.browser },
     },
     plugins: {
-      "react-hooks": pluginReactHooks as unknown as ESLint.Plugin,
+      "react-hooks": pluginReactHooks as ESLint.Plugin,
       "react-refresh": pluginReactRefresh,
     },
     rules: {

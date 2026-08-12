@@ -6,6 +6,7 @@ import oxlintConfig from "../dist/index.js";
 test("enables React linting by default with globally scoped rules first", () => {
   // Arrange
   const expectedRules = [
+    "max-lines",
     "max-lines-per-function",
     "no-inline-comments",
     "no-shadow",

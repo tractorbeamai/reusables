@@ -46,5 +46,5 @@ export function finalizeBundle(
 }
 
 function toText(source: string | Uint8Array): string {
-  return typeof source === "string" ? source : new TextDecoder().decode(source);
+  return source instanceof Uint8Array ? new TextDecoder().decode(source) : source;
 }

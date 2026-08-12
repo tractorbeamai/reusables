@@ -26,8 +26,11 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./anti-slop": {
+      "default": "./dist/anti-slop.mjs"
     }
   },
   "publishConfig": {
@@ -35,15 +38,16 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "vp pack",
     "clean": "rm -rf dist *.tsbuildinfo",
-    "lint:types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
-    "test": "pnpm run build && node --test test/*.test.js"
+    "prepublishOnly": "vp run build"
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",
-    "oxlint": "1.78.0",
-    "typescript": "5.9.3"
+    "oxlint": "catalog:",
+    "oxlint-plugin-anti-slop": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
   }
 }

@@ -13,9 +13,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-env:
-  TURBO_TELEMETRY_DISABLED: "1"
-
 jobs:
   checks:
     name: Checks
@@ -25,16 +22,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: voidzero-dev/setup-vp@250f29ce396baf5e8f24498e17c0dfdebabc26eb # v1
         with:
+          cache: true
           node-version-file: package.json
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
 
-      - run: pnpm lint
-      - run: pnpm test
-      - run: pnpm build
+      - run: vp run -r build
+      - run: vp check
+      - run: vp run -r test
 
       - uses: reviewdog/action-actionlint@50842263c20a7c46bd0065b9e624d3c569db061e # v1.73.0
         with:

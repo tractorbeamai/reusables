@@ -12,6 +12,16 @@ const globalRules = {
 } satisfies OxlintConfig["rules"];
 
 const pluginRules = {
+  "anti-slop/no-chained-type-assertions": "error",
+  "anti-slop/no-conditional-empty-object-spread": "error",
+  "anti-slop/no-known-value-widening": "error",
+  "anti-slop/no-object-parameters": "error",
+  "anti-slop/no-runtime-typeof": "error",
+  "anti-slop/no-shape-in-symbol-names": "error",
+  "anti-slop/no-unknown-parameters": "error",
+  "anti-slop/no-unknown-type-aliases": "error",
+  "anti-slop/no-unsafe-dictionary-type": "error",
+  "anti-slop/no-widen-then-assert": "error",
   "import/max-dependencies": "off",
   "import/no-namespace": "error",
   "import/no-unassigned-import": "off",
@@ -36,7 +46,19 @@ const reactPluginRules = {
 } satisfies OxlintConfig["rules"];
 
 export default function oxlintConfig({ react = true }: OxlintConfigOptions = {}) {
+  const rules = { ...globalRules, ...pluginRules };
+
+  if (react) {
+    Object.assign(rules, reactPluginRules);
+  }
+
   return {
+    jsPlugins: [
+      {
+        name: "anti-slop",
+        specifier: "@tractorbeam/oxlint-config/anti-slop",
+      },
+    ],
     options: {
       typeAware: true,
       typeCheck: true,
@@ -50,10 +72,6 @@ export default function oxlintConfig({ react = true }: OxlintConfigOptions = {})
       perf: "error",
       pedantic: "warn",
     },
-    rules: {
-      ...globalRules,
-      ...pluginRules,
-      ...(react ? reactPluginRules : {}),
-    },
+    rules,
   } satisfies OxlintConfig;
 }

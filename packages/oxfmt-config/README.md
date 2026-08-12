@@ -20,6 +20,8 @@ export default defineConfig({
 });
 ```
 
+The shared configuration leaves Markdown and MDX prose unwrapped.
+
 Compose repository-specific options in `vite.config.ts`:
 
 ```typescript

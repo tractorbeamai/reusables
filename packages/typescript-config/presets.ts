@@ -7,7 +7,7 @@ import strictest from "./strictest.json" with { type: "json" };
 import tanstackStart from "./tanstack-start.json" with { type: "json" };
 import vite from "./vite.json" with { type: "json" };
 
-export const presets: Record<string, Record<string, unknown>> = {
+export const presets = {
   "cloudflare-workers": cloudflareWorkers,
   next,
   node,

@@ -7,26 +7,22 @@
     "url": "git+https://github.com/tractorbeamai/reusables.git"
   },
   "scripts": {
-    "build": "turbo run build",
+    "build": "vp run -r build",
     "changeset": "changeset",
-    "check": "vp check && turbo run lint:types",
-    "clean": "turbo run clean && rm -rf node_modules",
-    "dev": "turbo run dev",
+    "check": "vp check",
+    "clean": "vp run -r --no-cache clean",
     "format": "vp fmt",
-    "lint": "vp check && turbo run lint:types",
-    "lint:format": "vp fmt --check",
-    "lint:oxlint": "vp lint",
-    "lint:types": "turbo run lint:types",
-    "release": "turbo run build && changeset publish",
-    "test": "turbo run test"
+    "release": "changeset publish",
+    "test": "vp run -r test"
   },
   "devDependencies": {
-    "@changesets/cli": "2.29.8",
-    "turbo": "2.9.14",
-    "vite-plus": "0.2.4"
+    "@changesets/cli": "catalog:",
+    "@tractorbeam/oxlint-config": "workspace:*",
+    "oxfmt": "catalog:",
+    "vite-plus": "catalog:"
   },
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "pnpm@11.15.1"
+  "packageManager": "pnpm@11.20.0"
 }

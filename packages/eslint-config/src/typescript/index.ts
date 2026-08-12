@@ -1,6 +1,6 @@
 import type { Linter } from "eslint";
 import pluginImportLite from "eslint-plugin-import-lite";
-import pluginRegexp from "eslint-plugin-regexp";
+import { configs as regexpConfigs } from "eslint-plugin-regexp";
 import pluginUnicorn from "eslint-plugin-unicorn";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
@@ -12,7 +12,7 @@ export const typescript: Linter.Config[] = defineConfig([
       tseslint.configs.strictTypeChecked,
       tseslint.configs.stylisticTypeChecked,
       pluginUnicorn.configs.recommended,
-      pluginRegexp.configs["flat/recommended"],
+      regexpConfigs["flat/recommended"],
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       pluginImportLite.configs.recommended,
     ],

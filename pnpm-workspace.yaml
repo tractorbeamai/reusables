@@ -22,7 +22,7 @@ catalog:
   eslint-plugin-react-compiler: 19.1.0-rc.2
   eslint-plugin-react-hooks: 7.1.1
   eslint-plugin-react-refresh: 0.5.3
-  eslint-plugin-regexp: 2.10.0
+  eslint-plugin-regexp: 3.1.1
   eslint-plugin-unicorn: 72.0.0
   eslint-plugin-zod: 4.9.0
   globals: 17.9.0

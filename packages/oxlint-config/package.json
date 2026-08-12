@@ -41,8 +41,7 @@
     "build": "vp pack",
     "clean": "rm -rf dist *.tsbuildinfo",
     "lint:types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
-    "test": "pnpm run build && node --test test/*.test.js"
+    "prepublishOnly": "vp run build"
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",

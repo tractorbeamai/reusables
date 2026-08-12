@@ -38,7 +38,7 @@
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist *.tsbuildinfo",
     "lint:types": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "vp run build"
   },
   "devDependencies": {
     "@tractorbeam/typescript-config": "workspace:*",

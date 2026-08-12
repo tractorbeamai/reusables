@@ -7,4 +7,13 @@ export default defineConfig({
     format: ["esm"],
     sourcemap: true,
   },
+  run: {
+    tasks: {
+      test: {
+        command: "node --test test/*.test.js",
+        dependsOn: ["build"],
+        output: [],
+      },
+    },
+  },
 });

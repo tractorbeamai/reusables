@@ -19,4 +19,13 @@ export default defineConfig({
       target: "node20.19.0",
     },
   ],
+  run: {
+    tasks: {
+      test: {
+        command: "node --test test/*.test.js",
+        dependsOn: ["build"],
+        output: [],
+      },
+    },
+  },
 });

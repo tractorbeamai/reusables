@@ -6,6 +6,7 @@ import oxlintConfig from "../dist/index.js";
 test("enables React linting by default with globally scoped rules first", () => {
   // Arrange
   const expectedRules = [
+    "max-lines",
     "max-lines-per-function",
     "no-inline-comments",
     "no-shadow",
@@ -34,6 +35,7 @@ test("enables React linting by default with globally scoped rules first", () => 
 
   // Assert
   assert.deepEqual(config.plugins, ["import", "jsx-a11y", "promise", "react", "react-perf"]);
+  assert.deepEqual(config.options, { typeAware: true, typeCheck: true });
   assert.deepEqual(Object.keys(config.rules), expectedRules);
 });
 

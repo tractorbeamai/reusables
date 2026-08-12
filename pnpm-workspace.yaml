@@ -34,7 +34,7 @@ catalog:
   postcss: 8.5.26
   postcss-value-parser: 4.2.0
   prettier: ">=3.0.0"
-  prettier-plugin-packagejson: 2.5.20
+  prettier-plugin-packagejson: 3.0.2
   prettier-plugin-tailwindcss: 0.8.1
   tinyglobby: 0.2.17
   typescript: 6.0.3

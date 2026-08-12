@@ -9,13 +9,13 @@
   "scripts": {
     "build": "turbo run build",
     "changeset": "changeset",
-    "check": "vp check && turbo run lint:types",
+    "check": "pnpm --filter @tractorbeam/oxlint-config build && vp check && turbo run lint:types",
     "clean": "turbo run clean && rm -rf node_modules",
     "dev": "turbo run dev",
     "format": "vp fmt",
-    "lint": "vp check && turbo run lint:types",
+    "lint": "pnpm --filter @tractorbeam/oxlint-config build && vp check && turbo run lint:types",
     "lint:format": "vp fmt --check",
-    "lint:oxlint": "vp lint",
+    "lint:oxlint": "pnpm --filter @tractorbeam/oxlint-config build && vp lint",
     "lint:types": "turbo run lint:types",
     "release": "turbo run build && changeset publish",
     "test": "turbo run test"

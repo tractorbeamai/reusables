@@ -13,9 +13,5 @@ export default defineConfig({
   lint: {
     ...lint,
     ignorePatterns: ["**/dist/**"],
-    options: {
-      typeAware: true,
-      typeCheck: true,
-    },
   },
 });

@@ -5,6 +5,7 @@ export interface OxlintConfigOptions {
 }
 
 const globalRules = {
+  "max-lines": ["warn", { max: 1000 }],
   "max-lines-per-function": ["warn", { max: 150 }],
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
   "no-shadow": "off",
@@ -58,6 +59,10 @@ export default function oxlintConfig({ react = true }: OxlintConfigOptions = {})
         specifier: "@tractorbeam/oxlint-config/anti-slop",
       },
     ],
+    options: {
+      typeAware: true,
+      typeCheck: true,
+    },
     plugins: react
       ? ["import", "jsx-a11y", "promise", "react", "react-perf"]
       : ["import", "promise"],

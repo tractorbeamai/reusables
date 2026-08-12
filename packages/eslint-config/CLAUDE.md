@@ -19,9 +19,7 @@ import type { Rule } from "eslint";
 const createRule = ESLintUtils.RuleCreator.withoutDocs;
 
 export const myRule = createRule({
-  meta: {
-    /* ... */
-  },
+  meta: {/* ... */},
   defaultOptions: [], // Required even if empty
   create(context) {
     /* ... */

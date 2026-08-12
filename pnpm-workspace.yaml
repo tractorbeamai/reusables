@@ -4,7 +4,7 @@ packages:
 catalogMode: strict
 
 catalog:
-  "@changesets/cli": 2.29.8
+  "@changesets/cli": 3.0.0
   "@eslint/js": 10.0.1
   "@ianvs/prettier-plugin-sort-imports": 4.7.0
   "@tanstack/eslint-plugin-router": 1.141.0
@@ -26,7 +26,7 @@ catalog:
   eslint-plugin-unicorn: 72.0.0
   eslint-plugin-zod: 4.8.0
   globals: 17.7.0
-  oxfmt: 0.57.0
+  oxfmt: 0.63.0
   oxlint: 1.78.0
   oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
   oxlint-tsgolint: 7.0.2001

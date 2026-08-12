@@ -11,10 +11,6 @@ export default defineConfig({
   lint: {
     ...oxlintConfig({ react: false }),
     ignorePatterns: ["**/dist/**"],
-    options: {
-      typeAware: true,
-      typeCheck: true,
-    },
   },
   run: {
     cache: true,

@@ -10,7 +10,6 @@ export default defineConfig({
     },
     {
       deps: {
-        alwaysBundle: ["oxlint-plugin-anti-slop"],
         onlyBundle: ["@oxlint/plugins", "oxlint-plugin-anti-slop"],
       },
       dts: false,

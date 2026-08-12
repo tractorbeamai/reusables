@@ -7,13 +7,13 @@
     "url": "git+https://github.com/tractorbeamai/reusables.git"
   },
   "scripts": {
-    "build": "vp run workspace:build",
+    "build": "vp run -r build",
     "changeset": "changeset",
     "check": "vp check",
-    "clean": "vp run workspace:clean",
+    "clean": "vp run -r --no-cache clean",
     "format": "vp fmt",
-    "release": "vp run workspace:release",
-    "test": "vp run workspace:test"
+    "release": "changeset publish",
+    "test": "vp run -r test"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.8",

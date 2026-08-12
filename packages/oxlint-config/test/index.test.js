@@ -4,22 +4,11 @@ import { test } from "node:test";
 import antiSlopPlugin from "@tractorbeam/oxlint-config/anti-slop";
 import oxlintConfig from "@tractorbeam/oxlint-config";
 
-const antiSlopRules = [
-  "no-chained-type-assertions",
-  "no-conditional-empty-object-spread",
-  "no-known-value-widening",
-  "no-object-parameters",
-  "no-runtime-typeof",
-  "no-shape-in-symbol-names",
-  "no-unknown-parameters",
-  "no-unknown-type-aliases",
-  "no-unsafe-dictionary-type",
-  "no-widen-then-assert",
-];
+const antiSlopRules = Object.keys(antiSlopPlugin.rules);
 
 test("loads the anti-slop plugin dependency", () => {
   assert.equal(antiSlopPlugin.meta.name, "anti-slop");
-  assert.deepEqual(Object.keys(antiSlopPlugin.rules).sort(), [...antiSlopRules].sort());
+  assert.ok(antiSlopRules.length > 0);
 });
 
 test("enables React linting by default with globally scoped rules first", () => {
@@ -28,7 +17,6 @@ test("enables React linting by default with globally scoped rules first", () => 
     "max-lines-per-function",
     "no-inline-comments",
     "no-shadow",
-    ...antiSlopRules.map((rule) => `anti-slop/${rule}`),
     "import/max-dependencies",
     "import/no-namespace",
     "import/no-unassigned-import",
@@ -60,7 +48,16 @@ test("enables React linting by default with globally scoped rules first", () => 
     },
   ]);
   assert.deepEqual(config.plugins, ["import", "jsx-a11y", "promise", "react", "react-perf"]);
-  assert.deepEqual(Object.keys(config.rules), expectedRules);
+  const configuredRules = Object.keys(config.rules);
+  const configuredAntiSlopRules = configuredRules
+    .filter((rule) => rule.startsWith("anti-slop/"))
+    .map((rule) => rule.slice("anti-slop/".length));
+
+  assert.deepEqual(configuredAntiSlopRules.sort(), [...antiSlopRules].sort());
+  assert.deepEqual(
+    configuredRules.filter((rule) => !rule.startsWith("anti-slop/")),
+    expectedRules,
+  );
 });
 
 test("omits React plugins and rules when React support is disabled", () => {

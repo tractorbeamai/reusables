@@ -12,7 +12,7 @@ catalog:
   "@types/eslint-plugin-jsx-a11y": 6.10.1
   "@types/node": 24.13.3
   "@typescript-eslint/utils": 8.67.0
-  eslint: ">= 9"
+  eslint: "9.39.2"
   eslint-config-prettier: 10.1.8
   eslint-plugin-depend: 1.5.0
   eslint-plugin-import-lite: 0.6.0
@@ -33,7 +33,7 @@ catalog:
   parse5: 8.0.1
   postcss: 8.5.26
   postcss-value-parser: 4.2.0
-  prettier: ">=3.0.0"
+  prettier: "3.7.4"
   prettier-plugin-packagejson: 3.0.2
   prettier-plugin-tailwindcss: 0.8.1
   tinyglobby: 0.2.17

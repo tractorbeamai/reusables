@@ -64,8 +64,8 @@ catalogs:
       specifier: 3.1.1
       version: 3.1.1
     eslint-plugin-unicorn:
-      specifier: 72.0.0
-      version: 72.0.0
+      specifier: 73.0.0
+      version: 73.0.0
     eslint-plugin-zod:
       specifier: 4.9.0
       version: 4.9.0
@@ -184,7 +184,7 @@ importers:
         version: 3.1.1(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-unicorn:
         specifier: 'catalog:'
-        version: 72.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
+        version: 73.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       eslint-plugin-zod:
         specifier: 'catalog:'
         version: 4.9.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(oxlint@1.78.0(oxlint-tsgolint@7.0.2001)(vite-plus@0.2.8(@types/node@24.13.3)(jiti@2.6.1)(typescript@6.0.3)(vite@8.2.1(@types/node@24.13.3)(jiti@2.6.1)(yaml@2.9.0))(yaml@2.9.0)))(supports-color@7.2.0)(typescript@6.0.3)(zod@4.1.13)
@@ -1974,8 +1974,8 @@ packages:
     peerDependencies:
       eslint: '>=9.38.0'
 
-  eslint-plugin-unicorn@72.0.0:
-    resolution: {integrity: sha512-hqO6ksoOHO+ZhdseTuKRVQbx9U7PRO/cv8qAR1mctwzdVO2hYud8uS9luAhp43RJgziYgHAph8eHyipT8GL0ng==}
+  eslint-plugin-unicorn@73.0.0:
+    resolution: {integrity: sha512-V0YatLe9nkGhXEXKe2Qljb1EY0sJHwDV0HUF1NKFwtsHh/fU7qGHDgv+6fchzZcgU2/7noHo2gdjnmo0P2uDPw==}
     engines: {node: '>=22'}
     peerDependencies:
       eslint: '>=10.4'
@@ -2150,10 +2150,6 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
-    engines: {node: '>=18'}
-
-  globals@17.7.0:
-    resolution: {integrity: sha512-Czmyns5dUsq4seFBR/Kdydhmo8y9kC79hiSkPn0YcGtNnYWnrgt0vjrSjx9tspoDGWm2CMarffRuLjM4xUz8xg==}
     engines: {node: '>=18'}
 
   globals@17.9.0:
@@ -2546,11 +2542,6 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  nanoid@3.3.16:
-    resolution: {integrity: sha512-bzlKTyNJ7+LdGIIwy8ijFpIqEQIvafahV7eYykJ8Cvh42EdJeODoJ6gUJXpQJvej1BddH8OqTXZNE/KfbWAu8Q==}
-    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
   nanoid@3.3.18:
     resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -2728,10 +2719,6 @@ packages:
 
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
-
-  postcss@8.5.19:
-    resolution: {integrity: sha512-Mz8SaolMd8nB+G13WkORcxQKHZ/NE4xXevtkJHVuG+guo9/wYKlIMTKAqGdEmYOXR2ijPjTYNHssizdaVSUNdQ==}
-    engines: {node: ^10 || ^12 || >=14}
 
   postcss@8.5.26:
     resolution: {integrity: sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==}
@@ -3013,10 +3000,6 @@ packages:
 
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
-
-  tinyexec@1.2.4:
-    resolution: {integrity: sha512-SHf/r48b7vOrjve9PxJo3MN5v5yuyjHvdUcrQffT3WXMUfnGmHDVbC4k3sHJaJTgZCwpUplIaAo5ANtMyp3YHg==}
-    engines: {node: '>=18'}
 
   tinyexec@1.3.0:
     resolution: {integrity: sha512-QKAl9m8gWWGHV8jZcPeym6j+XULi6tOf1mT83WYJ4Lk2ytW/uwAWkrP0uFsdoYMdueVJ0qs26wZ+23xeB4ibNQ==}
@@ -3511,7 +3494,7 @@ snapshots:
   '@changesets/format@0.1.1':
     dependencies:
       package-manager-detector: 1.8.0
-      tinyexec: 1.2.4
+      tinyexec: 1.3.0
 
   '@changesets/get-dependents-graph@3.0.0':
     dependencies:
@@ -4253,7 +4236,7 @@ snapshots:
       '@oxc-project/runtime': 0.142.0
       '@oxc-project/types': 0.142.0
       lightningcss: 1.33.0
-      postcss: 8.5.19
+      postcss: 8.5.26
       yuku-codegen: 0.5.48
       yuku-parser: 0.5.48
     optionalDependencies:
@@ -4276,7 +4259,7 @@ snapshots:
       '@oxc-project/runtime': 0.142.0
       '@oxc-project/types': 0.142.0
       lightningcss: 1.33.0
-      postcss: 8.5.19
+      postcss: 8.5.26
       yuku-codegen: 0.5.48
       yuku-parser: 0.5.48
     optionalDependencies:
@@ -4787,7 +4770,7 @@ snapshots:
   eslint-plugin-playwright@2.11.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0)):
     dependencies:
       eslint: 9.39.2(jiti@2.6.1)(supports-color@7.2.0)
-      globals: 17.7.0
+      globals: 17.9.0
 
   eslint-plugin-react-compiler@19.1.0-rc.2(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))(supports-color@7.2.0):
     dependencies:
@@ -4849,7 +4832,7 @@ snapshots:
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
 
-  eslint-plugin-unicorn@72.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0)):
+  eslint-plugin-unicorn@73.0.0(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@9.39.2(jiti@2.6.1)(supports-color@7.2.0))
       '@eslint/css-tree': 4.0.4
@@ -5060,8 +5043,6 @@ snapshots:
       is-glob: 4.0.3
 
   globals@14.0.0: {}
-
-  globals@17.7.0: {}
 
   globals@17.9.0: {}
 
@@ -5409,8 +5390,6 @@ snapshots:
 
   ms@2.1.3: {}
 
-  nanoid@3.3.16: {}
-
   nanoid@3.3.18: {}
 
   natural-compare@1.4.0: {}
@@ -5700,12 +5679,6 @@ snapshots:
   possible-typed-array-names@1.1.0: {}
 
   postcss-value-parser@4.2.0: {}
-
-  postcss@8.5.19:
-    dependencies:
-      nanoid: 3.3.16
-      picocolors: 1.1.1
-      source-map-js: 1.2.1
 
   postcss@8.5.26:
     dependencies:
@@ -6003,8 +5976,6 @@ snapshots:
       convert-hrtime: 5.0.0
 
   tinybench@2.9.0: {}
-
-  tinyexec@1.2.4: {}
 
   tinyexec@1.3.0: {}
 

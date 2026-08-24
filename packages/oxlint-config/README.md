@@ -24,6 +24,8 @@ export default defineConfig({
 
 React, React Performance, and JSX accessibility plugins and rules are enabled by default. Disable them for projects that do not use React:
 
+The React preset also enables Tractorbeam's UI rules. These warn when a `Button` uses fixed Tailwind sizing utilities instead of its `size` prop, or when an icon nested inside a `Button` has its own `className`. Icon detection supports `*Icon` component names, `Icons.*` members, Lucide, and imports from packages or local modules whose specifier contains `icon`.
+
 ```typescript
 export default defineConfig({
   lint: oxlintConfig({ react: false }),

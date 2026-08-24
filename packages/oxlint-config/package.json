@@ -31,6 +31,9 @@
     },
     "./anti-slop": {
       "default": "./dist/anti-slop.mjs"
+    },
+    "./ui": {
+      "default": "./dist/ui.mjs"
     }
   },
   "publishConfig": {
@@ -43,6 +46,7 @@
     "prepublishOnly": "vp run build"
   },
   "devDependencies": {
+    "@oxlint/plugins": "catalog:",
     "@tractorbeam/typescript-config": "workspace:*",
     "oxlint": "catalog:",
     "oxlint-plugin-anti-slop": "catalog:",

@@ -15,6 +15,9 @@ catalogs:
     '@ianvs/prettier-plugin-sort-imports':
       specifier: 4.7.1
       version: 4.7.1
+    '@oxlint/plugins':
+      specifier: 1.78.0
+      version: 1.78.0
     '@tanstack/eslint-plugin-router':
       specifier: 1.162.0
       version: 1.162.0
@@ -225,6 +228,9 @@ importers:
 
   packages/oxlint-config:
     devDependencies:
+      '@oxlint/plugins':
+        specifier: 'catalog:'
+        version: 1.78.0
       '@tractorbeam/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

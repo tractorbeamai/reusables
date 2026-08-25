@@ -1,5 +1,11 @@
 # @tractorbeam/oxlint-config
 
+## 0.4.0
+
+### Minor Changes
+
+- 69bec2d: Add Oxlint UI rules for Button sizing and nested icon classes.
+
 ## 0.3.0
 
 ### Minor Changes

@@ -3,12 +3,21 @@ import { test } from "node:test";
 
 import antiSlopPlugin from "@tractorbeam/oxlint-config/anti-slop";
 import oxlintConfig from "@tractorbeam/oxlint-config";
+import uiPlugin from "@tractorbeam/oxlint-config/ui";
 
 const antiSlopRules = Object.keys(antiSlopPlugin.rules);
 
 test("loads the anti-slop plugin dependency", () => {
   assert.equal(antiSlopPlugin.meta.name, "anti-slop");
   assert.ok(antiSlopRules.length > 0);
+});
+
+test("loads the UI plugin", () => {
+  assert.equal(uiPlugin.meta.name, "ui");
+  assert.deepEqual(Object.keys(uiPlugin.rules), [
+    "no-button-height-class",
+    "no-icon-class-in-button",
+  ]);
 });
 
 test("enables React linting by default with globally scoped rules first", () => {
@@ -36,6 +45,8 @@ test("enables React linting by default with globally scoped rules first", () => 
     "react-perf/jsx-no-new-array-as-prop",
     "react-perf/jsx-no-new-function-as-prop",
     "react-perf/jsx-no-new-object-as-prop",
+    "ui/no-button-height-class",
+    "ui/no-icon-class-in-button",
   ];
 
   // Act
@@ -46,6 +57,10 @@ test("enables React linting by default with globally scoped rules first", () => 
     {
       name: "anti-slop",
       specifier: "@tractorbeam/oxlint-config/anti-slop",
+    },
+    {
+      name: "ui",
+      specifier: "@tractorbeam/oxlint-config/ui",
     },
   ]);
   assert.deepEqual(config.plugins, ["import", "jsx-a11y", "promise", "react", "react-perf"]);
@@ -63,7 +78,7 @@ test("enables React linting by default with globally scoped rules first", () => 
 
 test("omits React plugins and rules when React support is disabled", () => {
   // Arrange
-  const reactRulePrefixes = ["jsx-a11y/", "react/", "react-perf/"];
+  const reactRulePrefixes = ["jsx-a11y/", "react/", "react-perf/", "ui/"];
 
   // Act
   const config = oxlintConfig({ react: false });
@@ -77,4 +92,10 @@ test("omits React plugins and rules when React support is disabled", () => {
     false,
   );
   assert.equal(config.rules["no-shadow"], "off");
+  assert.deepEqual(config.jsPlugins, [
+    {
+      name: "anti-slop",
+      specifier: "@tractorbeam/oxlint-config/anti-slop",
+    },
+  ]);
 });

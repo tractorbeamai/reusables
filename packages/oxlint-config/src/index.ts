@@ -43,6 +43,8 @@ const reactPluginRules = {
   "react-perf/jsx-no-new-array-as-prop": "warn",
   "react-perf/jsx-no-new-function-as-prop": "warn",
   "react-perf/jsx-no-new-object-as-prop": "warn",
+  "ui/no-button-height-class": "warn",
+  "ui/no-icon-class-in-button": "warn",
 } satisfies OxlintConfig["rules"];
 
 export default function oxlintConfig({ react = true }: OxlintConfigOptions = {}) {
@@ -58,6 +60,14 @@ export default function oxlintConfig({ react = true }: OxlintConfigOptions = {})
         name: "anti-slop",
         specifier: "@tractorbeam/oxlint-config/anti-slop",
       },
+      ...(react
+        ? [
+            {
+              name: "ui",
+              specifier: "@tractorbeam/oxlint-config/ui",
+            },
+          ]
+        : []),
     ],
     options: {
       typeAware: true,

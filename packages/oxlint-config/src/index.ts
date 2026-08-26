@@ -1,25 +1,9 @@
 import type { OxlintConfig } from "oxlint";
 
-export interface OxlintComplexityOptions {
-  /** Maximum allowed cyclomatic complexity. Defaults to 15. */
-  max?: number;
-  /** Use classic McCabe counting or count each switch statement once. */
-  variant?: "classic" | "modified";
-}
-
 export interface OxlintConfigOptions {
-  /** Enable the cyclomatic complexity preset or customize its threshold and variant. */
-  complexity?: boolean | OxlintComplexityOptions;
+  /** Warn when cyclomatic complexity exceeds this value. */
+  complexity?: number;
   react?: boolean;
-}
-
-const defaultComplexityOptions = {
-  max: 15,
-  variant: "classic",
-} as const satisfies OxlintComplexityOptions;
-
-interface ComplexityRules {
-  complexity?: ["warn", Required<OxlintComplexityOptions>];
 }
 
 const globalRules = {
@@ -65,22 +49,12 @@ const reactPluginRules = {
   "ui/no-icon-class-in-button": "warn",
 } satisfies OxlintConfig["rules"];
 
-function complexityRules(complexity: OxlintConfigOptions["complexity"]): ComplexityRules {
-  if (complexity === undefined || complexity === false) return {};
-
-  const options = complexity === true ? defaultComplexityOptions : complexity;
-  const configuredOptions: Required<OxlintComplexityOptions> = {
-    ...defaultComplexityOptions,
-    ...options,
-  };
-
-  return {
-    complexity: ["warn", configuredOptions],
-  } satisfies OxlintConfig["rules"];
-}
-
 export default function oxlintConfig({ complexity, react = true }: OxlintConfigOptions = {}) {
-  const rules = { ...globalRules, ...pluginRules, ...complexityRules(complexity) };
+  const rules = { ...globalRules, ...pluginRules };
+
+  if (complexity !== undefined) {
+    Object.assign(rules, { complexity: ["warn", complexity] });
+  }
 
   if (react) {
     Object.assign(rules, reactPluginRules);

@@ -36,21 +36,11 @@ The shared configuration enables type-aware linting and TypeScript checking. It 
 
 ## Cyclomatic complexity
 
-Cyclomatic complexity linting is opt-in. Enable the shared preset to warn when a function's classic McCabe complexity exceeds 15:
+Cyclomatic complexity linting is opt-in. Set the maximum allowed complexity to enable it:
 
 ```typescript
 export default defineConfig({
-  lint: oxlintConfig({ complexity: true }),
-});
-```
-
-Customize the maximum or use Oxlint's `modified` variant, which counts an entire `switch` statement as one complexity increment instead of counting each case:
-
-```typescript
-export default defineConfig({
-  lint: oxlintConfig({
-    complexity: { max: 10, variant: "modified" },
-  }),
+  lint: oxlintConfig({ complexity: 15 }),
 });
 ```
 

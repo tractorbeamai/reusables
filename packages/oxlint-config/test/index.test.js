@@ -106,16 +106,8 @@ test("omits cyclomatic complexity linting by default", () => {
   assert.equal(config.rules.complexity, undefined);
 });
 
-test("enables the shared cyclomatic complexity preset", () => {
-  const config = oxlintConfig({ complexity: true });
+test("configures a cyclomatic complexity limit", () => {
+  const config = oxlintConfig({ complexity: 15 });
 
-  assert.deepEqual(config.rules.complexity, ["warn", { max: 15, variant: "classic" }]);
-});
-
-test("customizes the cyclomatic complexity threshold and variant", () => {
-  const config = oxlintConfig({
-    complexity: { max: 10, variant: "modified" },
-  });
-
-  assert.deepEqual(config.rules.complexity, ["warn", { max: 10, variant: "modified" }]);
+  assert.deepEqual(config.rules.complexity, ["warn", 15]);
 });

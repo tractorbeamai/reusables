@@ -99,3 +99,15 @@ test("omits React plugins and rules when React support is disabled", () => {
     },
   ]);
 });
+
+test("omits cyclomatic complexity linting by default", () => {
+  const config = oxlintConfig();
+
+  assert.equal(config.rules.complexity, undefined);
+});
+
+test("configures a cyclomatic complexity limit", () => {
+  const config = oxlintConfig({ complexity: 15 });
+
+  assert.deepEqual(config.rules.complexity, ["warn", 15]);
+});

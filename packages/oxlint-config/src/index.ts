@@ -1,6 +1,8 @@
 import type { OxlintConfig } from "oxlint";
 
 export interface OxlintConfigOptions {
+  /** Warn when cyclomatic complexity exceeds this value. */
+  complexity?: number;
   react?: boolean;
 }
 
@@ -47,8 +49,12 @@ const reactPluginRules = {
   "ui/no-icon-class-in-button": "warn",
 } satisfies OxlintConfig["rules"];
 
-export default function oxlintConfig({ react = true }: OxlintConfigOptions = {}) {
+export default function oxlintConfig({ complexity, react = true }: OxlintConfigOptions = {}) {
   const rules = { ...globalRules, ...pluginRules };
+
+  if (complexity !== undefined) {
+    Object.assign(rules, { complexity: ["warn", complexity] });
+  }
 
   if (react) {
     Object.assign(rules, reactPluginRules);

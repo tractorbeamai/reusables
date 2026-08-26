@@ -34,6 +34,16 @@ export default defineConfig({
 
 The shared configuration enables type-aware linting and TypeScript checking. It also warns when a file exceeds 1,000 lines or a function exceeds 150 lines.
 
+## Cyclomatic complexity
+
+Cyclomatic complexity linting is opt-in. Set the maximum allowed complexity to enable it:
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({ complexity: 15 }),
+});
+```
+
 Compose repository-specific rules, ignores, and overrides in `vite.config.ts`:
 
 ```typescript

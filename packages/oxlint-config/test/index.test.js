@@ -26,6 +26,7 @@ test("enables React linting by default with globally scoped rules first", () => 
     "max-lines",
     "max-lines-per-function",
     "no-inline-comments",
+    "no-nested-ternary",
     "no-shadow",
     "import/max-dependencies",
     "import/no-namespace",
@@ -70,6 +71,7 @@ test("enables React linting by default with globally scoped rules first", () => 
     .map((rule) => rule.slice("anti-slop/".length));
 
   assert.deepEqual(configuredAntiSlopRules.sort(), [...antiSlopRules].sort());
+  assert.equal(config.rules["no-nested-ternary"], "error");
   assert.deepEqual(
     configuredRules.filter((rule) => !rule.startsWith("anti-slop/")),
     expectedRules,

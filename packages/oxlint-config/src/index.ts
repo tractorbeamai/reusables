@@ -10,6 +10,7 @@ const globalRules = {
   "max-lines": ["warn", { max: 1000 }],
   "max-lines-per-function": ["warn", { max: 150 }],
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
+  "no-nested-ternary": "error",
   "no-shadow": "off",
 } satisfies OxlintConfig["rules"];
 

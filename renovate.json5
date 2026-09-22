@@ -1,4 +1,8 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["local>tractorbeamai/.github:renovate-config"],
+  extends: [
+    "local>tractorbeamai/.github:renovate-config",
+    "local>tractorbeamai/.github:renovate-pnpm-lock",
+    "local>tractorbeamai/.github:renovate-vite-plus",
+  ],
 }

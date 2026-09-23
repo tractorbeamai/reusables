@@ -1,6 +1,9 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["local>tractorbeamai/.github:renovate-config"],
+  extends: [
+    "local>tractorbeamai/.github:renovate-config",
+    "local>tractorbeamai/.github:renovate-vite-plus",
+  ],
   postUpgradeTasks: {
     commands: [
       "npx --yes --ignore-scripts --package corepack@0.36.0 corepack pnpm install --lockfile-only --ignore-scripts --no-frozen-lockfile",
@@ -16,23 +19,6 @@
       matchStrings: ["corepack@(?<currentValue>\\d+\\.\\d+\\.\\d+)"],
       depNameTemplate: "corepack",
       datasourceTemplate: "npm",
-    },
-    {
-      customType: "regex",
-      managerFilePatterns: ["/^pnpm-workspace\\.yaml$/"],
-      matchStrings: [
-        "  vite: npm:@voidzero-dev/vite-plus-core@(?<currentValue>[^\\s]+)\\n  vite-plus: [^\\s]+",
-      ],
-      depNameTemplate: "vite-plus",
-      datasourceTemplate: "npm",
-      autoReplaceStringTemplate: "  vite: npm:@voidzero-dev/vite-plus-core@{{{newValue}}}\n  vite-plus: {{{newValue}}}",
-    },
-  ],
-  packageRules: [
-    {
-      matchManagers: ["npm"],
-      matchPackageNames: ["vite-plus", "@voidzero-dev/vite-plus-core"],
-      enabled: false,
     },
   ],
 }

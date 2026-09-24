@@ -7,15 +7,5 @@
     ],
     fileFilters: ["pnpm-lock.yaml"],
     executionMode: "branch",
-  },
-  customManagers: [
-    {
-      customType: "regex",
-      description: "Maintain the Corepack version used by this repository's lockfile hook.",
-      managerFilePatterns: ["/^renovate\\.json5?$/"],
-      matchStrings: ["corepack@(?<currentValue>\\d+\\.\\d+\\.\\d+)"],
-      depNameTemplate: "corepack",
-      datasourceTemplate: "npm",
-    },
-  ],
+  }
 }

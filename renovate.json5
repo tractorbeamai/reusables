@@ -1,4 +1,11 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["local>tractorbeamai/.github:renovate-config"],
+  postUpgradeTasks: {
+    commands: [
+      "npx --yes --ignore-scripts --package corepack@0.36.0 corepack pnpm install --lockfile-only --ignore-scripts --no-frozen-lockfile",
+    ],
+    fileFilters: ["pnpm-lock.yaml"],
+    executionMode: "branch",
+  },
 }

@@ -40,6 +40,6 @@ catalog:
   tinyglobby: 0.2.17
   typescript: 6.0.3
   typescript-eslint: 8.67.0
-  vite: 8.2.1
-  vite-plugin-singlefile: 2.3.3
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.8
   vite-plus: 0.2.8
+  vite-plugin-singlefile: 2.3.3

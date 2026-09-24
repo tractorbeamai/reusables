@@ -240,8 +240,8 @@ catalogs:
       specifier: 1.85.0
       version: 1.85.0
     oxlint-plugin-anti-slop:
-      specifier: github:dmmulroy/anti-slop#b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
-      version: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
+      specifier: github:dmmulroy/anti-slop#c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b
+      version: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b
     oxlint-tsgolint:
       specifier: 7.0.2002
       version: 7.0.2002
@@ -397,7 +397,7 @@ importers:
         version: 1.85.0(oxlint-tsgolint@7.0.2002)(vite-plus@0.3.3(@types/node@26.6.2)(typescript@6.0.3)(yaml@2.9.1))
       oxlint-plugin-anti-slop:
         specifier: 'catalog:'
-        version: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
+        version: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b
       oxlint-tsgolint:
         specifier: 'catalog:'
         version: 7.0.2002
@@ -2824,9 +2824,9 @@ packages:
       vite-plus:
         optional: true
 
-  oxlint-plugin-anti-slop@https://codeload.github.com/dmmulroy/anti-slop/tar.gz/b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0:
-    resolution: {gitHosted: true, integrity: sha512-GKXgVm7H/5RRVYwuTfuiGvFWmiy8JJKqrYTVacYh1IDtPHgk1mhtlPBkyo3WBfMOUPiRXHymgf134oFyL0elKQ==, tarball: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0}
-    version: 0.1.0
+  oxlint-plugin-anti-slop@https://codeload.github.com/dmmulroy/anti-slop/tar.gz/c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b:
+    resolution: {gitHosted: true, integrity: sha512-Vj/M0k5Bt1Q2pGdfXZ24wGXycBcvFHwJ/pjHIFl1hV8soaZKHl1lba5UXlQFY5xgwQ5TNfEWiKfsEt0yyRyVUg==, tarball: https://codeload.github.com/dmmulroy/anti-slop/tar.gz/c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b}
+    version: 0.1.2
 
   oxlint-tsgolint@7.0.2001:
     resolution: {integrity: sha512-KjK/XLcXr1DSyonKhsuFqJRiuKqcyG9j3LJ8nkOsrLzGvodBPqzHOKauy10asLMDI0sUpvb+1sxlzff3udZvfg==}
@@ -5788,7 +5788,7 @@ snapshots:
       '@oxfmt/binding-win32-x64-msvc': 0.70.0
       vite-plus: 0.3.3(@types/node@26.6.2)(typescript@6.0.3)(yaml@2.9.1)
 
-  oxlint-plugin-anti-slop@https://codeload.github.com/dmmulroy/anti-slop/tar.gz/b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0:
+  oxlint-plugin-anti-slop@https://codeload.github.com/dmmulroy/anti-slop/tar.gz/c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b:
     dependencies:
       '@oxlint/plugins': 1.78.0
 

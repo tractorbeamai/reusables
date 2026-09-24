@@ -29,7 +29,7 @@ catalog:
   globals: 17.12.0
   oxfmt: 0.70.0
   oxlint: 1.85.0
-  oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#b5d2288db1f00469a1d5f2e3b0e265e5a5676fd0
+  oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b
   oxlint-tsgolint: 7.0.2002
   parse5: 8.0.1
   postcss: 8.5.28

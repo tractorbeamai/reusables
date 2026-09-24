@@ -7,5 +7,5 @@
     ],
     fileFilters: ["pnpm-lock.yaml"],
     executionMode: "branch",
-  }
+  },
 }

@@ -1,5 +1,12 @@
 # @tractorbeam/oxlint-config
 
+## 0.5.0
+
+### Minor Changes
+
+- 61a6cab: Add an opt-in cyclomatic complexity limit to the shared Oxlint config.
+- 1c0d11e: Enable `no-nested-ternary` as an error in the default Oxlint configuration.
+
 ## 0.4.0
 
 ### Minor Changes

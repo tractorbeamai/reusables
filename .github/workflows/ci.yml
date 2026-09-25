@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
-      - uses: voidzero-dev/setup-vp@9fd26ff49f9b5e6276c2b493da4454ad4527f7f4 # v1.20.0
+      - uses: voidzero-dev/setup-vp@24d870228786dc83ae73482406bdd1e7befaec14 # v1.21.0
         with:
           cache: true
           node-version-file: package.json
@@ -31,7 +31,7 @@ jobs:
       - run: vp check
       - run: vp run -r test
 
-      - uses: reviewdog/action-actionlint@ab7138020abfe6cd20b742c82e5b7a9749fb5884 # v1.75.0
+      - uses: reviewdog/action-actionlint@0f79693de552e66b9934daa63513584415a955e4 # v1.75.2
         with:
           reporter: local
           filter_mode: nofilter

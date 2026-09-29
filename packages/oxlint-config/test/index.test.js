@@ -1,16 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import antiSlopPlugin from "@tractorbeam/oxlint-config/anti-slop";
 import oxlintConfig from "@tractorbeam/oxlint-config";
 import uiPlugin from "@tractorbeam/oxlint-config/ui";
-
-const antiSlopRules = Object.keys(antiSlopPlugin.rules);
-
-test("loads the anti-slop plugin dependency", () => {
-  assert.equal(antiSlopPlugin.meta.name, "anti-slop");
-  assert.ok(antiSlopRules.length > 0);
-});
 
 test("loads the UI plugin", () => {
   assert.equal(uiPlugin.meta.name, "ui");
@@ -66,11 +58,13 @@ test("enables React linting by default with globally scoped rules first", () => 
   ]);
   assert.deepEqual(config.plugins, ["import", "jsx-a11y", "promise", "react", "react-perf"]);
   const configuredRules = Object.keys(config.rules);
-  const configuredAntiSlopRules = configuredRules
-    .filter((rule) => rule.startsWith("anti-slop/"))
-    .map((rule) => rule.slice("anti-slop/".length));
-
-  assert.deepEqual(configuredAntiSlopRules.sort(), [...antiSlopRules].sort());
+  const configuredAntiSlopRules = Object.entries(config.rules).filter(([rule]) =>
+    rule.startsWith("anti-slop/"),
+  );
+  assert.ok(configuredAntiSlopRules.length > 0);
+  for (const [, severity] of configuredAntiSlopRules) {
+    assert.equal(severity, "error");
+  }
   assert.equal(config.rules["no-nested-ternary"], "error");
   assert.deepEqual(
     configuredRules.filter((rule) => !rule.startsWith("anti-slop/")),

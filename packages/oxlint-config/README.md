@@ -2,7 +2,7 @@
 
 Shared Oxlint configuration for Tractorbeam projects.
 
-The preset enables every rule from [anti-slop](https://github.com/dmmulroy/anti-slop) at error severity. The plugin is built from a pinned GitHub dependency and registered automatically; its source is not vendored into this repository.
+The preset enables a selected set of [anti-slop](https://github.com/dmmulroy/anti-slop) rules at error severity. The plugin is built from a pinned GitHub dependency and registered automatically; its source is not vendored into this repository.
 
 ## Install
 

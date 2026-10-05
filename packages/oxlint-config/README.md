@@ -22,9 +22,13 @@ export default defineConfig({
 });
 ```
 
-React, React Performance, and JSX accessibility plugins and rules are enabled by default. Disable them for projects that do not use React:
+React, React Performance, and JSX accessibility plugins and rules are enabled by default.
 
 The React preset also enables Tractorbeam's UI rules. These warn when a `Button` uses fixed Tailwind sizing utilities instead of its `size` prop, or when an icon nested inside a `Button` has its own `className`. Icon detection supports `*Icon` component names, `Icons.*` members, Lucide, and imports from packages or local modules whose specifier contains `icon`.
+
+The UI rules also keep application entry points out of reusable component directories. They warn when a file under `components/` is named `page`, `route`, `*-page`, or `*-route`, or declares a function component named `*Page` or `*Route`; implement those screens in the router's route files instead. Files elsewhere, such as Next.js `app/**/page.tsx` or Playwright page objects, are unaffected. For TanStack Router, they warn when a route factory registers an inline or otherwise named `component`; register a named `*Route` component, or `Outlet` for a layout with nothing of its own.
+
+Disable React linting for projects that do not use React:
 
 ```typescript
 export default defineConfig({

@@ -9,6 +9,8 @@ test("loads the UI plugin", () => {
   assert.deepEqual(Object.keys(uiPlugin.rules), [
     "no-button-height-class",
     "no-icon-class-in-button",
+    "no-pages-in-components",
+    "route-component-names",
   ]);
 });
 
@@ -40,6 +42,8 @@ test("enables React linting by default with globally scoped rules first", () => 
     "react-perf/jsx-no-new-object-as-prop",
     "ui/no-button-height-class",
     "ui/no-icon-class-in-button",
+    "ui/no-pages-in-components",
+    "ui/route-component-names",
   ];
 
   // Act

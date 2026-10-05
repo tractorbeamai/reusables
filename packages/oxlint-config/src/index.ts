@@ -48,6 +48,8 @@ const reactPluginRules = {
   "react-perf/jsx-no-new-object-as-prop": "warn",
   "ui/no-button-height-class": "warn",
   "ui/no-icon-class-in-button": "warn",
+  "ui/no-pages-in-components": "warn",
+  "ui/route-component-names": "warn",
 } satisfies OxlintConfig["rules"];
 
 export default function oxlintConfig({ complexity, react = true }: OxlintConfigOptions = {}) {

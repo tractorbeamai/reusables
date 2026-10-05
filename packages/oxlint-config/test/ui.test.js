@@ -69,3 +69,60 @@ tester.run("ui/no-icon-class-in-button", uiPlugin.rules["no-icon-class-in-button
     },
   ],
 });
+
+tester.run("ui/no-pages-in-components", uiPlugin.rules["no-pages-in-components"], {
+  valid: [
+    { code: "function SettingsRoute() {}", filename: "src/routes/settings.tsx" },
+    { code: "export default function Page() {}", filename: "app/settings/page.tsx" },
+    { code: "export class LoginPage {}", filename: "tests/pages/login-page.ts" },
+    { code: "function PageHeader() {}", filename: "src/components/page-header.tsx" },
+    { code: "const Pagination = () => null;", filename: "src/components/pagination.tsx" },
+    { code: "const routePage = 1;", filename: "src/components/table.tsx" },
+  ],
+  invalid: [
+    {
+      code: "function SettingsPage() {}",
+      filename: "src/components/settings.tsx",
+      errors: [{ messageId: "entryInComponents" }],
+    },
+    {
+      code: "export const ObjectRoute = () => null;",
+      filename: "src/components/objects/object.tsx",
+      errors: [{ messageId: "entryInComponents" }],
+    },
+    {
+      code: "export const value = 1;",
+      filename: "src/components/settings-page.tsx",
+      errors: [{ messageId: "entryInComponents" }],
+    },
+    {
+      code: "export const value = 1;",
+      filename: "src\\components\\route.ts",
+      errors: [{ messageId: "entryInComponents" }],
+    },
+  ],
+});
+
+tester.run("ui/route-component-names", uiPlugin.rules["route-component-names"], {
+  valid: [
+    'import { createFileRoute } from "@tanstack/react-router"; export const Route = createFileRoute("/settings")({ component: SettingsRoute });',
+    'import { Outlet, createFileRoute } from "@tanstack/react-router"; export const Route = createFileRoute("/settings")({ component: Outlet });',
+    'import { createRootRouteWithContext } from "@tanstack/react-router"; export const Route = createRootRouteWithContext<Context>()({ component: RootRoute });',
+    'import { createFileRoute } from "@tanstack/react-router"; export const Route = createFileRoute("/settings")({ loader });',
+    'import { createFileRoute } from "./router"; export const Route = createFileRoute("/settings")({ component: Settings });',
+  ],
+  invalid: [
+    {
+      code: 'import { createFileRoute } from "@tanstack/react-router"; export const Route = createFileRoute("/settings")({ component: SettingsPage });',
+      errors: [{ messageId: "routeName" }],
+    },
+    {
+      code: 'import { createFileRoute } from "@tanstack/react-router"; export const Route = createFileRoute("/settings")({ component: () => <Settings /> });',
+      errors: [{ messageId: "routeName" }],
+    },
+    {
+      code: 'import { createRoute as route } from "@tanstack/react-router"; export const settings = route({ path: "/settings", component: Settings });',
+      errors: [{ messageId: "routeName" }],
+    },
+  ],
+});

@@ -58,7 +58,7 @@ export default defineConfig({
 });
 ```
 
-Matching files receive Playwright's recommended rules plus stricter errors for unawaited Playwright calls (including locator methods), `nth()`-style positional locators, raw CSS or XPath locators, `waitForTimeout`, and non-retrying assertions. The rules are applied through the returned `overrides`, so they never reach application source. Set Playwright's `settings` (for example, `globalAliases` for custom fixtures) in your own configuration.
+Matching files receive Playwright's recommended rules plus stricter errors for unawaited Playwright calls (including locator methods), `nth()`-style positional locators, raw CSS or XPath locators, and `waitForTimeout`. The rules are applied through the returned `overrides`, so they never reach application source. Set Playwright's `settings` (for example, `globalAliases` for custom fixtures) in your own configuration.
 
 ## Stylistic rules
 

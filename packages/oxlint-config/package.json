@@ -34,6 +34,12 @@
     },
     "./ui": {
       "default": "./dist/ui.mjs"
+    },
+    "./playwright": {
+      "default": "./dist/playwright.mjs"
+    },
+    "./stylistic": {
+      "default": "./dist/stylistic.mjs"
     }
   },
   "publishConfig": {
@@ -44,6 +50,10 @@
     "build": "vp pack",
     "clean": "rm -rf dist *.tsbuildinfo",
     "prepublishOnly": "vp run build"
+  },
+  "dependencies": {
+    "@stylistic/eslint-plugin": "catalog:",
+    "eslint-plugin-playwright": "catalog:"
   },
   "devDependencies": {
     "@oxlint/plugins": "catalog:",

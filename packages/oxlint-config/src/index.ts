@@ -1,14 +1,19 @@
+import playwright from "eslint-plugin-playwright";
 import type { OxlintConfig } from "oxlint";
 
 export interface OxlintConfigOptions {
   /** Warn when cyclomatic complexity exceeds this value. */
   complexity?: number;
+  /** Apply Playwright rules to test files matching these globs. */
+  playwright?: { files: string[] };
   react?: boolean;
+  /** Require braces on every block and blank lines around multiline statements. */
+  stylistic?: boolean;
 }
 
 const globalRules = {
   "max-lines": ["warn", { max: 1000 }],
-  "max-lines-per-function": ["warn", { max: 150 }],
+  "max-lines-per-function": ["warn", { max: 300 }],
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
   "no-nested-ternary": "error",
   "no-shadow": "off",
@@ -52,7 +57,38 @@ const reactPluginRules = {
   "ui/route-component-names": "warn",
 } satisfies OxlintConfig["rules"];
 
-export default function oxlintConfig({ complexity, react = true }: OxlintConfigOptions = {}) {
+const MULTILINE_STATEMENTS = [
+  "multiline-block-like",
+  "multiline-expression",
+  "multiline-const",
+  "multiline-let",
+  "multiline-var",
+];
+
+const stylisticRules = {
+  "@stylistic/padding-line-between-statements": [
+    "error",
+    { blankLine: "always", prev: "*", next: MULTILINE_STATEMENTS },
+    { blankLine: "always", prev: MULTILINE_STATEMENTS, next: "*" },
+  ],
+  curly: ["error", "all"],
+} satisfies OxlintConfig["rules"];
+
+const playwrightRules = {
+  ...playwright.configs["flat/recommended"].rules,
+  "playwright/missing-playwright-await": ["error", { includePageLocatorMethods: true }],
+  "playwright/no-nth-methods": "error",
+  "playwright/no-raw-locators": "error",
+  "playwright/no-wait-for-timeout": "error",
+  "playwright/prefer-web-first-assertions": "error",
+} satisfies OxlintConfig["rules"];
+
+export default function oxlintConfig({
+  complexity,
+  playwright: playwrightTests,
+  react = true,
+  stylistic = false,
+}: OxlintConfigOptions = {}) {
   const rules = { ...globalRules, ...pluginRules };
 
   if (complexity !== undefined) {
@@ -61,6 +97,10 @@ export default function oxlintConfig({ complexity, react = true }: OxlintConfigO
 
   if (react) {
     Object.assign(rules, reactPluginRules);
+  }
+
+  if (stylistic) {
+    Object.assign(rules, stylisticRules);
   }
 
   return {
@@ -74,6 +114,22 @@ export default function oxlintConfig({ complexity, react = true }: OxlintConfigO
             {
               name: "ui",
               specifier: "@tractorbeam/oxlint-config/ui",
+            },
+          ]
+        : []),
+      ...(stylistic
+        ? [
+            {
+              name: "@stylistic",
+              specifier: "@tractorbeam/oxlint-config/stylistic",
+            },
+          ]
+        : []),
+      ...(playwrightTests
+        ? [
+            {
+              name: "playwright",
+              specifier: "@tractorbeam/oxlint-config/playwright",
             },
           ]
         : []),
@@ -92,5 +148,6 @@ export default function oxlintConfig({ complexity, react = true }: OxlintConfigO
       pedantic: "warn",
     },
     rules,
+    overrides: playwrightTests ? [{ files: playwrightTests.files, rules: playwrightRules }] : [],
   } satisfies OxlintConfig;
 }

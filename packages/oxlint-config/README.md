@@ -36,7 +36,7 @@ export default defineConfig({
 });
 ```
 
-The shared configuration enables type-aware linting and TypeScript checking. It also warns when a file exceeds 1,000 lines or a function exceeds 150 lines.
+The shared configuration enables type-aware linting and TypeScript checking. It also warns when a file exceeds 1,000 lines or a function exceeds 300 lines.
 
 ## Cyclomatic complexity
 
@@ -48,7 +48,31 @@ export default defineConfig({
 });
 ```
 
-Compose repository-specific rules, ignores, and overrides in `vite.config.ts`:
+## Playwright tests
+
+Playwright linting is opt-in. Pass the globs that match your Playwright tests, written the same way as an Oxlint override's `files`:
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({ playwright: { files: ["e2e/**/*.ts"] } }),
+});
+```
+
+Matching files receive Playwright's recommended rules plus stricter errors for unawaited Playwright calls (including locator methods), `nth()`-style positional locators, raw CSS or XPath locators, `waitForTimeout`, and non-retrying assertions. The rules are applied through the returned `overrides`, so they never reach application source. Set Playwright's `settings` (for example, `globalAliases` for custom fixtures) in your own configuration.
+
+## Stylistic rules
+
+Stylistic linting is opt-in. It requires braces on every block (`curly: all`) and a blank line before and after multiline statements, declarations, and blocks:
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({ stylistic: true }),
+});
+```
+
+## Repository configuration
+
+Compose repository-specific rules, ignores, and overrides in `vite.config.ts`. Spread the returned `overrides` before your own so opt-in presets keep applying:
 
 ```typescript
 const lint = oxlintConfig();
@@ -57,6 +81,7 @@ export default defineConfig({
   lint: {
     ...lint,
     ignorePatterns: ["generated/**"],
+    overrides: [...lint.overrides, { files: ["scripts/**"], rules: { "max-lines": "off" } }],
     rules: {
       ...lint.rules,
       "no-console": "off",

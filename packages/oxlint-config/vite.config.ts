@@ -26,6 +26,18 @@ export default defineConfig({
       sourcemap: true,
       target: "node20.19.0",
     },
+    {
+      dts: false,
+      entry: "src/playwright.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
+      dts: false,
+      entry: "src/stylistic.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
   ],
   run: {
     tasks: {

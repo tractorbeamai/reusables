@@ -111,3 +111,60 @@ test("configures a cyclomatic complexity limit", () => {
 
   assert.deepEqual(config.rules.complexity, ["warn", 15]);
 });
+
+test("omits stylistic and Playwright linting by default", () => {
+  const config = oxlintConfig();
+
+  assert.equal(config.rules.curly, undefined);
+  assert.equal(config.rules["@stylistic/padding-line-between-statements"], undefined);
+  assert.deepEqual(config.overrides, []);
+  assert.equal(
+    config.jsPlugins.some((plugin) => ["@stylistic", "playwright"].includes(plugin.name)),
+    false,
+  );
+});
+
+test("requires braces and padding around multiline statements when stylistic", () => {
+  const config = oxlintConfig({ stylistic: true });
+
+  assert.deepEqual(config.rules.curly, ["error", "all"]);
+  assert.equal(config.rules["@stylistic/padding-line-between-statements"][0], "error");
+  assert.deepEqual(config.jsPlugins.at(-1), {
+    name: "@stylistic",
+    specifier: "@tractorbeam/oxlint-config/stylistic",
+  });
+});
+
+test("scopes Playwright rules to the configured test files", () => {
+  // Arrange
+  const files = ["e2e/**/*.ts", "tests/browser/**/*.ts"];
+
+  // Act
+  const config = oxlintConfig({ playwright: { files } });
+
+  // Assert
+  assert.deepEqual(config.jsPlugins.at(-1), {
+    name: "playwright",
+    specifier: "@tractorbeam/oxlint-config/playwright",
+  });
+  assert.equal(
+    Object.keys(config.rules).some((rule) => rule.startsWith("playwright/")),
+    false,
+  );
+  assert.equal(config.overrides.length, 1);
+  assert.deepEqual(config.overrides[0].files, files);
+  assert.equal(config.overrides[0].rules["playwright/no-wait-for-timeout"], "error");
+  assert.deepEqual(config.overrides[0].rules["playwright/missing-playwright-await"], [
+    "error",
+    { includePageLocatorMethods: true },
+  ]);
+  assert.ok(config.overrides[0].rules["playwright/expect-expect"]);
+});
+
+test("loads the stylistic and Playwright plugins", async () => {
+  const { default: stylistic } = await import("@tractorbeam/oxlint-config/stylistic");
+  const { default: playwright } = await import("@tractorbeam/oxlint-config/playwright");
+
+  assert.ok(stylistic.rules["padding-line-between-statements"]);
+  assert.ok(playwright.rules["no-wait-for-timeout"]);
+});

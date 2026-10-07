@@ -1,5 +1,5 @@
-import playwright from "eslint-plugin-playwright";
-import type { OxlintConfig } from "oxlint";
+import playwrightPlugin from "eslint-plugin-playwright";
+import type { DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "oxlint";
 
 export interface OxlintConfigOptions {
   /** Warn when cyclomatic complexity exceeds this value. */
@@ -17,9 +17,9 @@ const globalRules = {
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
   "no-nested-ternary": "error",
   "no-shadow": "off",
-} satisfies OxlintConfig["rules"];
+} satisfies DummyRuleMap;
 
-const pluginRules = {
+const antiSlopRules = {
   "anti-slop/no-chained-type-assertions": "error",
   "anti-slop/no-conditional-empty-object-spread": "error",
   "anti-slop/no-known-value-widening": "error",
@@ -30,10 +30,13 @@ const pluginRules = {
   "anti-slop/no-unknown-type-aliases": "error",
   "anti-slop/no-unsafe-dictionary-type": "error",
   "anti-slop/no-widen-then-assert": "error",
+} satisfies DummyRuleMap;
+
+const importRules = {
   "import/max-dependencies": "off",
   "import/no-namespace": "error",
   "import/no-unassigned-import": "off",
-} satisfies OxlintConfig["rules"];
+} satisfies DummyRuleMap;
 
 const reactPluginRules = {
   "jsx-a11y/anchor-has-content": "warn",
@@ -55,9 +58,9 @@ const reactPluginRules = {
   "ui/no-icon-class-in-button": "warn",
   "ui/no-pages-in-components": "warn",
   "ui/route-component-names": "warn",
-} satisfies OxlintConfig["rules"];
+} satisfies DummyRuleMap;
 
-const MULTILINE_STATEMENTS = [
+const multilineStatements = [
   "multiline-block-like",
   "multiline-expression",
   "multiline-const",
@@ -68,71 +71,36 @@ const MULTILINE_STATEMENTS = [
 const stylisticRules = {
   "@stylistic/padding-line-between-statements": [
     "error",
-    { blankLine: "always", prev: "*", next: MULTILINE_STATEMENTS },
-    { blankLine: "always", prev: MULTILINE_STATEMENTS, next: "*" },
+    { blankLine: "always", prev: "*", next: multilineStatements },
+    { blankLine: "always", prev: multilineStatements, next: "*" },
   ],
   curly: ["error", "all"],
-} satisfies OxlintConfig["rules"];
+} satisfies DummyRuleMap;
 
 const playwrightRules = {
-  ...playwright.configs["flat/recommended"].rules,
+  ...playwrightPlugin.configs["flat/recommended"].rules,
   "playwright/missing-playwright-await": ["error", { includePageLocatorMethods: true }],
   "playwright/no-nth-methods": "error",
   "playwright/no-raw-locators": "error",
   "playwright/no-wait-for-timeout": "error",
-  "playwright/prefer-web-first-assertions": "error",
-} satisfies OxlintConfig["rules"];
+} satisfies DummyRuleMap;
+
+function jsPlugin(name: string, path = name): ExternalPluginEntry {
+  return { name, specifier: `@tractorbeam/oxlint-config/${path}` };
+}
 
 export default function oxlintConfig({
   complexity,
-  playwright: playwrightTests,
+  playwright,
   react = true,
   stylistic = false,
 }: OxlintConfigOptions = {}) {
-  const rules = { ...globalRules, ...pluginRules };
-
-  if (complexity !== undefined) {
-    Object.assign(rules, { complexity: ["warn", complexity] });
-  }
-
-  if (react) {
-    Object.assign(rules, reactPluginRules);
-  }
-
-  if (stylistic) {
-    Object.assign(rules, stylisticRules);
-  }
-
   return {
     jsPlugins: [
-      {
-        name: "anti-slop",
-        specifier: "@tractorbeam/oxlint-config/anti-slop",
-      },
-      ...(react
-        ? [
-            {
-              name: "ui",
-              specifier: "@tractorbeam/oxlint-config/ui",
-            },
-          ]
-        : []),
-      ...(stylistic
-        ? [
-            {
-              name: "@stylistic",
-              specifier: "@tractorbeam/oxlint-config/stylistic",
-            },
-          ]
-        : []),
-      ...(playwrightTests
-        ? [
-            {
-              name: "playwright",
-              specifier: "@tractorbeam/oxlint-config/playwright",
-            },
-          ]
-        : []),
+      jsPlugin("anti-slop"),
+      ...(react ? [jsPlugin("ui")] : []),
+      ...(stylistic ? [jsPlugin("@stylistic", "stylistic")] : []),
+      ...(playwright ? [jsPlugin("playwright")] : []),
     ],
     options: {
       typeAware: true,
@@ -147,7 +115,14 @@ export default function oxlintConfig({
       perf: "error",
       pedantic: "warn",
     },
-    rules,
-    overrides: playwrightTests ? [{ files: playwrightTests.files, rules: playwrightRules }] : [],
+    rules: {
+      ...globalRules,
+      ...antiSlopRules,
+      ...importRules,
+      ...(complexity !== undefined && { complexity: ["warn", complexity] }),
+      ...(react && reactPluginRules),
+      ...(stylistic && stylisticRules),
+    },
+    overrides: playwright ? [{ files: playwright.files, rules: playwrightRules }] : [],
   } satisfies OxlintConfig;
 }

@@ -1,5 +1,14 @@
 # @tractorbeam/oxlint-config
 
+## 0.5.0
+
+### Minor Changes
+
+- 61a6cab: Add an opt-in cyclomatic complexity limit to the shared Oxlint config.
+- 1c0d11e: Enable `no-nested-ternary` as an error in the default Oxlint configuration.
+- 05ed169: Add an opt-in `playwright: { files }` option that applies Playwright's recommended rules and stricter locator, waiting, and assertion rules to matching test files, and an opt-in `stylistic` option that requires braces on every block and blank lines around multiline statements. Raise the default `max-lines-per-function` warning threshold from 150 to 300 lines.
+- 79db427: Warn when page or route implementations live in `components/` directories, and when TanStack Router routes register a component that is not a named `*Route` or `Outlet`.
+
 ## 0.4.0
 
 ### Minor Changes

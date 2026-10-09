@@ -8,18 +8,18 @@ catalog:
   "@stylistic/eslint-plugin": 5.10.0
   "@eslint/js": 10.0.1
   "@ianvs/prettier-plugin-sort-imports": 4.7.1
-  "@oxlint/plugins": 1.86.0
+  "@oxlint/plugins": 1.87.0
   "@tanstack/eslint-plugin-router": 1.162.0
   "@types/eslint": 9.6.1
   "@types/eslint-plugin-jsx-a11y": 6.10.1
   "@types/node": 24.19.1
-  "@typescript-eslint/utils": 8.71.0
-  eslint: "10.11.0"
+  "@typescript-eslint/utils": 8.71.1
+  eslint: "10.12.0"
   eslint-config-prettier: 10.1.8
   eslint-plugin-depend: 1.5.0
   eslint-plugin-import-lite: 0.6.0
   eslint-plugin-jsx-a11y: 6.10.2
-  eslint-plugin-playwright: 2.12.0
+  eslint-plugin-playwright: 2.12.1
   eslint-plugin-react: 7.37.5
   eslint-plugin-react-compiler: 19.1.0-rc.2
   eslint-plugin-react-hooks: 7.1.1
@@ -28,19 +28,19 @@ catalog:
   eslint-plugin-unicorn: 72.0.0
   eslint-plugin-zod: 5.0.0
   globals: 17.13.0
-  oxfmt: 0.71.0
-  oxlint: 1.86.0
+  oxfmt: 0.72.0
+  oxlint: 1.87.0
   oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b
   oxlint-tsgolint: 7.0.2003
   parse5: 8.0.1
-  postcss: 8.5.28
+  postcss: 8.5.29
   postcss-value-parser: 4.2.0
   prettier: "3.9.9"
   prettier-plugin-packagejson: 3.0.2
   prettier-plugin-tailwindcss: 0.8.1
   tinyglobby: 0.2.17
   typescript: 6.0.3
-  typescript-eslint: 8.71.0
+  typescript-eslint: 8.71.1
   vite: npm:@voidzero-dev/vite-plus-core@0.3.3
   vite-plus: 0.3.3
   vite-plugin-singlefile: 2.3.3

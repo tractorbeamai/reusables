@@ -4,11 +4,17 @@ Shared configuration packages used across Tractorbeam projects.
 
 ## Packages
 
-- `@tractorbeam/eslint-config`: shared ESLint v9 flat config presets
 - `@tractorbeam/oxfmt-config`: shared Oxfmt configuration
 - `@tractorbeam/oxlint-config`: shared Oxlint configuration
-- `@tractorbeam/prettier-config`: shared Prettier config
 - `@tractorbeam/typescript-config`: shared `tsconfig` presets
+- `@tractorbeam/vite-plugin-mcp-apps`: Vite plugin that builds filesystem-based MCP Apps
+
+### Deprecated
+
+- `@tractorbeam/eslint-config`: use Oxlint with `@tractorbeam/oxlint-config`
+- `@tractorbeam/prettier-config`: use Oxfmt with `@tractorbeam/oxfmt-config`
+
+Their source stays in `packages/` at the final published versions. Both are excluded from the pnpm workspace and are no longer built or released.
 
 ## Requirements
 

@@ -10,7 +10,7 @@ export default defineConfig({
   },
   lint: {
     ...oxlintConfig({ react: false }),
-    ignorePatterns: ["**/dist/**"],
+    ignorePatterns: ["**/dist/**", "packages/eslint-config/**", "packages/prettier-config/**"],
   },
   run: {
     cache: true,

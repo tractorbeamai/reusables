@@ -1,6 +1,6 @@
 # Reusables
 
-Shared configurations for Tractorbeam projects: ESLint, Prettier, and TypeScript configs.
+Shared configurations for Tractorbeam projects: Oxlint, Oxfmt, and TypeScript configs, plus a Vite plugin for MCP Apps. The ESLint and Prettier configs in `packages/` are deprecated, excluded from the workspace, and no longer released.
 
 ## Changesets
 
@@ -20,7 +20,7 @@ The `changeset add` CLI requires an interactive TTY. To create changesets non-in
 
    ```markdown
    ---
-   "@tractorbeam/eslint-config": minor
+   "@tractorbeam/oxlint-config": minor
    ---
 
    Add ui config with no-button-height-class rule

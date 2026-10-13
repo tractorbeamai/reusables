@@ -111,7 +111,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "eslint": "catalog:",
+    "eslint": "^10.4.0",
     "typescript-eslint": ">= 8"
   }
 }

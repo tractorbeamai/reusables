@@ -44,7 +44,7 @@ export default defineConfig({
       test: {
         command: "node --test test/*.test.js",
         dependsOn: ["build"],
-        output: [],
+        cache: { output: [] },
       },
     },
   },

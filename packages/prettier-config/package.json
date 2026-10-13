@@ -33,6 +33,6 @@
     "prettier-plugin-tailwindcss": "catalog:"
   },
   "peerDependencies": {
-    "prettier": "catalog:"
+    "prettier": "^3.0.0"
   }
 }

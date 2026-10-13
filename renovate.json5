@@ -1,6 +1,13 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["local>tractorbeamai/.github:renovate-config"],
+  packageRules: [
+    {
+      description: "Stay on Node 24 type definitions to match the supported Node runtime",
+      matchPackageNames: ["@types/node"],
+      allowedVersions: "<25",
+    },
+  ],
   postUpgradeTasks: {
     commands: [
       "npx --yes --ignore-scripts --package corepack@0.36.0 corepack pnpm install --lockfile-only --ignore-scripts --no-frozen-lockfile",

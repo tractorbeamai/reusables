@@ -1,7 +1,7 @@
 {
   "name": "@tractorbeam/eslint-config",
   "version": "0.3.0",
-  "description": "Shared ESLint configuration for Tractorbeam projects",
+  "description": "Deprecated: use @tractorbeam/oxlint-config (Oxlint) instead. Shared ESLint configuration for Tractorbeam projects",
   "keywords": [
     "eslint",
     "eslint-config",
@@ -111,7 +111,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "eslint": "catalog:",
+    "eslint": "^10.4.0",
     "typescript-eslint": ">= 8"
   }
 }

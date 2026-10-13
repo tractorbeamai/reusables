@@ -1,5 +1,8 @@
 # @tractorbeam/eslint-config
 
+> [!WARNING]
+> **Deprecated.** This package receives no further updates. Lint with [Oxlint](https://oxc.rs/docs/guide/usage/linter) using [`@tractorbeam/oxlint-config`](https://www.npmjs.com/package/@tractorbeam/oxlint-config) instead, and format with [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) using [`@tractorbeam/oxfmt-config`](https://www.npmjs.com/package/@tractorbeam/oxfmt-config).
+
 Shared ESLint configuration for Tractorbeam projects using modern flat config format.
 
 ## Installation

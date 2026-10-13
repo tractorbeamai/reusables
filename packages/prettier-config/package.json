@@ -1,7 +1,7 @@
 {
   "name": "@tractorbeam/prettier-config",
   "version": "0.1.2",
-  "description": "Shared Prettier configuration for Tractorbeam projects",
+  "description": "Deprecated: use @tractorbeam/oxfmt-config (Oxfmt) instead. Shared Prettier configuration for Tractorbeam projects",
   "keywords": [
     "prettier",
     "prettier-config",
@@ -33,6 +33,6 @@
     "prettier-plugin-tailwindcss": "catalog:"
   },
   "peerDependencies": {
-    "prettier": "catalog:"
+    "prettier": "^3.0.0"
   }
 }

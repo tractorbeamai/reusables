@@ -12,8 +12,8 @@ export interface OxlintConfigOptions {
 }
 
 const globalRules = {
-  "max-lines": ["warn", { max: 1000 }],
-  "max-lines-per-function": ["warn", { max: 300 }],
+  "max-lines": "off",
+  "max-lines-per-function": "off",
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
   "no-nested-ternary": "error",
   "no-shadow": "off",

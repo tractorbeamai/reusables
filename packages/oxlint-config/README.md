@@ -36,7 +36,7 @@ export default defineConfig({
 });
 ```
 
-The shared configuration enables type-aware linting and TypeScript checking. It also warns when a file exceeds 1,000 lines or a function exceeds 300 lines.
+The shared configuration enables type-aware linting and TypeScript checking.
 
 ## Cyclomatic complexity
 
@@ -81,7 +81,10 @@ export default defineConfig({
   lint: {
     ...lint,
     ignorePatterns: ["generated/**"],
-    overrides: [...lint.overrides, { files: ["scripts/**"], rules: { "max-lines": "off" } }],
+    overrides: [
+      ...lint.overrides,
+      { files: ["scripts/**"], rules: { "no-inline-comments": "off" } },
+    ],
     rules: {
       ...lint.rules,
       "no-console": "off",

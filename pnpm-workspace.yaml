@@ -14,7 +14,7 @@ catalog:
   eslint-plugin-playwright: 2.12.1
   oxfmt: 0.72.0
   oxlint: 1.87.0
-  oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#c44ef22ca116d0ba62a3ff663a0bd13a3f3fa40b
+  oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#13909c9e07590f5a85d93c62712259fe14a883f7
   oxlint-tsgolint: 7.0.2004
   parse5: 8.0.1
   postcss: 8.5.29

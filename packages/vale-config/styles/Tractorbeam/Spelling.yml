@@ -1,5 +1,5 @@
 extends: spelling
-message: "Check the spelling of '%s'. If it is correct, add it to the Tractorbeam vocabulary."
+message: "Check the spelling of '%s'. If it is correct, add it to the project's Vale vocabulary."
 level: error
 # Word lists that GitLab, Red Hat, and Mintlify maintain for their own docs,
 # bundled at pinned commits by scripts/package.sh. The Tractorbeam vocabulary
@@ -8,3 +8,7 @@ ignore:
   - gitlab_base/spelling-exceptions.txt
   - Tractorbeam/wordlist-redhat.txt
   - Tractorbeam/wordlist-mintlify.txt
+# The word lists hold base forms only, so a possessive ("Workspace's,"
+# "write's") reads as a misspelling of a word the lists accept.
+filters:
+  - "['’]s$"

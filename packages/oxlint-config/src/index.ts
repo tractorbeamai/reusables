@@ -7,7 +7,7 @@ export interface OxlintConfigOptions {
   /** Apply Playwright rules to test files matching these globs. */
   playwright?: { files: string[] };
   react?: boolean;
-  /** Require braces on every block and blank lines around multiline statements. */
+  /** Require braces on every block and blank lines around multiline statements. On by default; set `stylistic: false` to opt out. */
   stylistic?: boolean;
 }
 
@@ -93,7 +93,7 @@ export default function oxlintConfig({
   complexity,
   playwright,
   react = true,
-  stylistic = false,
+  stylistic = true,
 }: OxlintConfigOptions = {}) {
   return {
     jsPlugins: [

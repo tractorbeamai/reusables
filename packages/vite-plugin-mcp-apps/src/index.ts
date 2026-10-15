@@ -109,52 +109,65 @@ function assertDedicatedBuild(config: UserConfig): void {
   addConflict(conflicts, build?.ssr !== undefined && build.ssr !== false, "build.ssr");
   addConflict(conflicts, build?.watch !== undefined && build.watch !== null, "build.watch");
   addConflict(conflicts, build?.write === false, "build.write");
+
   addConflict(
     conflicts,
     build?.rolldownOptions?.input !== undefined,
     "build.rolldownOptions.input",
   );
+
   addConflict(
     conflicts,
     build?.rolldownOptions?.output !== undefined,
     "build.rolldownOptions.output",
   );
+
   addConflict(
     conflicts,
     build?.rolldownOptions?.external !== undefined,
     "build.rolldownOptions.external",
   );
+
   addConflict(conflicts, build?.rollupOptions?.input !== undefined, "build.rollupOptions.input");
   addConflict(conflicts, build?.rollupOptions?.output !== undefined, "build.rollupOptions.output");
+
   addConflict(
     conflicts,
     build?.rollupOptions?.external !== undefined,
     "build.rollupOptions.external",
   );
+
   addConflict(conflicts, build?.assetsInlineLimit !== undefined, "build.assetsInlineLimit");
   addConflict(conflicts, build?.cssCodeSplit === true, "build.cssCodeSplit");
+
   addConflict(
     conflicts,
     build?.modulePreload !== undefined && build.modulePreload !== false,
     "build.modulePreload",
   );
+
   addConflict(conflicts, build?.emptyOutDir !== undefined, "build.emptyOutDir");
+
   addConflict(
     conflicts,
     build?.sourcemap !== undefined && build.sourcemap !== false,
     "build.sourcemap",
   );
+
   addConflict(
     conflicts,
     build?.manifest !== undefined && build.manifest !== false,
     "build.manifest",
   );
+
   addConflict(
     conflicts,
     build?.ssrManifest !== undefined && build.ssrManifest !== false,
     "build.ssrManifest",
   );
+
   addConflict(conflicts, build?.license !== undefined && build.license !== false, "build.license");
+
   addConflict(
     conflicts,
     build?.copyPublicDir !== undefined && build.copyPublicDir !== false,
@@ -203,6 +216,7 @@ async function buildApps(
     await previousBuild;
 
     const environment = builder.environments[name];
+
     if (environment === undefined) {
       throw new Error(`Vite did not create the MCP app build environment "${name}".`);
     }

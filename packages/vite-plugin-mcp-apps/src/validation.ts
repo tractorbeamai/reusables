@@ -12,6 +12,7 @@ const ALLOWED_META_NAMES = new Set([
   "msapplication-wide310x150logo",
   "twitter:image",
 ]);
+
 const ALLOWED_META_PROPERTIES = new Set([
   "og:audio",
   "og:audio:secure_url",
@@ -21,8 +22,10 @@ const ALLOWED_META_PROPERTIES = new Set([
   "og:video",
   "og:video:secure_url",
 ]);
+
 const IMAGE_CANDIDATE_PATTERN =
   /(?:^|\s|(?<=,))(?<url>[\w-]+\([^)]*\)|"[^"]*"|'[^']*'|[^,]\S*[^,])\s*(?:\s(?<descriptor>\w[^,]+))?(?:,|$)/gu;
+
 const STANDARD_ASSET_SOURCES = {
   audio: { srcAttributes: ["src"] },
   embed: { srcAttributes: ["src"] },
@@ -59,9 +62,11 @@ const STANDARD_ASSET_SOURCES = {
   use: { srcAttributes: ["href", "xlink:href"] },
   video: { srcAttributes: ["poster", "src"] },
 } satisfies Readonly<Record<string, HtmlAssetSource>>;
+
 const STANDARD_ASSET_SOURCE_BY_TAG = new Map<string, HtmlAssetSource>(
   Object.entries(STANDARD_ASSET_SOURCES),
 );
+
 const URL_SCHEME_PATTERN = /^[a-z][a-z\d+.-]*:/iu;
 
 export function findUnresolvedReferences(
@@ -74,6 +79,7 @@ export function findUnresolvedReferences(
     const attributes = Object.fromEntries(
       element.attrs.map((attribute) => [attributeKey(attribute), attribute.value]),
     );
+
     const sources = [
       STANDARD_ASSET_SOURCE_BY_TAG.get(element.tagName),
       additionalAssetSources?.[element.tagName],
@@ -207,8 +213,10 @@ function addCssReferences(
   root.walkDecls((declaration) => {
     addCssValueReferences(references, context, declaration.value);
   });
+
   root.walkAtRules(/^import$/iu, (atRule) => {
     const parsed = valueParser(atRule.params);
+
     const firstValue = parsed.nodes.find(
       (node) => node.type !== "comment" && node.type !== "space",
     );
@@ -235,6 +243,7 @@ function addCssValueReferences(references: Set<string>, context: string, value: 
         `${context} url`,
         stripQuotes(valueParser.stringify(node.nodes).trim()),
       );
+
       return false;
     }
 

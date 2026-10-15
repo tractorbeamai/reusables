@@ -10,6 +10,7 @@ test("fails when another plugin leaves a residual bundle asset", async () => {
     "src/mcp-apps/weather/index.html": appHtml("Weather", "./main.js"),
     "src/mcp-apps/weather/main.js": `document.body.dataset.app = "weather";`,
   });
+
   const residualPlugin = {
     name: "test:residual-asset",
     generateBundle() {
@@ -32,6 +33,7 @@ test("fails when generated scripts are removed without being inlined", async () 
     "src/mcp-apps/weather/index.html": appHtml("Weather", "./main.js"),
     "src/mcp-apps/weather/main.js": `document.body.dataset.app = "weather";`,
   });
+
   const incompatibleHtmlPlugin = {
     name: "test:incompatible-html",
     enforce: "post",

@@ -19,7 +19,7 @@ vale sync
 vale path/to/page.md
 ```
 
-The package's own `.vale.ini` becomes the project's base configuration: it installs Google's and ai-tells' published styles, enables them with GitLab's `gitlab_base` style, Mintlify's `CutPhrases` rule, and the `Tractorbeam` style, applies Tractorbeam's overrides, and adds the `Tractorbeam` vocabulary. Override any rule after the `Packages` line, for example `Google.Passive = NO`.
+The package's own `.vale.ini` becomes the project's base configuration: it installs Google's and ai-tells' published styles, enables them with GitLab's `gitlab_base` style, Mintlify's `CutPhrases` rule, and the `Tractorbeam` style, applies Tractorbeam's overrides, and adds the `Tractorbeam` vocabulary. Front matter is not linted. Override any rule after the `Packages` line, for example `Google.Passive = NO`.
 
 ## What ships in the package
 
@@ -29,7 +29,7 @@ The package's own `.vale.ini` becomes the project's base configuration: it insta
 | `ai-tells` | [tbhb/vale-ai-tells](https://github.com/tbhb/vale-ai-tells) v1.37.0, installed by `vale sync` |
 | `gitlab_base` | GitLab's `doc/.vale/gitlab_base` at a pinned commit, bundled (CC BY-SA 4.0) |
 | `Mintlify` | Mintlify's `.vale/styles/Mintlify` at a pinned commit, bundled (MIT) |
-| `Tractorbeam` | This package: `Terms` (name spellings the vocabulary can't catch), `Unverified` (leftover `[UNVERIFIED]` markers), `RequirementVerbs` ("may" and "shall" outside policies), and `ProductPossessive` (possessives of product names such as Constellation and Beam) |
+| `Tractorbeam` | This package: `Spelling` (accepts GitLab's spelling exceptions, Red Hat's dictionary word list, and Mintlify's vocabulary, fetched at pinned commits, plus the Tractorbeam vocabulary; replaces `Vale.Spelling`), `Terms` (name spellings the vocabulary can't catch), `Unverified` (leftover `[UNVERIFIED]` markers), `RequirementVerbs` ("may" and "shall" outside policies), and `ProductPossessive` (possessives of product names such as Constellation and Beam) |
 
 `Tractorbeam.RequirementVerbs` flags "may" and "shall", which policies use on purpose. Turn it off for policy files in the project's `.vale.ini`:
 

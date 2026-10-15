@@ -1,0 +1,10 @@
+extends: spelling
+message: "Check the spelling of '%s'. If it is correct, add it to the Tractorbeam vocabulary."
+level: error
+# Word lists that GitLab, Red Hat, and Mintlify maintain for their own docs,
+# bundled at pinned commits by scripts/package.sh. The Tractorbeam vocabulary
+# applies on top of them.
+ignore:
+  - gitlab_base/spelling-exceptions.txt
+  - Tractorbeam/wordlist-redhat.txt
+  - Tractorbeam/wordlist-mintlify.txt

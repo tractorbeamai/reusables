@@ -64,7 +64,7 @@ Matching files receive Playwright's recommended rules plus stricter errors for u
 
 Stylistic linting is on by default. It requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`, and a blank line before and after multiline statements, declarations, and blocks.
 
-Both rules are autofixable: run `vp lint --fix` (or `oxlint --fix`), and repeat it until nothing is left to fix. Braces on nested blocks are added one level per pass, so this can take two or three runs.
+Both rules are autofixable: repeat `vp check --fix`, which lints with fixes and then formats, until it passes, usually three runs. Braces on nested blocks are added one level per pass, and the formatter expands one-line `{ return; }` bodies, which the blank-line rule then pads. Without Vite+, alternate `oxlint --fix` and your formatter the same way.
 
 Opt out with `stylistic: false`:
 

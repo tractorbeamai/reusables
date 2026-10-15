@@ -36,7 +36,7 @@ export default defineConfig({
 });
 ```
 
-The shared configuration enables type-aware linting and TypeScript checking, and requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`. The rule is autofixable: run `vp lint --fix` (or `oxlint --fix`) to add missing braces.
+The shared configuration enables type-aware linting and TypeScript checking, and requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`. The rule is autofixable: run `vp lint --fix` (or `oxlint --fix`) to add missing braces, and repeat it until nothing is left to fix. Braces on nested blocks are added one level per pass, so this can take two or three runs.
 
 ## Cyclomatic complexity
 

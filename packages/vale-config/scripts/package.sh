@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Build dist/Tractorbeam.zip, a Vale package: this config and vocabulary plus the
-# gitlab_base and Mintlify styles, fetched at pinned commits because neither
-# project publishes its style as a package.
+# Build dist/Tractorbeam.zip, a Vale package: this config and vocabulary plus
+# GitLab's gitlab_base style and the Mintlify and Red Hat word lists, fetched at
+# pinned commits because none of them is published as a package.
 set -euo pipefail
 
 GITLAB_SHA=60211423df71189501c30d85671d3f794af2bfaa
@@ -25,14 +25,10 @@ From GitLab (https://gitlab.com/gitlab-org/gitlab/-/tree/$GITLAB_SHA/doc/.vale/g
 licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/).
 EOF
 
-curl -fsSL "https://github.com/mintlify/docs/archive/$MINTLIFY_SHA.tar.gz" |
-  tar -xz -C "$work" "docs-$MINTLIFY_SHA/.vale/styles/Mintlify" "docs-$MINTLIFY_SHA/.vale/styles/config/vocabularies/Mintlify/accept.txt" "docs-$MINTLIFY_SHA/LICENSE"
-mv "$work/docs-$MINTLIFY_SHA/.vale/styles/Mintlify" "$pkg/styles/Mintlify"
-cp "$work/docs-$MINTLIFY_SHA/LICENSE" "$pkg/styles/Mintlify/LICENSE"
-
 # Word lists for Tractorbeam.Spelling: Mintlify's vocabulary and Red Hat's
 # dictionary word list (MIT).
-cp "$work/docs-$MINTLIFY_SHA/.vale/styles/config/vocabularies/Mintlify/accept.txt" "$pkg/styles/Tractorbeam/wordlist-mintlify.txt"
+curl -fsSL "https://raw.githubusercontent.com/mintlify/docs/$MINTLIFY_SHA/.vale/styles/config/vocabularies/Mintlify/accept.txt" \
+  -o "$pkg/styles/Tractorbeam/wordlist-mintlify.txt"
 curl -fsSL "https://raw.githubusercontent.com/redhat-documentation/vale-at-red-hat/$REDHAT_SHA/.vale/styles/RedHat/dictionaries/wordlist.txt" \
   -o "$pkg/styles/Tractorbeam/wordlist-redhat.txt"
 cat >"$pkg/styles/Tractorbeam/NOTICE.md" <<EOF

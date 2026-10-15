@@ -1,0 +1,18 @@
+# The tokens of Mintlify's CutPhrases rule that no ai-tells rule already
+# catches, copied from
+# https://github.com/mintlify/docs/blob/d216a1658361a64650da085b0af067af25bb7e0b/.vale/styles/Mintlify/CutPhrases.yml
+# (MIT).
+extends: existence
+message: "Cut or rephrase '%s'. See 'Phrases to cut' in the style guide."
+link: https://github.com/mintlify/docs/blob/main/style-guide/voice-and-tone.md
+level: suggestion
+ignorecase: true
+tokens:
+  # Promotional
+  - breathtaking
+  - captivat(?:e|es|ing)
+  - rich heritage
+  - powerful
+  # Editorializing
+  - it(?:'s| is) important to note
+  - this (?:article|page|guide) will

@@ -1,0 +1,11 @@
+extends: existence
+message: "Minimizer: '%s'. Cut it; the step is as hard as it is, whatever the page calls it."
+level: suggestion
+ignorecase: true
+nonword: true
+# "Just", "simply", and "easily" tell readers a step is trivial, which reads
+# as condescending when it isn't. "Not just" means "not only" and is skipped.
+tokens:
+  - '(?<!\bnot )\bjust\b'
+  - '\bsimply\b'
+  - '\beasily\b'

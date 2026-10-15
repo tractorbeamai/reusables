@@ -1,0 +1,10 @@
+extends: existence
+message: "Vague noun: '%s'. Name the specific item."
+level: suggestion
+ignorecase: true
+# From Heidewald's Business Writing Feedback rubric (Kelley School of
+# Business): "Avoids vague, abstract, overused or incorrect nouns ...
+# (thing/aspect)."
+tokens:
+  - things?
+  - aspects?

@@ -1,0 +1,9 @@
+extends: existence
+message: "Avoid the possessive of a product name in '%s': use the name as a modifier ('the Constellation control plane') or rewrite with 'of'."
+# Product names are trademarks, so they stay out of the possessive. The company
+# name can take one when it means the company: "Tractorbeam's standards".
+level: warning
+ignorecase: false
+nonword: true
+tokens:
+  - "\\b(?:Constellation|Beam|Tractorbeam Cloud)['’]s\\b"

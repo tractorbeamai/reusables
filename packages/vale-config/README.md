@@ -19,7 +19,7 @@ vale sync
 vale path/to/page.md
 ```
 
-The package's own `.vale.ini` becomes the project's base configuration: it installs Google's and ai-tells' published styles, enables them with GitLab's `gitlab_base` style and Mintlify's `CutPhrases` rule, applies Tractorbeam's overrides, and adds the `Tractorbeam` vocabulary. Override any rule after the `Packages` line, for example `Google.Passive = NO`.
+The package's own `.vale.ini` becomes the project's base configuration: it installs Google's and ai-tells' published styles, enables them with GitLab's `gitlab_base` style, Mintlify's `CutPhrases` rule, and the `Tractorbeam` style, applies Tractorbeam's overrides, and adds the `Tractorbeam` vocabulary. Override any rule after the `Packages` line, for example `Google.Passive = NO`.
 
 ## What ships in the package
 
@@ -29,6 +29,14 @@ The package's own `.vale.ini` becomes the project's base configuration: it insta
 | `ai-tells` | [tbhb/vale-ai-tells](https://github.com/tbhb/vale-ai-tells) v1.37.0, installed by `vale sync` |
 | `gitlab_base` | GitLab's `doc/.vale/gitlab_base` at a pinned commit, bundled (CC BY-SA 4.0) |
 | `Mintlify` | Mintlify's `.vale/styles/Mintlify` at a pinned commit, bundled (MIT) |
+| `Tractorbeam` | This package: `Terms` (name spellings the vocabulary can't catch), `Unverified` (leftover `[UNVERIFIED]` markers), and `RequirementVerbs` ("may" and "shall" outside policies) |
+
+`Tractorbeam.RequirementVerbs` flags "may" and "shall", which policies use on purpose. Turn it off for policy files in the project's `.vale.ini`:
+
+```ini
+[content/policies/*.md]
+Tractorbeam.RequirementVerbs = NO
+```
 
 GitLab and Mintlify don't publish their styles as packages, so `scripts/package.sh` fetches them at the commits pinned in the script and builds `Tractorbeam.zip`. The release workflow attaches the zip to the `@tractorbeam/vale-config@<version>` GitHub release once Changesets bumps the version.
 

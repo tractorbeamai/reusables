@@ -14,7 +14,7 @@ pkg="$work/Tractorbeam"
 mkdir -p "$pkg/styles"
 
 cp "$root/.vale.ini" "$pkg/.vale.ini"
-cp -R "$root/styles/config" "$pkg/styles/config"
+cp -R "$root/styles/." "$pkg/styles/"
 
 curl -fsSL "https://gitlab.com/gitlab-org/gitlab/-/archive/$GITLAB_SHA/gitlab-$GITLAB_SHA.tar.gz?path=doc/.vale/gitlab_base" |
   tar -xz -C "$work"

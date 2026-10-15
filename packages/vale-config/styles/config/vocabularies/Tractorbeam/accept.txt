@@ -1,4 +1,6 @@
 Bitwarden
+Cloudflare
+GitHub
 Hyperdrive
 Okta
 OpenTofu

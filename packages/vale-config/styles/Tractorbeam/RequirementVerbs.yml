@@ -1,7 +1,7 @@
 extends: existence
 message: "Replace '%s': use 'must' for required, 'should' for recommended, 'can' for optional, or 'might' for possibility."
-# Policies keep 'shall' and 'may' as their guide defines; the package's
-# .vale.ini turns this rule off under policies directories.
+# Policies keep 'shall' and 'may' as their guide defines; turn this rule off for
+# policy directories in the project's .vale.ini.
 level: warning
 ignorecase: true
 tokens:

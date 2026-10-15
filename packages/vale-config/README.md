@@ -31,7 +31,12 @@ The package's own `.vale.ini` becomes the project's base configuration: it insta
 | `gitlab_base` | GitLab's `doc/.vale/gitlab_base` at a pinned commit, bundled (CC BY-SA 4.0) |
 | `Tractorbeam` | This package: `Spelling` (accepts GitLab's spelling exceptions, Red Hat's dictionary word list, and Mintlify's vocabulary, fetched at pinned commits, plus the Tractorbeam vocabulary; replaces `Vale.Spelling`), `Terms` (name spellings the vocabulary can't catch), `Unverified` (leftover `[UNVERIFIED]` markers), `RequirementVerbs` ("may" and "shall" outside policies), `ProductPossessive` (possessives of product names such as Constellation and Beam), `ContrastiveNegationCells` (ai-tells' trailing ", no …" pattern, applied to table cells that end without punctuation), and `CutPhrases` (the phrases from Mintlify's `CutPhrases` rule that ai-tells doesn't already catch) |
 
-Files under a `policies` directory skip the rules that flag a formal register, which policies use on purpose: requirement verbs, passive voice and density, formal and long words, contractions, scope statements such as "All personnel…", and lists of obligations.
+`Tractorbeam.RequirementVerbs` flags "may" and "shall", which policies use on purpose. Turn it off, along with any other rule that flags a formal register, for policy files in the project's `.vale.ini`:
+
+```ini
+[content/policies/*.md]
+Tractorbeam.RequirementVerbs = NO
+```
 
 GitLab doesn't publish its style as a package, and Mintlify and Red Hat don't publish their word lists as packages, so `scripts/package.sh` fetches them at the commits pinned in the script and builds `Tractorbeam.zip`. The release workflow attaches the zip to the `@tractorbeam/vale-config@<version>` GitHub release once Changesets bumps the version.
 

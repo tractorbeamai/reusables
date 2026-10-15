@@ -3,6 +3,7 @@ import { defineRule } from "@oxlint/plugins";
 import type { ESTree } from "@oxlint/plugins";
 
 const ROUTER_SOURCE = "@tanstack/react-router";
+
 const ROUTE_FACTORIES = new Set([
   "createFileRoute",
   "createLazyFileRoute",
@@ -11,13 +12,16 @@ const ROUTE_FACTORIES = new Set([
   "createRootRouteWithContext",
   "createRoute",
 ]);
+
 const ROUTE_COMPONENT_PATTERN = /^[A-Z]\w*Route$/u;
 
 function calleeIdentifier(node: ESTree.CallExpression): ESTree.IdentifierReference | undefined {
   let callee: ESTree.Expression = node.callee;
+
   while (callee.type === "CallExpression" || callee.type === "TSInstantiationExpression") {
     callee = callee.type === "CallExpression" ? callee.callee : callee.expression;
   }
+
   return callee.type === "Identifier" ? callee : undefined;
 }
 
@@ -52,13 +56,16 @@ export const routeComponentNamesRule = defineRule({
         if (node.source.value !== ROUTER_SOURCE) {
           return;
         }
+
         for (const specifier of node.specifiers) {
           if (specifier.type !== "ImportSpecifier" || specifier.imported.type !== "Identifier") {
             continue;
           }
+
           if (ROUTE_FACTORIES.has(specifier.imported.name)) {
             factories.add(specifier.local.name);
           }
+
           if (specifier.imported.name === "Outlet") {
             outlets.add(specifier.local.name);
           }
@@ -66,23 +73,30 @@ export const routeComponentNamesRule = defineRule({
       },
       CallExpression(node) {
         const callee = calleeIdentifier(node);
+
         if (callee === undefined || !factories.has(callee.name)) {
           return;
         }
+
         const [options] = node.arguments;
+
         if (options?.type !== "ObjectExpression") {
           return;
         }
+
         const component = componentProperty(options)?.value;
+
         if (component === undefined) {
           return;
         }
+
         if (
           component.type === "Identifier" &&
           (outlets.has(component.name) || ROUTE_COMPONENT_PATTERN.test(component.name))
         ) {
           return;
         }
+
         context.report({ node: component, messageId: "routeName" });
       },
     };

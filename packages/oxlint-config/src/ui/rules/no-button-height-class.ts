@@ -47,17 +47,21 @@ function isStringLiteral(
 
 function attributeHasDisallowedSizeClass(attribute: ESTree.JSXAttribute): boolean {
   const { value } = attribute;
+
   if (value?.type === "Literal") {
     return hasDisallowedSizeClass(value.value);
   }
+
   if (value?.type !== "JSXExpressionContainer") {
     return false;
   }
 
   const { expression } = value;
+
   if (expression.type === "Literal") {
     return isStringLiteral(expression) && hasDisallowedSizeClass(expression.value);
   }
+
   if (expression.type !== "TemplateLiteral") {
     return false;
   }
@@ -83,10 +87,13 @@ export const noButtonHeightClassRule = defineRule({
         if (!isButton(node)) {
           return;
         }
+
         const className = node.attributes.find(isClassNameAttribute);
+
         if (className === undefined || !attributeHasDisallowedSizeClass(className)) {
           return;
         }
+
         context.report({ node, messageId: "preferSizeProp" });
       },
     };

@@ -20,6 +20,7 @@ export function finalizeBundle(
   }
 
   const htmlAsset = htmlAssets[0];
+
   const residualAssets = Object.values(bundle)
     .filter((entry) => entry !== htmlAsset)
     .map((entry) => entry.fileName)

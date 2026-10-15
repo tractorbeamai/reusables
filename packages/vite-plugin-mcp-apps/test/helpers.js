@@ -27,6 +27,7 @@ export function appHtml(title, source) {
 
 export async function buildProject(root, { config = {}, pluginOptions, plugins = [] } = {}) {
   const outputDirectory = path.join(root, "dist");
+
   const builder = await createBuilder({
     ...config,
     build: {
@@ -69,6 +70,7 @@ export async function createProject(files) {
 
 export async function listFiles(directory, prefix = "") {
   const entries = await readdir(directory, { withFileTypes: true });
+
   const nestedFiles = await Promise.all(
     entries.map((entry) => {
       const relativePath = path.posix.join(prefix, entry.name);
@@ -90,18 +92,24 @@ export function run(command, arguments_) {
       env: process.env,
       stdio: ["ignore", "pipe", "pipe"],
     });
+
     let stderr = "";
     let stdout = "";
 
     child.stderr.setEncoding("utf8");
+
     child.stderr.on("data", (chunk) => {
       stderr += chunk;
     });
+
     child.stdout.setEncoding("utf8");
+
     child.stdout.on("data", (chunk) => {
       stdout += chunk;
     });
+
     child.on("error", reject);
+
     child.on("close", (code) => {
       resolve({ code, stderr, stdout });
     });

@@ -38,6 +38,7 @@ test("preserves compatible Vite configuration across every app build", async () 
       },
     },
   });
+
   const html = await readFile(path.join(outputDirectory, "weather.html"), "utf8");
 
   assert.deepEqual(await listFiles(outputDirectory), ["weather.html"]);

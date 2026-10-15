@@ -88,6 +88,7 @@ test("produces deterministic outputs when source creation order changes", async 
     "src/mcp-apps/alpha/index.html": appHtml("Alpha", "./main.js"),
     "src/mcp-apps/alpha/main.js": `document.body.dataset.app = "alpha";`,
   });
+
   const secondProject = await createProject({
     "src/mcp-apps/alpha/main.js": `document.body.dataset.app = "alpha";`,
     "src/mcp-apps/alpha/index.html": appHtml("Alpha", "./main.js"),
@@ -149,6 +150,7 @@ test("rejects case-folded output collisions on case-sensitive filesystems", asyn
     "src/mcp-apps/Foo/index.html": appHtml("Upper", "./main.js"),
     "src/mcp-apps/Foo/main.js": `document.body.dataset.app = "upper";`,
   });
+
   const lowerDirectory = path.join(project, "src/mcp-apps/foo");
 
   try {
@@ -175,9 +177,11 @@ test("builds the same configuration through vp build", async () => {
     "src/mcp-apps/weather/index.html": appHtml("Weather", "./main.js"),
     "src/mcp-apps/weather/main.js": `document.body.dataset.app = "vp-weather";`,
   });
+
   const pluginModule = pathToFileURL(
     fileURLToPath(new URL("../dist/index.mjs", import.meta.url)),
   ).href;
+
   const vitePlusModule = import.meta.resolve("vite-plus");
   const configFile = path.join(project, "vite.config.mjs");
 

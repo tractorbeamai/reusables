@@ -36,7 +36,7 @@ export default defineConfig({
 });
 ```
 
-The shared configuration enables type-aware linting and TypeScript checking, and requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`. The rule is autofixable: run `vp lint --fix` (or `oxlint --fix`) to add missing braces, and repeat it until nothing is left to fix. Braces on nested blocks are added one level per pass, so this can take two or three runs.
+The shared configuration enables type-aware linting and TypeScript checking, and the stylistic rules described below.
 
 ## Cyclomatic complexity
 
@@ -62,11 +62,15 @@ Matching files receive Playwright's recommended rules plus stricter errors for u
 
 ## Stylistic rules
 
-Stylistic linting is opt-in. It requires a blank line before and after multiline statements, declarations, and blocks:
+Stylistic linting is on by default. It requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`, and a blank line before and after multiline statements, declarations, and blocks.
+
+Both rules are autofixable: run `vp lint --fix` (or `oxlint --fix`), and repeat it until nothing is left to fix. Braces on nested blocks are added one level per pass, so this can take two or three runs.
+
+Opt out with `stylistic: false`:
 
 ```typescript
 export default defineConfig({
-  lint: oxlintConfig({ stylistic: true }),
+  lint: oxlintConfig({ stylistic: false }),
 });
 ```
 

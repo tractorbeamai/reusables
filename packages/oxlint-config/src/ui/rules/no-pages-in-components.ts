@@ -24,6 +24,7 @@ export const noPagesInComponentsRule = defineRule({
   },
   create(context) {
     const filename = context.filename.replaceAll("\\", "/");
+
     if (!COMPONENTS_DIRECTORY_PATTERN.test(filename)) {
       return {};
     }
@@ -42,6 +43,7 @@ export const noPagesInComponentsRule = defineRule({
       VariableDeclarator(node) {
         const isFunction =
           node.init?.type === "ArrowFunctionExpression" || node.init?.type === "FunctionExpression";
+
         if (isFunction && isEntryName(node.id)) {
           context.report({ node: node.id, messageId: "entryInComponents" });
         }

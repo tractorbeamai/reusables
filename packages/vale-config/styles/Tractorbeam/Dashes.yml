@@ -6,5 +6,5 @@ nonword: true
 # "CC1.1–CC1.5") left alone: an en dash between two numbers or codes is
 # correct typography, not a dash.
 tokens:
-  - '—'
+  - "—"
   - '(?<![\w.])–|–(?![\w])'

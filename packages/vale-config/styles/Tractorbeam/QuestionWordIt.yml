@@ -1,0 +1,13 @@
+extends: existence
+message: "Question-word sentence ending in 'it': '%s'. Name what 'it' refers to, or state the answer directly."
+level: suggestion
+ignorecase: true
+nonword: true
+scope: sentence
+# A broad net for the embedded-question shape: a sentence or fragment that
+# contains "which", "what", or "where" and ends on a bare "it" ("Which path
+# you follow depends on who owns the machine and how much we manage it").
+# The trailing pronoun usually points back across the question clause to a
+# noun the reader has to recover. Real questions, ending in "?", are skipped.
+tokens:
+  - '^[^?]*\b(?:which|what|where)\b[^?]*\bit[^\w?]*$'

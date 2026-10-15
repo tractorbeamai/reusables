@@ -7,11 +7,12 @@ export interface OxlintConfigOptions {
   /** Apply Playwright rules to test files matching these globs. */
   playwright?: { files: string[] };
   react?: boolean;
-  /** Require braces on every block and blank lines around multiline statements. */
+  /** Require blank lines around multiline statements. */
   stylistic?: boolean;
 }
 
 const globalRules = {
+  curly: ["error", "all"],
   "max-lines": "off",
   "max-lines-per-function": "off",
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
@@ -74,7 +75,6 @@ const stylisticRules = {
     { blankLine: "always", prev: "*", next: multilineStatements },
     { blankLine: "always", prev: multilineStatements, next: "*" },
   ],
-  curly: ["error", "all"],
 } satisfies DummyRuleMap;
 
 const playwrightRules = {

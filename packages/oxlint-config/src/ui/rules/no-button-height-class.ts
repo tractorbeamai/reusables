@@ -50,13 +50,17 @@ function attributeHasDisallowedSizeClass(attribute: ESTree.JSXAttribute): boolea
   if (value?.type === "Literal") {
     return hasDisallowedSizeClass(value.value);
   }
-  if (value?.type !== "JSXExpressionContainer") return false;
+  if (value?.type !== "JSXExpressionContainer") {
+    return false;
+  }
 
   const { expression } = value;
   if (expression.type === "Literal") {
     return isStringLiteral(expression) && hasDisallowedSizeClass(expression.value);
   }
-  if (expression.type !== "TemplateLiteral") return false;
+  if (expression.type !== "TemplateLiteral") {
+    return false;
+  }
 
   return expression.quasis.some((quasi) => hasDisallowedSizeClass(quasi.value.raw));
 }
@@ -76,9 +80,13 @@ export const noButtonHeightClassRule = defineRule({
   create(context) {
     return {
       JSXOpeningElement(node) {
-        if (!isButton(node)) return;
+        if (!isButton(node)) {
+          return;
+        }
         const className = node.attributes.find(isClassNameAttribute);
-        if (className === undefined || !attributeHasDisallowedSizeClass(className)) return;
+        if (className === undefined || !attributeHasDisallowedSizeClass(className)) {
+          return;
+        }
         context.report({ node, messageId: "preferSizeProp" });
       },
     };

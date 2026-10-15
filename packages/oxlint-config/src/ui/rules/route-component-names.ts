@@ -49,22 +49,34 @@ export const routeComponentNamesRule = defineRule({
 
     return {
       ImportDeclaration(node) {
-        if (node.source.value !== ROUTER_SOURCE) return;
+        if (node.source.value !== ROUTER_SOURCE) {
+          return;
+        }
         for (const specifier of node.specifiers) {
           if (specifier.type !== "ImportSpecifier" || specifier.imported.type !== "Identifier") {
             continue;
           }
-          if (ROUTE_FACTORIES.has(specifier.imported.name)) factories.add(specifier.local.name);
-          if (specifier.imported.name === "Outlet") outlets.add(specifier.local.name);
+          if (ROUTE_FACTORIES.has(specifier.imported.name)) {
+            factories.add(specifier.local.name);
+          }
+          if (specifier.imported.name === "Outlet") {
+            outlets.add(specifier.local.name);
+          }
         }
       },
       CallExpression(node) {
         const callee = calleeIdentifier(node);
-        if (callee === undefined || !factories.has(callee.name)) return;
+        if (callee === undefined || !factories.has(callee.name)) {
+          return;
+        }
         const [options] = node.arguments;
-        if (options?.type !== "ObjectExpression") return;
+        if (options?.type !== "ObjectExpression") {
+          return;
+        }
         const component = componentProperty(options)?.value;
-        if (component === undefined) return;
+        if (component === undefined) {
+          return;
+        }
         if (
           component.type === "Identifier" &&
           (outlets.has(component.name) || ROUTE_COMPONENT_PATTERN.test(component.name))

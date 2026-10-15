@@ -13,7 +13,9 @@ function isButtonElement(node: ESTree.Node): node is ESTree.JSXElement {
 function isInsideButton(node: ESTree.JSXOpeningElement): boolean {
   let ancestor: ESTree.Node | null = node.parent;
   while (ancestor !== null) {
-    if (isButtonElement(ancestor)) return true;
+    if (isButtonElement(ancestor)) {
+      return true;
+    }
     ancestor = ancestor.parent;
   }
   return false;
@@ -45,9 +47,13 @@ function isNamedIconComponent(
   if (name.type === "JSXIdentifier") {
     return isIconName(name.name) || iconImports.has(name.name);
   }
-  if (name.type !== "JSXMemberExpression") return false;
+  if (name.type !== "JSXMemberExpression") {
+    return false;
+  }
 
-  if (isIconName(name.property.name)) return true;
+  if (isIconName(name.property.name)) {
+    return true;
+  }
   return (
     name.object.type === "JSXIdentifier" &&
     (name.object.name === "Icons" ||
@@ -74,7 +80,9 @@ export const noIconClassInButtonRule = defineRule({
 
     return {
       ImportDeclaration(node) {
-        if (!isIconModule(node.source.value)) return;
+        if (!isIconModule(node.source.value)) {
+          return;
+        }
         for (const specifier of node.specifiers) {
           if (specifier.type === "ImportNamespaceSpecifier") {
             iconNamespaces.add(specifier.local.name);
@@ -84,10 +92,16 @@ export const noIconClassInButtonRule = defineRule({
         }
       },
       JSXOpeningElement(node) {
-        if (!isNamedIconComponent(node.name, iconImports, iconNamespaces)) return;
-        if (!isInsideButton(node)) return;
+        if (!isNamedIconComponent(node.name, iconImports, iconNamespaces)) {
+          return;
+        }
+        if (!isInsideButton(node)) {
+          return;
+        }
         const className = node.attributes.find(isClassNameAttribute);
-        if (className !== undefined) context.report({ node: className, messageId: "noClassName" });
+        if (className !== undefined) {
+          context.report({ node: className, messageId: "noClassName" });
+        }
       },
     };
   },

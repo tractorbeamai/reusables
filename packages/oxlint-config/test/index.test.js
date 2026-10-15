@@ -17,6 +17,7 @@ test("loads the UI plugin", () => {
 test("enables React linting by default with globally scoped rules first", () => {
   // Arrange
   const expectedRules = [
+    "curly",
     "max-lines",
     "max-lines-per-function",
     "no-inline-comments",
@@ -70,6 +71,7 @@ test("enables React linting by default with globally scoped rules first", () => 
     assert.equal(severity, "error");
   }
   assert.equal(config.rules["no-nested-ternary"], "error");
+  assert.deepEqual(config.rules.curly, ["error", "all"]);
   assert.deepEqual(
     configuredRules.filter((rule) => !rule.startsWith("anti-slop/")),
     expectedRules,
@@ -115,7 +117,6 @@ test("configures a cyclomatic complexity limit", () => {
 test("omits stylistic and Playwright linting by default", () => {
   const config = oxlintConfig();
 
-  assert.equal(config.rules.curly, undefined);
   assert.equal(config.rules["@stylistic/padding-line-between-statements"], undefined);
   assert.deepEqual(config.overrides, []);
   assert.equal(
@@ -124,10 +125,9 @@ test("omits stylistic and Playwright linting by default", () => {
   );
 });
 
-test("requires braces and padding around multiline statements when stylistic", () => {
+test("requires padding around multiline statements when stylistic", () => {
   const config = oxlintConfig({ stylistic: true });
 
-  assert.deepEqual(config.rules.curly, ["error", "all"]);
   assert.equal(config.rules["@stylistic/padding-line-between-statements"][0], "error");
   assert.deepEqual(config.jsPlugins.at(-1), {
     name: "@stylistic",

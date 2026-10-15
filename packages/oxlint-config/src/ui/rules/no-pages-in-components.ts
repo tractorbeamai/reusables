@@ -24,7 +24,9 @@ export const noPagesInComponentsRule = defineRule({
   },
   create(context) {
     const filename = context.filename.replaceAll("\\", "/");
-    if (!COMPONENTS_DIRECTORY_PATTERN.test(filename)) return {};
+    if (!COMPONENTS_DIRECTORY_PATTERN.test(filename)) {
+      return {};
+    }
 
     return {
       Program(node) {

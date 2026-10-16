@@ -1,0 +1,8 @@
+extends: existence
+message: "Heading with '%s': name the thing, such as 'Connector Tables' for 'Tables that a Connector provides'."
+level: warning
+ignorecase: true
+scope: heading
+tokens:
+  - that
+  - which

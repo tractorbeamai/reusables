@@ -1,0 +1,13 @@
+extends: existence
+message: "Sentence ends on a bare '%s'. Name what it refers to."
+level: suggestion
+ignorecase: true
+nonword: true
+scope: sentence
+# A demonstrative with no noun after it at the end of a sentence ("Your
+# manager pairs with you on this.") sends the reader back to find what it
+# points at. gitlab_base.UnclearAntecedent covers the sentence-initial "This
+# is"; this rule covers the end. Lead-ins that end in a colon ("Run it like
+# this:") point forward to what follows and are skipped.
+tokens:
+  - '\b(?:this|that|these|those)(?=[.!?)"''’]*$)'

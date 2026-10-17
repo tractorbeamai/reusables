@@ -1,0 +1,16 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: error
+ignorecase: false
+# The Tractorbeam vocabulary enforces the casing of accepted names; this catches
+# spellings the vocabulary can't, such as names split into two words.
+swap:
+  "Bit Warden": Bitwarden
+  "Cloud Flare": Cloudflare
+  "Git Hub": GitHub
+  "Open Tofu": OpenTofu
+  "Planet Scale": PlanetScale
+  "Secure Frame": Secureframe
+  "Tractor Beam": Tractorbeam
+  "Work OS": WorkOS
+  "security officer": Security Officer

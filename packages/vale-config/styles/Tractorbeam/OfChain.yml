@@ -1,0 +1,6 @@
+extends: existence
+message: "Stacked 'of' phrases: '%s'. Name the thing directly, or use a possessive or a compound noun."
+level: suggestion
+nonword: true
+tokens:
+  - '\b(?:the|a|an|each) [a-z]+ of (?:the|a|an|each) [a-z]+ of (?:the|a|an|each) [a-z]+'

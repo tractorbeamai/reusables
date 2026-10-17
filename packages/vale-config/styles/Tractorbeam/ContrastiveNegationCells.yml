@@ -1,0 +1,13 @@
+extends: existence
+# ai-tells.ContrastiveNegation's clause-final pattern, for table cells: they
+# rarely end in punctuation, so the upstream pattern's [.!?] never matches.
+message: "AI contrast by negation: '%s'. State the positive directly without the trailing negation."
+level: error
+scope: table.cell
+nonword: true
+ignorecase: true
+exceptions:
+  - "no longer"
+  - "no sooner"
+tokens:
+  - ", no [a-z][^.!?,;:]*$"

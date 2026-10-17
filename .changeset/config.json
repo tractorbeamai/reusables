@@ -8,5 +8,9 @@
   "baseBranch": "main",
   "format": "oxfmt",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": [],
+  "privatePackages": {
+    "version": true,
+    "tag": false
+  }
 }

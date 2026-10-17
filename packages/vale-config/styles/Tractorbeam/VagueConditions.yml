@@ -1,0 +1,9 @@
+extends: existence
+message: "Vague condition: '%s'. Name the condition, such as 'when the account has more than one Region'."
+level: suggestion
+ignorecase: true
+nonword: true
+# Policies use "where required by applicable law" on purpose; turn this rule
+# off for them in the project's .vale.ini.
+tokens:
+  - '\b(?:as|when|if|where|wherever) (?:needed|necessary|required|appropriate|applicable|possible)\b'

@@ -1,0 +1,11 @@
+extends: sequence
+message: "Relative 'that' clause: '%s'. Cut it, reduce it to a participle such as 'the old state kept by Tractorbeam', or name the thing directly."
+level: suggestion
+# A noun followed by "that" and the clause's subject or verb ("the old state
+# that Tractorbeam keeps," "writers that expect," "the HEAD that it read").
+# A "that" after a verb ("ensures that") is left alone. An imperative at the
+# start of a sentence can read as a noun ("Copy that directory").
+tokens:
+  - tag: NN|NNS|NNP|NNPS
+  - pattern: that
+  - tag: PRP|DT|NN|NNS|NNP|NNPS|VB|VBD|VBZ|VBP|VBN|MD|RB|JJ

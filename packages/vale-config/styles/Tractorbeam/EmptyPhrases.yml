@@ -1,0 +1,16 @@
+extends: existence
+message: "Empty phrase: '%s'. Cut it and state the point directly."
+level: suggestion
+ignorecase: true
+nonword: true
+# From Heidewald's Business Writing Feedback rubric (Kelley School of
+# Business): "cuts extra words/empty phrases (it seems, in order, am able,
+# when it comes, so)" and "avoids very, really." Other styles already cover
+# "in order to," "am able," and "when it comes to." "Very Low" and "Very High"
+# are risk levels in the risk-management policy, not intensifiers.
+tokens:
+  - '\bit seems\b'
+  - '\bit is (?:important|essential|necessary|critical) (?:that|to)\b'
+  - '(?:^|(?<=[.!?]\s))So,'
+  - '\bvery\b(?! (?:low|high)\b)'
+  - '\breally\b'

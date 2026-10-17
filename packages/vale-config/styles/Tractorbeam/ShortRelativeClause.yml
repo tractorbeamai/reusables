@@ -1,0 +1,11 @@
+extends: sequence
+message: "Short relative clause: '%s'. Put the verb before the noun as a modifier, such as 'matching documents' for 'documents that match'."
+level: suggestion
+# A noun, "that" or "which", and a single verb that ends the clause. Part-of-
+# speech tags keep a demonstrative ("copy that directory") and a clause that
+# goes on ("the request that made it") out.
+tokens:
+  - tag: NN|NNS|NNP|NNPS
+  - pattern: that|which
+  - tag: VBD|VBZ|VBP|VB|VBN
+  - tag: '\.|,|:'

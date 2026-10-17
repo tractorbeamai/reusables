@@ -1,0 +1,14 @@
+extends: existence
+message: "Question-word sentence ending in 'it': '%s'. Name what 'it' refers to, or state the answer directly."
+level: suggestion
+ignorecase: true
+nonword: true
+scope: sentence
+# A sentence or fragment that contains a question word and ends on a bare
+# "it" ("Which path you follow depends on who owns the machine and how much we
+# manage it," "the data it holds and how long it keeps it"). The question
+# clause puts a boundary between the pronoun and its noun, so the reader has
+# to recover which earlier noun "it" means. Real questions, ending in "?", are
+# skipped.
+tokens:
+  - '^[^?]*\b(?:which|what|where|how|who|whom|whose|whether|when|why)\b[^?]*\bit[^\w?]*$'

@@ -1,18 +1,24 @@
 # @tractorbeam/vale-config
 
-Shared [Vale](https://vale.sh) configuration for Tractorbeam docs, released as a Vale package rather than to npm.
+Shared [Vale](https://vale.sh) configuration for Tractorbeam docs, published to npm as a Vale package.
 
 ## Usage
 
-List the release in the project's `.vale.ini`:
+Install the package, so the project's lockfile owns its version:
+
+```bash
+pnpm add -D @tractorbeam/vale-config
+```
+
+Point the project's `.vale.ini` at the Vale package inside it. Vale resolves a relative path from the directory `vale sync` runs in, so run it from the project root:
 
 ```ini
 StylesPath = .vale/styles
 
-Packages = https://github.com/tractorbeamai/reusables/releases/download/%40tractorbeam%2Fvale-config%400.1.0/Tractorbeam.zip
+Packages = node_modules/@tractorbeam/vale-config/dist/Tractorbeam
 ```
 
-Then install and lint:
+Then install the styles and lint:
 
 ```bash
 vale sync
@@ -40,7 +46,7 @@ The package's own `.vale.ini` becomes the project's base configuration: it insta
 Tractorbeam.RequirementVerbs = NO
 ```
 
-GitLab doesn't publish its style as a package, and Mintlify and Red Hat don't publish their word lists as packages, so `scripts/package.sh` fetches them at the commits pinned in the script and builds `Tractorbeam.zip`. The release workflow attaches the zip to the `@tractorbeam/vale-config@<version>` GitHub release once Changesets bumps the version.
+GitLab doesn't publish its style as a package, and Mintlify and Red Hat don't publish their word lists as packages, so `scripts/package.sh` fetches them at the commits pinned in the script and builds `dist/Tractorbeam`, which the npm package ships; publishing runs it.
 
 ## Development
 
@@ -48,4 +54,4 @@ GitLab doesn't publish its style as a package, and Mintlify and Red Hat don't pu
 pnpm --filter @tractorbeam/vale-config package
 ```
 
-Builds `dist/Tractorbeam.zip`. To try it, point a scratch `.vale.ini` at the zip's absolute path in `Packages` and run `vale sync`.
+Builds `dist/Tractorbeam`. To try it, point a scratch `.vale.ini` at that directory's absolute path in `Packages` and run `vale sync`.

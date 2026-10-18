@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build dist/Tractorbeam.zip, a Vale package: this config and vocabulary plus
+# Build dist/Tractorbeam, the Vale package npm publishes: this config and vocabulary plus
 # GitLab's gitlab_base style and the Mintlify and Red Hat word lists, fetched at
 # pinned commits because none of them is published as a package.
 set -euo pipefail
@@ -38,7 +38,7 @@ wordlist-redhat.txt is Red Hat's Vale dictionary word list
 (https://github.com/redhat-documentation/vale-at-red-hat/blob/$REDHAT_SHA/.vale/styles/RedHat/dictionaries/wordlist.txt), MIT.
 EOF
 
+rm -rf "$root/dist"
 mkdir -p "$root/dist"
-rm -f "$root/dist/Tractorbeam.zip"
-(cd "$work" && zip -qr "$root/dist/Tractorbeam.zip" Tractorbeam)
-echo "$root/dist/Tractorbeam.zip"
+mv "$pkg" "$root/dist/Tractorbeam"
+echo "$root/dist/Tractorbeam"

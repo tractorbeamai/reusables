@@ -38,15 +38,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Changesets versions the private Vale config but doesn't release it. Once
-      # no changesets are pending, create its release with Tractorbeam.zip if the
-      # current version has none yet.
-      - name: Release Vale config
-        if: steps.changesets.outputs.has-changesets == 'false'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: bash packages/vale-config/scripts/release.sh
-
       # Pushes made with GITHUB_TOKEN don't trigger `pull_request` workflows, so the
       # release PR would never get its required `Checks` run. GITHUB_TOKEN may
       # dispatch workflows, so run CI on the release branch explicitly.

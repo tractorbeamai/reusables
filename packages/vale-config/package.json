@@ -1,8 +1,7 @@
 {
   "name": "@tractorbeam/vale-config",
   "version": "0.0.0",
-  "private": true,
-  "description": "Shared Vale configuration for Tractorbeam docs, released as a Vale package",
+  "description": "Shared Vale configuration for Tractorbeam docs, published as a Vale package",
   "keywords": [
     "config",
     "prose",
@@ -20,8 +19,17 @@
     "url": "git+https://github.com/tractorbeamai/reusables.git",
     "directory": "packages/vale-config"
   },
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "package": "bash scripts/package.sh",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "bash scripts/package.sh"
   }
 }

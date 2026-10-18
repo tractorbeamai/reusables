@@ -1,0 +1,14 @@
+extends: existence
+message: "The reader doesn't go anywhere in software: '%s'. Name what the reader opens or selects, or the operation's term, such as 'roll back'."
+level: suggestion
+nonword: true
+scope: sentence
+# A Tractorbeam house rule that overrides the "go to" in the GitLab, Google,
+# and Microsoft guides. It matches only an instruction to the reader, at the
+# start of a sentence or after a comma or colon ("Go to Settings," "In the
+# admin console, go to its billing settings"), so "logs go to Better Stack"
+# is left alone. A quoted phrase, such as a style guide's example of what not
+# to write, is skipped.
+tokens:
+  - '(?:^|(?<=[,:]\s))(?:[Gg]o|[Nn]avigate|[Hh]ead) (?:back(?: to)?|to|over to)\b'
+  - '(?<!["“])\b(?:go|goes|going|went) back\b(?!["”])'

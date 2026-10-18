@@ -1,0 +1,6 @@
+extends: existence
+message: "'respectively' makes the reader match two lists by position. Pair each item with its value directly."
+level: suggestion
+ignorecase: true
+tokens:
+  - respectively

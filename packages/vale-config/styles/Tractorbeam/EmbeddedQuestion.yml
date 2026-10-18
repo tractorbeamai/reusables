@@ -1,0 +1,14 @@
+extends: existence
+message: "Embedded question as subject: '%s'. State the answer for each case instead of the question it depends on."
+level: warning
+nonword: true
+scope: sentence
+# A subordinate interrogative clause as the sentence's subject ("Which path
+# you follow depends on who owns the machine") describes how to find the
+# answer instead of giving it. "When", "Where", and "If" are left out because
+# they open conditional clauses ("When a service depends on single sign-on, add it
+# to the register"). A sentence ending in a question mark is a real question.
+tokens:
+  - '^(?:Which|What|Who|Whom|Whose|Whether|How|Why)\b(?![^?]*\?)[^,;:]{2,80}? (?:depends|depend|hinges|hinge|rests|rest|turns|turn) on\b'
+  - '^(?:Which|What|Who|Whom|Whose|Whether|How|Why)\b(?![^?]*\?)[^,;:]{2,80}? (?:is|are) (?:up to|determined by|decided by|set by|based on)\b'
+  - '^(?:Which|What|Who|Whom|Whose|Whether|How|Why)\b(?![^?]*\?)[^,;:]{2,80}? (?:varies|vary|comes down to|come down to)\b'

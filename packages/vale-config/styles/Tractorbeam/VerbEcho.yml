@@ -1,0 +1,7 @@
+extends: existence
+message: "'%s' uses a noun and its own verb together. Use another verb for the action, such as 'the Tables that it changes' for 'the Tables that the write writes'."
+level: suggestion
+ignorecase: true
+nonword: true
+tokens:
+  - '\b(?:the|a|an|each|every|its|this|that) (write|read|call|merge|build|run|commit|apply|change|update|delete|sync|deploy|release|import|export)s? (?:that |which )?(?:[a-z]+ ){0,2}(?<!\b(?:the|a|an|each|every|its|this|that|his|her|their|our|one|whose) )\1(?:s|es|d|ed)?\b'

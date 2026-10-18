@@ -1,0 +1,6 @@
+extends: existence
+message: "Relative clause with 'is' or 'are': '%s'. Put the adjective or participle before the noun, such as 'a unique name' for 'a name that is unique'."
+level: suggestion
+nonword: true
+tokens:
+  - '\b(?!(?:and|or|nor|but|so|not)\b)[a-z]+s? (?:that|which) (?:is|are|was|were) (?:[a-z]+ed|[a-z]+en|new|old|empty|missing|open|closed|active|valid|invalid|unique|required|optional)\b'

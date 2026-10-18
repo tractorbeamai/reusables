@@ -1,0 +1,9 @@
+extends: existence
+message: "Passive with 'get': '%s'. Say who acts and use an active verb."
+level: suggestion
+ignorecase: true
+# Google.Passive only matches forms of "be", so "the check gets bypassed"
+# slips past it. Idioms that aren't passive ("get started", "get used to",
+# "get involved", "get rid of") are excluded.
+tokens:
+  - (?:get|gets|got|gotten|getting) (?!started\b|used\b|involved\b|rid\b)(?:[a-z]+ed|built|done|made|sent|set|run|shown|taken|given|written|seen|kept|lost|stuck|caught|thrown|broken|chosen|hidden)

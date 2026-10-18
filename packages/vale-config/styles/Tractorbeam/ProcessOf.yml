@@ -1,0 +1,7 @@
+extends: existence
+message: "'%s' wraps an action in a noun. Use the gerund or the verb, such as 'rotating keys' for 'the process of rotating keys'."
+level: suggestion
+ignorecase: true
+nonword: true
+tokens:
+  - '\bthe (?:process|act|task|job|practice) of [a-z]+ing\b'

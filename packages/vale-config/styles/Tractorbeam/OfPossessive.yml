@@ -1,0 +1,8 @@
+extends: existence
+message: "'%s': use the possessive, such as 'a document's ID' for 'the ID of a document'."
+level: suggestion
+nonword: true
+# Limited to nouns for a property that a thing has, such as its ID, name, or
+# owner, so that "the owner of the change" becomes "the change's owner".
+tokens:
+  - '\bthe (?:ID|id|name|owner|state|schema|size|type|version|value|key|status|author|URL|path) of (?:the|a|an|each|its) [A-Za-z]+'

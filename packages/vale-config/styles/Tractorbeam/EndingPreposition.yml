@@ -1,0 +1,19 @@
+extends: existence
+message: "Ends with a preposition: '%s' Recast it so the sentence ends on the word that matters."
+level: suggestion
+ignorecase: true
+nonword: true
+scope: sentence
+# A house preference, not a grammar rule: ending on a preposition is correct
+# English, but a sentence that ends on its noun or verb reads more firmly
+# ("the position a candidate has applied for" becomes "the position a
+# candidate is applying to fill"). Two-word verbs whose particle can't move
+# ("sign in," "fill in," "turn it on," "set up," "opt out") and idioms ("from
+# then on," "and so on") are left alone, as are hyphenated compounds ("single
+# sign-on") and lead-ins that end in a colon. The preposition has to sit
+# directly before the sentence's closing punctuation: Vale masks inline code,
+# so "add this alias to `~/.zshrc`." would otherwise read as ending in "to."
+# Fragments under four words are skipped: they're labels such as the table
+# headers "Managed in" and "Approved by."
+tokens:
+  - '^(?:\S+\s+){3,}.*?(?<!\b(?:sign|signs|signed|signing|log|logs|logged|logging|opt|opts|opted|check|checks|checked|fill|fills|filled|plug|plugs|plugged|turn|turns|turned|switch|switches|switched|lock|locks|locked|kick|kicks|kicked|carry|carries|carried|hand|hands|handed|clock|clocks|clocked|dial|dials|dialed|try|tries|tried|count|counts|counted|it|them|this|that|then|now|so|later)\s)(?<![-\w])(?:about|across|against|among|at|between|by|for|from|in|into|of|on|onto|through|to|toward|towards|upon|via|with|within|without)[.!?)"''’]*$'

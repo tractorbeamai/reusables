@@ -1,0 +1,13 @@
+extends: existence
+message: "Vague noun: '%s'. Name the specific item."
+level: suggestion
+ignorecase: true
+# From Heidewald's Business Writing Feedback rubric (Kelley School of
+# Business): "Avoids vague, abstract, overused or incorrect nouns ...
+# (thing/aspect)." "Work" as a stand-in for the operations themselves ("does
+# only the work that its code requests," "doing the work again") is the same
+# kind of noun; "the work of others" is skipped.
+tokens:
+  - things?
+  - aspects?
+  - (?:the|its|their|all the|less|more|extra) work(?! of\b| environment\b)

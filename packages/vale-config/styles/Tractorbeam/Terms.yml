@@ -1,0 +1,9 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: error
+ignorecase: false
+# The Tractorbeam vocabulary enforces the casing of accepted names; this catches
+# spellings the vocabulary can't, such as names split into two words.
+swap:
+  "Tractor Beam": Tractorbeam
+  "security officer": Security Officer

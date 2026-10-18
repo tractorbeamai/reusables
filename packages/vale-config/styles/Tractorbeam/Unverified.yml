@@ -1,0 +1,6 @@
+extends: existence
+message: "Check this claim against its source and remove the [UNVERIFIED] marker."
+level: error
+scope: raw
+raw:
+  - '\[UNVERIFIED\]'

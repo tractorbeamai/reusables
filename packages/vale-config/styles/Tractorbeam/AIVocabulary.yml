@@ -1,0 +1,13 @@
+extends: existence
+message: "AI vocabulary: '%s'. Replace with a more specific or common word."
+level: error
+ignorecase: true
+# Words from Heidewald's Business Writing Feedback rubric (Kelley School of
+# Business) list of "AI language in words ... that humans wouldn't typically
+# say or write" that ai-tells doesn't already catch.
+tokens:
+  - hone[sd]?
+  - honing
+  - bespoke
+  - whimsical
+  - annals

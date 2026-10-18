@@ -1,6 +1,6 @@
 # Reusables
 
-Shared configurations for Tractorbeam projects: Oxlint, Oxfmt, and TypeScript configs, plus a Vite plugin for MCP Apps. The ESLint and Prettier configs in `packages/` are deprecated, excluded from the workspace, and no longer released.
+Shared configurations for Tractorbeam projects: Oxlint, Oxfmt, TypeScript, and Vale configs, plus a Vite plugin for MCP Apps. The Vale config is released as a Vale package attached to its GitHub release, not to npm. The ESLint and Prettier configs in `packages/` are deprecated, excluded from the workspace, and no longer released.
 
 ## Changesets
 

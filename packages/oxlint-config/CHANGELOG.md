@@ -1,5 +1,12 @@
 # @tractorbeam/oxlint-config
 
+## 0.6.0
+
+### Minor Changes
+
+- 247b3cd: Turn off `max-lines` and `max-lines-per-function`, including the defaults the `pedantic` category would otherwise apply, so the shared config no longer limits file or function length.
+- 02a296f: Stylistic rules are now on by default: braces on every block (`curly: all`) and blank lines around multiline statements. Upgrade, then repeat `vp check --fix` until it passes, usually three runs: braces on nested blocks are added one level per pass, and the formatter expands one-line `{ return; }` bodies, which the blank-line rule then pads. Without Vite+, alternate `oxlint --fix` and your formatter the same way. Opt out with `oxlintConfig({ stylistic: false })`.
+
 ## 0.5.0
 
 ### Minor Changes

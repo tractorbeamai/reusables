@@ -34,6 +34,8 @@ The four bundler presets type-check code that a bundler or a type-stripping runn
 | `node-bundler` | Node code that a bundler builds | `node` |
 | `cloudflare-workers` | Cloudflare Workers with `nodejs_compat` | `@cloudflare/workers-types`, `node` |
 
+Each bundler preset also maps `@/*` to the package's `src/*`, resolved from the package's own `tsconfig.json` through `${configDir}`. A bundler resolves the alias at build time when it reads `tsconfig.json` paths, such as Vite with `resolve.tsconfigPaths`. A package that sets its own `paths` replaces the alias, so it lists `@/*` again if it keeps it.
+
 The other bases keep their own conventions:
 
 - `node` and `node22`: Node code that `tsc` resolves with `nodenext`.

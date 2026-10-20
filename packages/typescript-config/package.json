@@ -39,6 +39,8 @@
     "./tanstack-start": "./tanstack-start.json",
     "./vite": "./vite.json",
     "./cloudflare-workers": "./cloudflare-workers.json",
+    "./bundler": "./bundler.json",
+    "./effect": "./effect.json",
     "./presets": "./presets.ts"
   },
   "publishConfig": {

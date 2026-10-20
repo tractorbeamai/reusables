@@ -1,6 +1,17 @@
 # @tractorbeam/typescript-config
 
-Shared `tsconfig` presets for Tractorbeam projects.
+Shared `tsconfig` presets for Tractorbeam projects. A package's `tsconfig.json` extends one base preset, adds any add-ons, and lists only the files it checks:
+
+```json
+{
+  "extends": [
+    "@tractorbeam/typescript-config/cloudflare-workers",
+    "@tractorbeam/typescript-config/effect",
+    "@tractorbeam/typescript-config/vitest"
+  ],
+  "include": ["src", "tests", "vitest.config.ts"]
+}
+```
 
 ## Install
 
@@ -8,41 +19,31 @@ Shared `tsconfig` presets for Tractorbeam projects.
 pnpm add -D @tractorbeam/typescript-config
 ```
 
-## Usage
+Install the packages a preset names in `types`, such as `@types/node`, too.
 
-In your project’s `tsconfig.json`:
+## Base presets
 
-```json
-{
-  "extends": "@tractorbeam/typescript-config/node22.json"
-}
-```
+Extend exactly one.
 
-## Presets
+The four bundler presets type-check code that a bundler or a type-stripping runner resolves. They emit nothing, preserve import syntax, allow `.ts` extensions in imports, and report unused locals and parameters. They share one `lib`, ES2023 with the DOM library for web-standard APIs such as `fetch` and `URL`, and differ only in the ambient `types` each environment needs:
 
-- `@tractorbeam/typescript-config/node.json`
-- `@tractorbeam/typescript-config/node22.json`
-- `@tractorbeam/typescript-config/strictest.json`
-- `@tractorbeam/typescript-config/react.json`
-- `@tractorbeam/typescript-config/next.json`
-- `@tractorbeam/typescript-config/tanstack-start.json`
-- `@tractorbeam/typescript-config/vite.json`
-- `@tractorbeam/typescript-config/cloudflare-workers.json`
-- `@tractorbeam/typescript-config/bundler.json`
-- `@tractorbeam/typescript-config/effect.json`
+| Preset | For | `types` |
+| --- | --- | --- |
+| `bundler` | Runtime-neutral libraries | none |
+| `browser` | Browser code built with Vite, with its `vite.config.ts` | `node`, `vite/client` |
+| `node-bundler` | Node code that a bundler builds | `node` |
+| `cloudflare-workers` | Cloudflare Workers with `nodejs_compat` | `@cloudflare/workers-types`, `node` |
 
-### `bundler` and `effect`
+The other bases keep their own conventions:
 
-`bundler` type-checks code that a bundler resolves, such as Vite, a Cloudflare Worker build, or a Node runner that strips types. It emits nothing, preserves import syntax, allows `.ts` extensions in imports, and reports unused locals and parameters. Its `lib` covers DOM, so one config can check browser code beside its `vite.config.ts`.
+- `node` and `node22`: Node code that `tsc` resolves with `nodenext`.
+- `next`: Next.js.
+- `tanstack-start`: TanStack Start.
 
-`effect` is `bundler` plus the Effect language service, with its diagnostics off.
+## Add-ons
 
-Neither sets `types`, which defaults to `[]` in TypeScript 6. Each package lists the ambient types it uses:
+Add-ons go after the base in `extends` and set nothing a base sets, so they combine freely:
 
-```json
-{
-  "extends": "@tractorbeam/typescript-config/effect",
-  "compilerOptions": { "types": ["@cloudflare/workers-types", "vitest/importMeta"] },
-  "include": ["src", "tests"]
-}
-```
+- `effect`: the Effect language service, with its diagnostics off.
+- `vitest`: `import.meta.vitest` for in-source tests. It loads the types from a file, because a later preset's `types` would replace the base's instead of adding to them. Install `vitest` alongside it.
+- `strictest`: the strictest checking flags.

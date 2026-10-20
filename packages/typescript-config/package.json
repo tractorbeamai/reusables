@@ -3,15 +3,16 @@
   "version": "0.4.0",
   "description": "Shared tsconfig presets for Tractorbeam projects",
   "keywords": [
+    "cloudflare-workers",
+    "effect",
     "nextjs",
-    "react",
     "tanstack",
     "tractorbeam",
     "tractorbeamai",
     "tsconfig",
     "tsconfig-bases",
     "typescript",
-    "vite"
+    "vitest"
   ],
   "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/typescript-config#readme",
   "bugs": {
@@ -31,20 +32,29 @@
   ],
   "type": "module",
   "exports": {
+    "./bundler": "./bundler.json",
+    "./browser": "./browser.json",
+    "./node-bundler": "./node-bundler.json",
+    "./cloudflare-workers": "./cloudflare-workers.json",
     "./node": "./node.json",
     "./node22": "./node22.json",
-    "./strictest": "./strictest.json",
-    "./react": "./react.json",
     "./next": "./next.json",
     "./tanstack-start": "./tanstack-start.json",
-    "./vite": "./vite.json",
-    "./cloudflare-workers": "./cloudflare-workers.json",
-    "./bundler": "./bundler.json",
     "./effect": "./effect.json",
+    "./vitest": "./vitest.json",
+    "./strictest": "./strictest.json",
     "./presets": "./presets.ts"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true
+  },
+  "peerDependencies": {
+    "vitest": "*"
+  },
+  "peerDependenciesMeta": {
+    "vitest": {
+      "optional": true
+    }
   }
 }

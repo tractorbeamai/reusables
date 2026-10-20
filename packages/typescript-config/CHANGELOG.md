@@ -1,5 +1,11 @@
 # @tractorbeam/typescript-config
 
+## 0.6.0
+
+### Minor Changes
+
+- 58ef022: Map `@/*` to the package's `src/*` in the `bundler`, `browser`, `node-bundler`, and `cloudflare-workers` presets.
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,8 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "target": "es2022",
     "lib": ["es2023", "esnext.disposable", "dom", "dom.iterable"],
+    "types": [],
+    "target": "es2022",
     "module": "preserve",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",

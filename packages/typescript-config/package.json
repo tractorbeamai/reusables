@@ -30,14 +30,6 @@
     "package.json",
     "README.md"
   ],
-  "peerDependencies": {
-    "vitest": "*"
-  },
-  "peerDependenciesMeta": {
-    "vitest": {
-      "optional": true
-    }
-  },
   "type": "module",
   "exports": {
     "./bundler": "./bundler.json",
@@ -56,5 +48,13 @@
   "publishConfig": {
     "access": "public",
     "provenance": true
+  },
+  "peerDependencies": {
+    "vitest": "*"
+  },
+  "peerDependenciesMeta": {
+    "vitest": {
+      "optional": true
+    }
   }
 }

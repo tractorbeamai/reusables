@@ -27,12 +27,12 @@ Extend exactly one.
 
 The four bundler presets type-check code that a bundler or a type-stripping runner resolves. They emit nothing, preserve import syntax, allow `.ts` extensions in imports, and report unused locals and parameters. They share one `lib`, ES2023 with the DOM library for web-standard APIs such as `fetch` and `URL`, and differ only in the ambient `types` each environment needs:
 
-| Preset               | For                                                     | `types`                             |
-| -------------------- | ------------------------------------------------------- | ----------------------------------- |
-| `bundler`            | Runtime-neutral libraries                               | none                                |
-| `browser`            | Browser code built with Vite, with its `vite.config.ts` | `node`, `vite/client`               |
-| `node-bundler`       | Node code that a bundler builds                         | `node`                              |
-| `cloudflare-workers` | Cloudflare Workers with `nodejs_compat`                 | `@cloudflare/workers-types`, `node` |
+| Preset | For | `types` |
+| --- | --- | --- |
+| `bundler` | Runtime-neutral libraries | none |
+| `browser` | Browser code built with Vite, with its `vite.config.ts` | `node`, `vite/client` |
+| `node-bundler` | Node code that a bundler builds | `node` |
+| `cloudflare-workers` | Cloudflare Workers with `nodejs_compat` | `@cloudflare/workers-types`, `node` |
 
 The other bases keep their own conventions:
 

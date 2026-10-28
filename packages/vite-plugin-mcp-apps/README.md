@@ -14,8 +14,9 @@ Vite 8 is a required peer dependency.
 
 ```ts
 import react from "@vitejs/plugin-react";
-import { mcpApps } from "@tractorbeam/vite-plugin-mcp-apps";
 import { defineConfig } from "vite-plus";
+
+import { mcpApps } from "@tractorbeam/vite-plugin-mcp-apps";
 
 export default defineConfig({
   plugins: [react(), mcpApps()],

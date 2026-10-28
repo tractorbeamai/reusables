@@ -20,7 +20,7 @@ export default defineConfig({
 });
 ```
 
-The shared configuration leaves Markdown and MDX prose unwrapped.
+The shared configuration sorts imports and Tailwind CSS classes, including those passed to `clsx`, `cn`, and `cva`, and leaves Markdown and MDX prose unwrapped.
 
 Compose repository-specific options in `vite.config.ts`:
 

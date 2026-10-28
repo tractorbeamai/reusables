@@ -1,6 +1,5 @@
-import { RuleTester } from "oxlint/plugins-dev";
-
 import uiPlugin from "@tractorbeam/oxlint-config/ui";
+import { RuleTester } from "oxlint/plugins-dev";
 
 const tester = new RuleTester({ languageOptions: { parserOptions: { lang: "tsx" } } });
 

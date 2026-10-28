@@ -13,9 +13,8 @@ pnpm add -D @tractorbeam/oxlint-config vite-plus
 ## Usage with Vite+
 
 ```typescript
-import { defineConfig } from "vite-plus";
-
 import oxlintConfig from "@tractorbeam/oxlint-config";
+import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   lint: oxlintConfig(),

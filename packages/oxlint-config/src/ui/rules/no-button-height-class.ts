@@ -1,5 +1,4 @@
 import { defineRule } from "@oxlint/plugins";
-
 import type { ESTree } from "@oxlint/plugins";
 
 const VALUE_PATTERN = "(\\d+|\\[.+?\\]|\\d+\\/\\d+)";

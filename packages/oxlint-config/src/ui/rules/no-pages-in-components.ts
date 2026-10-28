@@ -1,5 +1,4 @@
 import { defineRule } from "@oxlint/plugins";
-
 import type { ESTree } from "@oxlint/plugins";
 
 const COMPONENTS_DIRECTORY_PATTERN = /(?:^|\/)components\//u;

@@ -1,5 +1,11 @@
 # @tractorbeam/oxfmt-config
 
+## 0.3.0
+
+### Minor Changes
+
+- 846ed07: Sort imports, and Tailwind CSS classes in `class`, `className`, `clsx`, `cn`, `cva`, and `tw`. Formatting a project after upgrading reorders its imports and classes once.
+
 ## 0.2.0
 
 ### Minor Changes

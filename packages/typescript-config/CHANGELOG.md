@@ -1,5 +1,11 @@
 # @tractorbeam/typescript-config
 
+## 0.6.0
+
+### Minor Changes
+
+- bb05d2d: `strictest` drops `exactOptionalPropertyTypes` and `noPropertyAccessFromIndexSignature`, and adds `verbatimModuleSyntax` and `noUncheckedSideEffectImports`. Optional properties accept an explicit `undefined` again, and index-signature properties read with dot notation. Type-only imports must use `import type`, and a side-effect import must resolve.
+
 ## 0.5.0
 
 ### Minor Changes

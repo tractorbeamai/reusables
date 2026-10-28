@@ -21,11 +21,11 @@ pnpm add -D jiti
 
 ## Quick Start
 
-```typescript
-// eslint.config.ts
-import { defineConfig } from "eslint/config";
+In `eslint.config.ts`:
 
+```typescript
 import { base, react, typescript } from "@tractorbeam/eslint-config";
+import { defineConfig } from "eslint/config";
 
 export default defineConfig([base, typescript, react]);
 ```
@@ -49,10 +49,9 @@ export default defineConfig([base, typescript, react]);
 If you have JavaScript files alongside TypeScript, disable type checking for them:
 
 ```typescript
+import { base, typescript } from "@tractorbeam/eslint-config";
 import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
-
-import { base, typescript } from "@tractorbeam/eslint-config";
 
 export default defineConfig([
   base,
@@ -66,9 +65,8 @@ export default defineConfig([
 Use `extends` to apply configs to specific file patterns:
 
 ```typescript
-import { defineConfig } from "eslint/config";
-
 import { base, playwright, typescript } from "@tractorbeam/eslint-config";
+import { defineConfig } from "eslint/config";
 
 export default defineConfig([base, eslint, { files: ["**/e2e/**/*.ts"], extends: [playwright] }]);
 ```
@@ -78,9 +76,8 @@ export default defineConfig([base, eslint, { files: ["**/e2e/**/*.ts"], extends:
 Override any rules by adding them after `extends`:
 
 ```typescript
-import { defineConfig } from "eslint/config";
-
 import { base, react, typescript } from "@tractorbeam/eslint-config";
+import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   base,

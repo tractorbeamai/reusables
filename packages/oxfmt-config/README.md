@@ -11,9 +11,8 @@ pnpm add -D @tractorbeam/oxfmt-config vite-plus
 ## Usage with Vite+
 
 ```typescript
-import { defineConfig } from "vite-plus";
-
 import config from "@tractorbeam/oxfmt-config";
+import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   fmt: config,

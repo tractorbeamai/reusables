@@ -9,15 +9,15 @@ catalogMode: strict
 catalog:
   "@changesets/cli": 3.0.3
   "@stylistic/eslint-plugin": 5.10.0
-  "@oxlint/plugins": 1.89.0
+  "@oxlint/plugins": 1.90.0
   "@types/node": 24.19.2
   eslint-plugin-playwright: 2.12.1
-  oxfmt: 0.74.0
-  oxlint: 1.89.0
+  oxfmt: 0.75.0
+  oxlint: 1.90.0
   oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#13909c9e07590f5a85d93c62712259fe14a883f7
   oxlint-tsgolint: 7.0.2005
   parse5: 8.0.1
-  postcss: 8.5.31
+  postcss: 8.5.32
   postcss-value-parser: 4.2.0
   tinyglobby: 0.2.17
   typescript: 7.0.2

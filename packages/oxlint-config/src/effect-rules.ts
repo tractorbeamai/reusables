@@ -13,11 +13,12 @@ type RuleMap = Record<string, DummyRule>;
 
 export interface EffectOptions {
   /**
-   * Apply `@effect/tsgo`'s effect-native preset, as errors, to files matching
-   * these globs: native APIs that Effect provides a service for are errors
-   * there even outside Effect code.
+   * Globs for code on another platform's terms, such as React components, a
+   * published SDK's plain-TypeScript API, or tool configuration. The
+   * effect-native preset's rules are off there, except the `*-in-effect`
+   * rules, since a native API inside Effect code is wrong anywhere.
    */
-  native?: { files: string[]; excludeFiles?: string[] };
+  except?: string[];
 }
 
 interface Preset {
@@ -90,6 +91,12 @@ const effectTsgoOffRules = {
   "effecttsgo/unstable-api-usage": "off",
 } satisfies DummyRuleMap;
 
+const effectNativeCompanionRules = {
+  // prefer-effect-array already reports a native sort, and this rule mistakes
+  // effect/Array's `Arr.sort`, which copies, for `Array#sort`.
+  "unicorn/no-array-sort": "off",
+} satisfies DummyRuleMap;
+
 /**
  * The rules of oxlint-plugin-effect that hold Effect's conventions; the rest
  * of its preset is off.
@@ -121,34 +128,30 @@ export function effectRules() {
     // application's entry points, where the program is provided, turn off.
     ...asErrors(loadPreset("style").rules),
     ...asErrors(loadPreset("antipattern").rules),
-    // Native APIs that Effect provides a service for are errors inside Effect
-    // code; the effect-native preset's other rules apply only to the files
-    // `native` lists.
-    ...asErrors(
-      Object.fromEntries(
-        Object.entries(loadPreset("effect-native").rules).filter(([rule]) =>
-          rule.endsWith("-in-effect"),
-        ),
-      ),
-    ),
+    // The codebase is Effect, so native APIs that Effect provides a service
+    // for, such as `fetch`, `Date`, and `process.env`, are errors everywhere,
+    // as are native collection methods effect/Array, effect/Record, and
+    // effect/String cover. The preset ships as warnings; as errors, CI fails
+    // on it.
+    ...asErrors(loadPreset("effect-native").rules),
+    ...effectNativeCompanionRules,
     ...effectTsgoOffRules,
     ...effectPluginRules,
   };
 }
 
-export function effectNativeOverride({
-  files,
-  excludeFiles,
-}: NonNullable<EffectOptions["native"]>): OxlintOverride {
+/**
+ * Turns the effect-native preset's rules off for code on another platform's
+ * terms, but keeps its `*-in-effect` rules: a native API inside Effect code is
+ * wrong wherever that code is.
+ */
+export function effectExceptOverride(files: string[]): OxlintOverride {
   return {
     files,
-    ...(excludeFiles && { excludeFiles }),
-    rules: {
-      // The preset ships as warnings; as errors, CI fails on it.
-      ...asErrors(loadPreset("effect-native").rules),
-      // prefer-effect-array already reports a native sort here, and this rule
-      // mistakes effect/Array's `Arr.sort`, which copies, for `Array#sort`.
-      "unicorn/no-array-sort": "off",
-    },
+    rules: Object.fromEntries(
+      Object.keys(loadPreset("effect-native").rules)
+        .filter((rule) => !rule.endsWith("-in-effect"))
+        .map((rule) => [rule, "off"]),
+    ),
   };
 }

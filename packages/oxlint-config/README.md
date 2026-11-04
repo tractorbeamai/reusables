@@ -73,7 +73,30 @@ export default defineConfig({
 });
 ```
 
-It enables `@effect/tsgo`'s `strict` preset, its `style` and `antipattern` presets as errors, and the rules of [oxlint-plugin-effect](https://github.com/cevr/effect-oxlint) that hold Effect's conventions, such as `effect/noSilentCatchAll`, `effect/noUnboundedConcurrency`, and `effect/requireNamedEffectFn`. Inside Effect code, native APIs that Effect provides a service for, such as `fetch`, `Date`, `console`, timers, and `process.env`, are errors: these are the effect-native preset's `*-in-effect` rules. The presets come from the `@effect/tsgo` your project installs, so a new release's rules arrive with it.
+The option treats the codebase as Effect code. It enables `@effect/tsgo`'s `strict` preset, its `style`, `antipattern`, and `effect-native` presets as errors, and the rules of [oxlint-plugin-effect](https://github.com/cevr/effect-oxlint) that hold Effect's conventions, such as `effect/noSilentCatchAll`, `effect/noUnboundedConcurrency`, and `effect/requireNamedEffectFn`. The presets come from the `@effect/tsgo` your project installs, so a new release's rules arrive with it.
+
+The effect-native preset holds every file to Effect's own services: `fetch`, `Date`, `console`, timers, `process.env`, `JSON`, `crypto.randomUUID`, Node built-ins, `async` functions, and native Array, Record, and String methods report in favor of `HttpClient`, `Clock`, `Logger`, `Config`, `effect/Array`, and the rest. All-Effect is the default because a codebase that mixes the two styles file by file drifts back to the native APIs one convenience at a time; exceptions name the code that can't follow it. `unicorn/no-array-sort` is off, since it mistakes `effect/Array`'s `sort`, which copies, for `Array#sort`, and `prefer-effect-array` already reports a native sort.
+
+List code on another platform's terms in `except`: React and browser code, a published SDK whose API is plain TypeScript, or tool configuration that the tool loads and calls. Comment why each one is there:
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({
+    effect: {
+      except: [
+        // The web app is React.
+        "apps/web/**",
+        // The SDK's API is plain TypeScript, for customers who don't use Effect.
+        "packages/sdk/**",
+        // Tool configuration, which the tool loads and calls.
+        "**/*.config.ts",
+      ],
+    },
+  }),
+});
+```
+
+The effect-native rules are off in those files, except its `*-in-effect` rules: a native API inside Effect code, such as `fetch` in `Effect.gen`, is wrong wherever the code lives.
 
 `antipattern` includes `effecttsgo/strict-effect-provide`, which reports providing a layer anywhere but an application's entry point, such as its `main`, its Worker, or a test that builds a runtime. Turn it off for your own entry points in an override:
 
@@ -94,18 +117,6 @@ export default defineConfig({
 A few of `@effect/tsgo`'s rules are off: `strict-boolean-expressions`, which TypeScript's narrowing covers; `missing-pipeable-signature`, since a data-last overload is for a library's pipeline API and most exported functions take every argument at once; and `unstable-api-usage`, so Effect's unstable modules, such as HttpApi and RPC, are fair to use. Shared rules that flag Effect's own idioms are relaxed: namespace imports, `_tag`, a schema and its type sharing a name, Effect's constructors called without `new`, and its combinators taking a `this`-like argument or a function reference.
 
 Two rules read their settings from the tsconfig's `@effect/language-service` plugin entry, never from Oxlint's rule options, so extend `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code. `effecttsgo/schema-class-missing-brand` then asks only untagged Schema classes for a brand; without the preset, tagged classes and errors are asked too. `effecttsgo/prefer-namespace-import` then asks for `import * as Effect from "effect/Effect"` over named imports from `"effect"`.
-
-To hold code to Effect's own services even outside Effect code, apply `@effect/tsgo`'s effect-native preset, as errors, to the files that are ready for it:
-
-```typescript
-export default defineConfig({
-  lint: oxlintConfig({
-    effect: { native: { files: ["src/**/*.ts"], excludeFiles: ["**/*.test.ts"] } },
-  }),
-});
-```
-
-The preset includes `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-string`, so those files use `effect/Array`, `effect/Record`, and `effect/String`. `unicorn/no-array-sort` is off there: it mistakes `effect/Array`'s `sort`, which copies, for `Array#sort`, and `prefer-effect-array` already reports a native sort.
 
 ## Stylistic rules
 

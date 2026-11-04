@@ -3,7 +3,7 @@ import type { DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "oxlint";
 
 import {
   type EffectOptions,
-  effectNativeOverride,
+  effectExceptOverride,
   effectPlugin,
   effectPlugins,
   effectRules,
@@ -15,7 +15,8 @@ export interface OxlintConfigOptions {
   /** Warn when cyclomatic complexity exceeds this value. */
   complexity?: number;
   /**
-   * Lint Effect code with `@effect/tsgo`'s and oxlint-plugin-effect's rules.
+   * Lint the codebase as Effect code with `@effect/tsgo`'s and
+   * oxlint-plugin-effect's rules, except the globs `except` lists.
    * Off by default; install both packages to turn it on, and extend
    * `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code.
    */
@@ -112,7 +113,7 @@ export default function oxlintConfig({
   react = true,
   stylistic = true,
 }: OxlintConfigOptions = {}) {
-  const effectNative = effect === true || effect === false ? undefined : effect.native;
+  const effectExcept = effect === true || effect === false ? undefined : effect.except;
 
   return {
     jsPlugins: [
@@ -149,7 +150,7 @@ export default function oxlintConfig({
     },
     overrides: [
       ...(playwright ? [{ files: playwright.files, rules: playwrightRules }] : []),
-      ...(effectNative ? [effectNativeOverride(effectNative)] : []),
+      ...(effectExcept?.length ? [effectExceptOverride(effectExcept)] : []),
     ],
   } satisfies OxlintConfig;
 }

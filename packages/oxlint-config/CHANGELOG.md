@@ -1,5 +1,11 @@
 # @tractorbeam/oxlint-config
 
+## 0.7.0
+
+### Minor Changes
+
+- e53c5d6: Add an opt-in `effect` option that lints the codebase as Effect code. `oxlintConfig({ effect: true })` enables `@effect/tsgo`'s `strict` preset, its `style`, `antipattern`, and `effect-native` presets as errors, so native APIs such as `fetch`, `Date`, `process.env`, and native Array methods report in every file, and oxlint-plugin-effect's convention rules, and relaxes the shared rules that flag Effect's own idioms. `effect: { except: [globs] }` turns the effect-native rules off for code on another platform's terms, such as React, a published SDK's plain-TypeScript API, or tool configuration, while native APIs inside Effect code stay errors there. Turn `antipattern`'s `effecttsgo/strict-effect-provide` off for your application's entry points. Install `@effect/tsgo` 0.64.1 or later and `oxlint-plugin-effect` 0.29.0 or later, now optional peer dependencies, and extend `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code, which holds the settings `effecttsgo/schema-class-missing-brand` and `effecttsgo/prefer-namespace-import` read.
+
 ## 0.6.0
 
 ### Minor Changes

@@ -56,12 +56,27 @@
     "eslint-plugin-playwright": "catalog:"
   },
   "devDependencies": {
+    "@effect/tsgo": "catalog:",
     "@oxlint/plugins": "catalog:",
     "@tractorbeam/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
     "oxlint": "catalog:",
     "oxlint-plugin-anti-slop": "catalog:",
+    "oxlint-plugin-effect": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "typescript": "catalog:",
     "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@effect/tsgo": ">=0.64.1",
+    "oxlint-plugin-effect": ">=0.29.0"
+  },
+  "peerDependenciesMeta": {
+    "@effect/tsgo": {
+      "optional": true
+    },
+    "oxlint-plugin-effect": {
+      "optional": true
+    }
   }
 }

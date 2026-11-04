@@ -3,7 +3,8 @@
   "extends": "@tractorbeam/typescript-config/node",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "rewriteRelativeImportExtensions": true
+    "rewriteRelativeImportExtensions": true,
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"]
 }

@@ -1,9 +1,25 @@
 import playwrightPlugin from "eslint-plugin-playwright";
 import type { DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "oxlint";
 
+import {
+  type EffectOptions,
+  effectNativeOverride,
+  effectPlugin,
+  effectPlugins,
+  effectRules,
+} from "./effect-rules.ts";
+
+export type { EffectOptions };
+
 export interface OxlintConfigOptions {
   /** Warn when cyclomatic complexity exceeds this value. */
   complexity?: number;
+  /**
+   * Lint Effect code with `@effect/tsgo`'s and oxlint-plugin-effect's rules.
+   * Off by default; install both packages to turn it on, and extend
+   * `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code.
+   */
+  effect?: boolean | EffectOptions;
   /** Apply Playwright rules to test files matching these globs. */
   playwright?: { files: string[] };
   react?: boolean;
@@ -91,24 +107,31 @@ function jsPlugin(name: string, path = name): ExternalPluginEntry {
 
 export default function oxlintConfig({
   complexity,
+  effect = false,
   playwright,
   react = true,
   stylistic = true,
 }: OxlintConfigOptions = {}) {
+  const effectNative = effect === true || effect === false ? undefined : effect.native;
+
   return {
     jsPlugins: [
       jsPlugin("anti-slop"),
       ...(react ? [jsPlugin("ui")] : []),
       ...(stylistic ? [jsPlugin("@stylistic", "stylistic")] : []),
       ...(playwright ? [jsPlugin("playwright")] : []),
+      ...(effect ? [effectPlugin] : []),
     ],
     options: {
       typeAware: true,
       typeCheck: true,
     },
-    plugins: react
-      ? ["import", "jsx-a11y", "promise", "react", "react-perf"]
-      : ["import", "promise"],
+    plugins: [
+      ...(react
+        ? (["import", "jsx-a11y", "promise", "react", "react-perf"] as const)
+        : (["import", "promise"] as const)),
+      ...(effect ? effectPlugins() : []),
+    ],
     categories: {
       correctness: "error",
       suspicious: "error",
@@ -122,7 +145,11 @@ export default function oxlintConfig({
       ...(complexity !== undefined && { complexity: ["warn", complexity] }),
       ...(react && reactPluginRules),
       ...(stylistic && stylisticRules),
+      ...(effect && effectRules()),
     },
-    overrides: playwright ? [{ files: playwright.files, rules: playwrightRules }] : [],
+    overrides: [
+      ...(playwright ? [{ files: playwright.files, rules: playwrightRules }] : []),
+      ...(effectNative ? [effectNativeOverride(effectNative)] : []),
+    ],
   } satisfies OxlintConfig;
 }

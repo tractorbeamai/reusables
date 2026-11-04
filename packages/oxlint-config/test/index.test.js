@@ -204,3 +204,76 @@ test("loads the stylistic and Playwright plugins", async () => {
   assert.ok(stylistic.rules["padding-line-between-statements"]);
   assert.ok(playwright.rules["no-wait-for-timeout"]);
 });
+
+test("omits Effect linting by default", () => {
+  const config = oxlintConfig();
+
+  assert.equal(config.plugins.includes("effecttsgo"), false);
+
+  assert.equal(
+    config.jsPlugins.some((plugin) => plugin.name === "effect"),
+    false,
+  );
+
+  assert.equal(
+    Object.keys(config.rules).some(
+      (rule) => rule.startsWith("effecttsgo/") || rule.startsWith("effect/"),
+    ),
+    false,
+  );
+
+  assert.equal(config.rules["import/no-namespace"], "error");
+  assert.deepEqual(config.overrides, []);
+});
+
+test("enables Effect's plugins and rules as errors", () => {
+  // Act
+  const config = oxlintConfig({ effect: true, react: false });
+
+  // Assert
+  assert.deepEqual(config.plugins, ["import", "promise", "effecttsgo"]);
+
+  assert.deepEqual(config.jsPlugins.at(-1), {
+    name: "effect",
+    specifier: "oxlint-plugin-effect/plugin",
+  });
+
+  const effectRules = Object.entries(config.rules).filter(
+    ([rule, severity]) =>
+      (rule.startsWith("effecttsgo/") || rule.startsWith("effect/")) && severity !== "off",
+  );
+
+  assert.ok(effectRules.length > 50);
+
+  for (const [, severity] of effectRules) {
+    assert.equal(severity, "error");
+  }
+
+  assert.equal(config.rules["effecttsgo/schema-class-missing-brand"], "error");
+  assert.equal(config.rules["effecttsgo/effect-try-without-catch"], "error");
+  assert.equal(config.rules["effecttsgo/global-fetch-in-effect"], "error");
+  assert.equal(config.rules["effect/requireNamedEffectFn"], "error");
+  assert.equal(config.rules["effecttsgo/strict-boolean-expressions"], "off");
+  assert.equal(config.rules["effecttsgo/unstable-api-usage"], "off");
+  assert.equal(config.rules["import/no-namespace"], "off");
+  assert.deepEqual(config.rules["eslint/no-underscore-dangle"], ["error", { allow: ["_tag"] }]);
+  assert.equal(config.rules["effecttsgo/global-fetch"], undefined);
+  assert.deepEqual(config.overrides, []);
+});
+
+test("scopes the effect-native preset to the configured files", () => {
+  // Arrange
+  const files = ["src/**/*.ts"];
+  const excludeFiles = ["**/*.test.ts"];
+
+  // Act
+  const config = oxlintConfig({ effect: { native: { files, excludeFiles } } });
+
+  // Assert
+  assert.equal(config.overrides.length, 1);
+  assert.deepEqual(config.overrides[0].files, files);
+  assert.deepEqual(config.overrides[0].excludeFiles, excludeFiles);
+  assert.equal(config.overrides[0].rules["effecttsgo/global-fetch"], "error");
+  assert.equal(config.overrides[0].rules["effecttsgo/prefer-effect-array"], "off");
+  assert.equal(config.rules["effecttsgo/global-fetch"], undefined);
+});

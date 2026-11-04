@@ -59,6 +59,38 @@ export default defineConfig({
 
 Matching files receive Playwright's recommended rules plus stricter errors for unawaited Playwright calls (including locator methods), `nth()`-style positional locators, raw CSS or XPath locators, and `waitForTimeout`. The rules are applied through the returned `overrides`, so they never reach application source. Set Playwright's `settings` (for example, `globalAliases` for custom fixtures) in your own configuration.
 
+## Effect
+
+Effect linting is opt-in. Install `@effect/tsgo` and `oxlint-plugin-effect`, and turn it on:
+
+```bash
+pnpm add -D @effect/tsgo oxlint-plugin-effect
+```
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({ effect: true }),
+});
+```
+
+It enables `@effect/tsgo`'s `strict` preset, its `style` preset as errors, and the rules of [oxlint-plugin-effect](https://github.com/cevr/effect-oxlint) that hold Effect's conventions, such as `effect/noSilentCatchAll`, `effect/noUnboundedConcurrency`, and `effect/requireNamedEffectFn`. Inside Effect code, native APIs that Effect provides a service for, such as `fetch`, `Date`, `console`, timers, and `process.env`, are errors, and so is a short-form `Effect.try`, whose `Cause.UnknownError` no caller can handle by tag. The presets come from the `@effect/tsgo` your project installs, so a new release's rules arrive with it.
+
+A few of `@effect/tsgo`'s rules are off: `strict-boolean-expressions`, which TypeScript's narrowing covers; `missing-pipeable-signature` and `missed-pipeable-opportunity`, since pipe style is a choice for each call site; `unnecessary-arrow-block`, a layout rule the formatter owns; and `unstable-api-usage`, so Effect's unstable modules, such as HttpApi and RPC, are fair to use. Shared rules that flag Effect's own idioms are relaxed: namespace imports, `_tag`, a schema and its type sharing a name, Effect's constructors called without `new`, and its combinators taking a `this`-like argument or a function reference.
+
+`effecttsgo/schema-class-missing-brand` asks untagged Schema classes for a brand. The rule reads which class kinds need one from the tsconfig's `@effect/language-service` plugin entry, never from Oxlint's rule options, so extend `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code; without it, tagged classes and errors are asked for a brand too.
+
+To hold code to Effect's own services even outside Effect code, apply `@effect/tsgo`'s effect-native preset, as errors, to the files that are ready for it:
+
+```typescript
+export default defineConfig({
+  lint: oxlintConfig({
+    effect: { native: { files: ["src/**/*.ts"], excludeFiles: ["**/*.test.ts"] } },
+  }),
+});
+```
+
+The preset's `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-string` stay off: native Array, Object, and String methods are fine, and `effect/Array`, `effect/Record`, and `effect/String` are for what they lack.
+
 ## Stylistic rules
 
 Stylistic linting is on by default. It requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`, and a blank line before and after multiline statements, declarations, and blocks.

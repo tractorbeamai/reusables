@@ -77,37 +77,17 @@ const effectIdiomRules = {
 } satisfies DummyRuleMap;
 
 /**
- * Rules `@effect/tsgo`'s presets don't set, or set differently.
+ * Rules of `@effect/tsgo`'s presets that are off.
  */
-const effectTsgoRules = {
-  // TypeScript's own narrowing covers optional values in conditions, and pipe
-  // style is a choice for each call site rather than a rule.
+const effectTsgoOffRules = {
+  // TypeScript's own narrowing covers optional values in conditions.
   "effecttsgo/strict-boolean-expressions": "off",
+  // A data-last overload is for a library's pipeline API, and most exported
+  // functions take every argument at once.
   "effecttsgo/missing-pipeable-signature": "off",
-  "effecttsgo/missed-pipeable-opportunity": "off",
-  // A generic arrow-body style rule, not an Effect one; the formatter owns layout.
-  "effecttsgo/unnecessary-arrow-block": "off",
   // Effect's unstable modules, such as HttpApi, HttpRouter, effect/cli, and
   // RPC, are fair to use.
   "effecttsgo/unstable-api-usage": "off",
-  // An untagged Schema class needs a brand to keep its type distinct; a tagged
-  // class's or error's literal `_tag` already does. The language service reads
-  // which kinds need one from the tsconfig, which
-  // `@tractorbeam/typescript-config/effect` sets.
-  "effecttsgo/schema-class-missing-brand": "error",
-  // Native APIs that Effect provides a service for are errors inside Effect code.
-  "effecttsgo/abort-controller-in-effect": "error",
-  "effecttsgo/crypto-random-uuid-in-effect": "error",
-  "effecttsgo/global-console-in-effect": "error",
-  "effecttsgo/global-date-in-effect": "error",
-  "effecttsgo/global-fetch-in-effect": "error",
-  "effecttsgo/global-json-in-effect": "error",
-  "effecttsgo/global-random-in-effect": "error",
-  "effecttsgo/global-timers-in-effect": "error",
-  "effecttsgo/process-env-in-effect": "error",
-  // A short-form `Effect.try` fails with Cause.UnknownError, which no caller
-  // can handle by tag; the object form maps the cause to a typed error.
-  "effecttsgo/effect-try-without-catch": "error",
 } satisfies DummyRuleMap;
 
 /**
@@ -131,12 +111,27 @@ const effectPluginRules = {
 export function effectRules() {
   return {
     ...effectIdiomRules,
-    // Effect's rules report only on code that uses Effect.
+    // Effect's rules report only on code that uses Effect. The strict preset
+    // ships as errors, including schema-class-missing-brand, which asks a brand
+    // only of the class kinds the tsconfig's `brandedSchemaClasses` lists.
     ...loadPreset("strict").rules,
-    // The style preset ships as warnings; as errors, CI fails on it as it does
-    // on the strict preset.
+    // The style and antipattern presets ship as warnings; as errors, CI fails
+    // on them as it does on the strict preset. Antipattern adds
+    // effect-try-without-catch and strict-effect-provide, which an
+    // application's entry points, where the program is provided, turn off.
     ...asErrors(loadPreset("style").rules),
-    ...effectTsgoRules,
+    ...asErrors(loadPreset("antipattern").rules),
+    // Native APIs that Effect provides a service for are errors inside Effect
+    // code; the effect-native preset's other rules apply only to the files
+    // `native` lists.
+    ...asErrors(
+      Object.fromEntries(
+        Object.entries(loadPreset("effect-native").rules).filter(([rule]) =>
+          rule.endsWith("-in-effect"),
+        ),
+      ),
+    ),
+    ...effectTsgoOffRules,
     ...effectPluginRules,
   };
 }
@@ -151,11 +146,9 @@ export function effectNativeOverride({
     rules: {
       // The preset ships as warnings; as errors, CI fails on it.
       ...asErrors(loadPreset("effect-native").rules),
-      // Native Array, Object, and String methods are house style; effect/Array,
-      // effect/Record, and effect/String are for what the native methods lack.
-      "effecttsgo/prefer-effect-array": "off",
-      "effecttsgo/prefer-effect-record": "off",
-      "effecttsgo/prefer-effect-string": "off",
+      // prefer-effect-array already reports a native sort here, and this rule
+      // mistakes effect/Array's `Arr.sort`, which copies, for `Array#sort`.
+      "unicorn/no-array-sort": "off",
     },
   };
 }

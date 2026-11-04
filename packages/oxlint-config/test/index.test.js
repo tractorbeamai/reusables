@@ -253,7 +253,12 @@ test("enables Effect's plugins and rules as errors", () => {
   assert.equal(config.rules["effecttsgo/effect-try-without-catch"], "error");
   assert.equal(config.rules["effecttsgo/global-fetch-in-effect"], "error");
   assert.equal(config.rules["effect/requireNamedEffectFn"], "error");
+  assert.equal(config.rules["effecttsgo/strict-effect-provide"], "error");
+  assert.equal(config.rules["effecttsgo/missed-pipeable-opportunity"], "error");
+  assert.equal(config.rules["effecttsgo/unnecessary-arrow-block"], "error");
+  assert.equal(config.rules["effecttsgo/prefer-namespace-import"], "error");
   assert.equal(config.rules["effecttsgo/strict-boolean-expressions"], "off");
+  assert.equal(config.rules["effecttsgo/missing-pipeable-signature"], "off");
   assert.equal(config.rules["effecttsgo/unstable-api-usage"], "off");
   assert.equal(config.rules["import/no-namespace"], "off");
   assert.deepEqual(config.rules["eslint/no-underscore-dangle"], ["error", { allow: ["_tag"] }]);
@@ -274,6 +279,7 @@ test("scopes the effect-native preset to the configured files", () => {
   assert.deepEqual(config.overrides[0].files, files);
   assert.deepEqual(config.overrides[0].excludeFiles, excludeFiles);
   assert.equal(config.overrides[0].rules["effecttsgo/global-fetch"], "error");
-  assert.equal(config.overrides[0].rules["effecttsgo/prefer-effect-array"], "off");
+  assert.equal(config.overrides[0].rules["effecttsgo/prefer-effect-array"], "error");
+  assert.equal(config.overrides[0].rules["unicorn/no-array-sort"], "off");
   assert.equal(config.rules["effecttsgo/global-fetch"], undefined);
 });

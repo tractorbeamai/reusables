@@ -5,7 +5,8 @@
       {
         "name": "@effect/language-service",
         "diagnostics": false,
-        "brandedSchemaClasses": ["Class", "Error", "Opaque"]
+        "brandedSchemaClasses": ["Class", "Error", "Opaque"],
+        "namespaceImportPackages": ["effect"]
       }
     ]
   }

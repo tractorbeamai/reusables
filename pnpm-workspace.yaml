@@ -8,7 +8,7 @@ catalogMode: strict
 
 catalog:
   "@changesets/cli": 3.0.3
-  "@effect/tsgo": 0.63.0
+  "@effect/tsgo": 0.64.1
   "@stylistic/eslint-plugin": 5.10.0
   "@oxlint/plugins": 1.89.0
   "@types/node": 24.19.2

@@ -73,11 +73,27 @@ export default defineConfig({
 });
 ```
 
-It enables `@effect/tsgo`'s `strict` preset, its `style` preset as errors, and the rules of [oxlint-plugin-effect](https://github.com/cevr/effect-oxlint) that hold Effect's conventions, such as `effect/noSilentCatchAll`, `effect/noUnboundedConcurrency`, and `effect/requireNamedEffectFn`. Inside Effect code, native APIs that Effect provides a service for, such as `fetch`, `Date`, `console`, timers, and `process.env`, are errors, and so is a short-form `Effect.try`, whose `Cause.UnknownError` no caller can handle by tag. The presets come from the `@effect/tsgo` your project installs, so a new release's rules arrive with it.
+It enables `@effect/tsgo`'s `strict` preset, its `style` and `antipattern` presets as errors, and the rules of [oxlint-plugin-effect](https://github.com/cevr/effect-oxlint) that hold Effect's conventions, such as `effect/noSilentCatchAll`, `effect/noUnboundedConcurrency`, and `effect/requireNamedEffectFn`. Inside Effect code, native APIs that Effect provides a service for, such as `fetch`, `Date`, `console`, timers, and `process.env`, are errors: these are the effect-native preset's `*-in-effect` rules. The presets come from the `@effect/tsgo` your project installs, so a new release's rules arrive with it.
 
-A few of `@effect/tsgo`'s rules are off: `strict-boolean-expressions`, which TypeScript's narrowing covers; `missing-pipeable-signature` and `missed-pipeable-opportunity`, since pipe style is a choice for each call site; `unnecessary-arrow-block`, a layout rule the formatter owns; and `unstable-api-usage`, so Effect's unstable modules, such as HttpApi and RPC, are fair to use. Shared rules that flag Effect's own idioms are relaxed: namespace imports, `_tag`, a schema and its type sharing a name, Effect's constructors called without `new`, and its combinators taking a `this`-like argument or a function reference.
+`antipattern` includes `effecttsgo/strict-effect-provide`, which reports providing a layer anywhere but an application's entry point, such as its `main`, its Worker, or a test that builds a runtime. Turn it off for your own entry points in an override:
 
-`effecttsgo/schema-class-missing-brand` asks untagged Schema classes for a brand. The rule reads which class kinds need one from the tsconfig's `@effect/language-service` plugin entry, never from Oxlint's rule options, so extend `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code; without it, tagged classes and errors are asked for a brand too.
+```typescript
+const lint = oxlintConfig({ effect: true });
+
+export default defineConfig({
+  lint: {
+    ...lint,
+    overrides: [
+      ...lint.overrides,
+      { files: ["src/main.ts"], rules: { "effecttsgo/strict-effect-provide": "off" } },
+    ],
+  },
+});
+```
+
+A few of `@effect/tsgo`'s rules are off: `strict-boolean-expressions`, which TypeScript's narrowing covers; `missing-pipeable-signature`, since a data-last overload is for a library's pipeline API and most exported functions take every argument at once; and `unstable-api-usage`, so Effect's unstable modules, such as HttpApi and RPC, are fair to use. Shared rules that flag Effect's own idioms are relaxed: namespace imports, `_tag`, a schema and its type sharing a name, Effect's constructors called without `new`, and its combinators taking a `this`-like argument or a function reference.
+
+Two rules read their settings from the tsconfig's `@effect/language-service` plugin entry, never from Oxlint's rule options, so extend `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code. `effecttsgo/schema-class-missing-brand` then asks only untagged Schema classes for a brand; without the preset, tagged classes and errors are asked too. `effecttsgo/prefer-namespace-import` then asks for `import * as Effect from "effect/Effect"` over named imports from `"effect"`.
 
 To hold code to Effect's own services even outside Effect code, apply `@effect/tsgo`'s effect-native preset, as errors, to the files that are ready for it:
 
@@ -89,7 +105,7 @@ export default defineConfig({
 });
 ```
 
-The preset's `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-string` stay off: native Array, Object, and String methods are fine, and `effect/Array`, `effect/Record`, and `effect/String` are for what they lack.
+The preset includes `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-string`, so those files use `effect/Array`, `effect/Record`, and `effect/String`. `unicorn/no-array-sort` is off there: it mistakes `effect/Array`'s `sort`, which copies, for `Array#sort`, and `prefer-effect-array` already reports a native sort.
 
 ## Stylistic rules
 

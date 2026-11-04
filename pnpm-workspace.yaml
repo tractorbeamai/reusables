@@ -8,12 +8,14 @@ catalogMode: strict
 
 catalog:
   "@changesets/cli": 3.0.3
+  "@effect/tsgo": 0.64.1
   "@stylistic/eslint-plugin": 5.10.0
   "@oxlint/plugins": 1.89.0
   "@types/node": 24.19.2
   eslint-plugin-playwright: 2.12.1
   oxfmt: 0.74.0
   oxlint: 1.89.0
+  oxlint-plugin-effect: 0.29.0
   oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#13909c9e07590f5a85d93c62712259fe14a883f7
   oxlint-tsgolint: 7.0.2005
   parse5: 8.0.1

@@ -204,3 +204,97 @@ test("loads the stylistic and Playwright plugins", async () => {
   assert.ok(stylistic.rules["padding-line-between-statements"]);
   assert.ok(playwright.rules["no-wait-for-timeout"]);
 });
+
+test("omits Effect linting by default", () => {
+  const config = oxlintConfig();
+
+  assert.equal(config.plugins.includes("effecttsgo"), false);
+
+  assert.equal(
+    config.jsPlugins.some((plugin) => plugin.name === "effect"),
+    false,
+  );
+
+  assert.equal(
+    Object.keys(config.rules).some(
+      (rule) => rule.startsWith("effecttsgo/") || rule.startsWith("effect/"),
+    ),
+    false,
+  );
+
+  assert.equal(config.rules["import/no-namespace"], "error");
+  assert.deepEqual(config.overrides, []);
+});
+
+test("enables Effect's plugins and rules as errors", () => {
+  // Act
+  const config = oxlintConfig({ effect: true, react: false });
+
+  // Assert
+  assert.deepEqual(config.plugins, ["import", "promise", "effecttsgo"]);
+
+  assert.deepEqual(config.jsPlugins.at(-1), {
+    name: "effect",
+    specifier: "oxlint-plugin-effect/plugin",
+  });
+
+  const effectRules = Object.entries(config.rules).filter(
+    ([rule, severity]) =>
+      (rule.startsWith("effecttsgo/") || rule.startsWith("effect/")) && severity !== "off",
+  );
+
+  assert.ok(effectRules.length > 50);
+
+  for (const [, severity] of effectRules) {
+    assert.equal(severity, "error");
+  }
+
+  assert.equal(config.rules["effecttsgo/schema-class-missing-brand"], "error");
+  assert.equal(config.rules["effecttsgo/effect-try-without-catch"], "error");
+  assert.equal(config.rules["effecttsgo/global-fetch-in-effect"], "error");
+  assert.equal(config.rules["effect/requireNamedEffectFn"], "error");
+  assert.equal(config.rules["effecttsgo/strict-effect-provide"], "error");
+  assert.equal(config.rules["effecttsgo/missed-pipeable-opportunity"], "error");
+  assert.equal(config.rules["effecttsgo/unnecessary-arrow-block"], "error");
+  assert.equal(config.rules["effecttsgo/prefer-namespace-import"], "error");
+  assert.equal(config.rules["effecttsgo/strict-boolean-expressions"], "off");
+  assert.equal(config.rules["effecttsgo/missing-pipeable-signature"], "off");
+  assert.equal(config.rules["effecttsgo/unstable-api-usage"], "off");
+  assert.equal(config.rules["import/no-namespace"], "off");
+  assert.deepEqual(config.rules["eslint/no-underscore-dangle"], ["error", { allow: ["_tag"] }]);
+  assert.deepEqual(config.overrides, []);
+});
+
+test("applies the effect-native preset to every file without exceptions", () => {
+  const config = oxlintConfig({ effect: true });
+
+  assert.equal(config.rules["effecttsgo/global-fetch"], "error");
+  assert.equal(config.rules["effecttsgo/prefer-effect-array"], "error");
+  assert.equal(config.rules["unicorn/no-array-sort"], "off");
+  assert.deepEqual(config.overrides, []);
+  assert.deepEqual(oxlintConfig({ effect: { except: [] } }).overrides, []);
+});
+
+test("turns the effect-native rules off for exceptions but keeps the in-effect rules", () => {
+  // Arrange
+  const except = ["packages/web/**", "**/*.config.ts"];
+
+  // Act
+  const config = oxlintConfig({ effect: { except } });
+
+  // Assert
+  assert.equal(config.overrides.length, 1);
+  const [exception] = config.overrides;
+  assert.deepEqual(exception.files, except);
+  assert.equal(exception.rules["effecttsgo/global-fetch"], "off");
+  assert.equal(exception.rules["effecttsgo/prefer-effect-array"], "off");
+  assert.equal(exception.rules["effecttsgo/global-fetch-in-effect"], undefined);
+
+  assert.equal(
+    Object.keys(exception.rules).some((rule) => rule.endsWith("-in-effect")),
+    false,
+  );
+
+  assert.equal(config.rules["effecttsgo/global-fetch-in-effect"], "error");
+  assert.equal(config.rules["effecttsgo/global-fetch"], "error");
+});

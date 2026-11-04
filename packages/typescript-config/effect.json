@@ -1,6 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "plugins": [{ "name": "@effect/language-service", "diagnostics": false }]
+    "plugins": [
+      {
+        "name": "@effect/language-service",
+        "diagnostics": false,
+        "brandedSchemaClasses": ["Class", "Error", "Opaque"],
+        "namespaceImportPackages": ["effect"]
+      }
+    ]
   }
 }

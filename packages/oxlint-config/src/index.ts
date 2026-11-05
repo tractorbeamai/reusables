@@ -1,5 +1,5 @@
 import playwrightPlugin from "eslint-plugin-playwright";
-import type { DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "oxlint";
+import type { DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "vite-plus/lint";
 
 import {
   type EffectOptions,

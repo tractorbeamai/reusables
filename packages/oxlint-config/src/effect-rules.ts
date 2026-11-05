@@ -6,7 +6,7 @@ import type {
   ExternalPluginEntry,
   OxlintConfig,
   OxlintOverride,
-} from "oxlint";
+} from "vite-plus/lint";
 
 /** A rule map keyed by any rule name, so declarations name no rule's options type. */
 type RuleMap = Record<string, DummyRule>;

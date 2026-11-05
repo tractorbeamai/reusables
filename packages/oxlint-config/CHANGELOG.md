@@ -1,5 +1,15 @@
 # @tractorbeam/oxlint-config
 
+## 0.8.0
+
+### Minor Changes
+
+- 1c2854c: Turn off `effecttsgo/prefer-effect-array`, `effecttsgo/prefer-effect-record`, and `effecttsgo/prefer-effect-string` in the `effect` option, so native Array, Object, and String methods no longer report. Use `effect/Array`, `effect/Record`, and `effect/String` for what the native methods lack; `effect/String`'s functions take their string last, so replacing each native call with one would turn it into a pipe. The rest of the effect-native preset stays errors.
+
+### Patch Changes
+
+- 01f92a2: Type the returned configuration with the Oxlint types that Vite+ ships (`vite-plus/lint`), so `defineConfig({ lint: oxlintConfig() })` type-checks against the Oxlint version your Vite+ runs, even when another Oxlint version is installed.
+
 ## 0.7.0
 
 ### Minor Changes

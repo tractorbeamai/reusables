@@ -1,8 +1,11 @@
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import { test } from "node:test";
 
 import oxlintConfig from "@tractorbeam/oxlint-config";
 import uiPlugin from "@tractorbeam/oxlint-config/ui";
+
+const require = createRequire(import.meta.url);
 
 test("loads the UI plugin", () => {
   assert.equal(uiPlugin.meta.name, "ui");
@@ -269,10 +272,35 @@ test("applies the effect-native preset to every file without exceptions", () => 
   const config = oxlintConfig({ effect: true });
 
   assert.equal(config.rules["effecttsgo/global-fetch"], "error");
-  assert.equal(config.rules["effecttsgo/prefer-effect-array"], "error");
+  assert.equal(config.rules["effecttsgo/process-env"], "error");
+  assert.equal(config.rules["effecttsgo/async-function"], "error");
   assert.equal(config.rules["unicorn/no-array-sort"], "off");
   assert.deepEqual(config.overrides, []);
   assert.deepEqual(oxlintConfig({ effect: { except: [] } }).overrides, []);
+});
+
+test("leaves native Array, Object, and String methods to the codebase", () => {
+  const config = oxlintConfig({ effect: true });
+
+  const offRules = [
+    "effecttsgo/prefer-effect-array",
+    "effecttsgo/prefer-effect-record",
+    "effecttsgo/prefer-effect-string",
+  ];
+
+  for (const rule of offRules) {
+    assert.equal(config.rules[rule], "off", rule);
+  }
+
+  const nativeRules = Object.keys(
+    require("@effect/tsgo/oxlint-presets/effect-native.json").rules,
+  ).filter((rule) => !offRules.includes(rule));
+
+  assert.ok(nativeRules.length > 20);
+
+  for (const rule of nativeRules) {
+    assert.equal(config.rules[rule], "error", rule);
+  }
 });
 
 test("turns the effect-native rules off for exceptions but keeps the in-effect rules", () => {

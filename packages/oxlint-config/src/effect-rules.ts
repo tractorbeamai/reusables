@@ -89,11 +89,18 @@ const effectTsgoOffRules = {
   // Effect's unstable modules, such as HttpApi, HttpRouter, effect/cli, and
   // RPC, are fair to use.
   "effecttsgo/unstable-api-usage": "off",
+  // Native Array, Object, and String methods are house style; effect/Array,
+  // effect/Record, and effect/String are for what the native methods lack.
+  // effect/String's functions also take their string last, so each native
+  // call would become a pipe.
+  "effecttsgo/prefer-effect-array": "off",
+  "effecttsgo/prefer-effect-record": "off",
+  "effecttsgo/prefer-effect-string": "off",
 } satisfies DummyRuleMap;
 
 const effectNativeCompanionRules = {
-  // prefer-effect-array already reports a native sort, and this rule mistakes
-  // effect/Array's `Arr.sort`, which copies, for `Array#sort`.
+  // This rule mistakes effect/Array's `Arr.sort`, which copies, for
+  // `Array#sort`.
   "unicorn/no-array-sort": "off",
 } satisfies DummyRuleMap;
 
@@ -129,10 +136,8 @@ export function effectRules() {
     ...asErrors(loadPreset("style").rules),
     ...asErrors(loadPreset("antipattern").rules),
     // The codebase is Effect, so native APIs that Effect provides a service
-    // for, such as `fetch`, `Date`, and `process.env`, are errors everywhere,
-    // as are native collection methods effect/Array, effect/Record, and
-    // effect/String cover. The preset ships as warnings; as errors, CI fails
-    // on it.
+    // for, such as `fetch`, `Date`, and `process.env`, are errors everywhere.
+    // The preset ships as warnings; as errors, CI fails on it.
     ...asErrors(loadPreset("effect-native").rules),
     ...effectNativeCompanionRules,
     ...effectTsgoOffRules,

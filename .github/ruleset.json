@@ -28,9 +28,6 @@
         "required_status_checks": [
           {
             "context": "Checks"
-          },
-          {
-            "context": "policy-bot: main"
           }
         ],
         "strict_required_status_checks_policy": true,

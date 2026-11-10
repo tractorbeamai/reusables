@@ -1,3 +1,9 @@
+# Cloudflare publishes these packages almost daily.
+minimumReleaseAgeExclude:
+  - "@cloudflare/*"
+  - wrangler
+  - miniflare
+  - workerd
 packages:
   - "packages/*"
   # Deprecated: frozen at their final published versions and no longer built.

@@ -18,11 +18,11 @@
     "url": "git+https://github.com/tractorbeamai/reusables.git",
     "directory": "packages/pnpm-config"
   },
-  "type": "module",
   "files": [
     "pnpmfile.mjs",
     "README.md"
   ],
+  "type": "module",
   "publishConfig": {
     "access": "public",
     "provenance": true

@@ -6,6 +6,7 @@ Shared configuration packages used across Tractorbeam projects.
 
 - `@tractorbeam/oxfmt-config`: shared Oxfmt configuration
 - `@tractorbeam/oxlint-config`: shared Oxlint configuration
+- `@tractorbeam/pnpm-config`: shared pnpm settings, installed as a pnpm config dependency
 - `@tractorbeam/typescript-config`: shared `tsconfig` presets
 - `@tractorbeam/vale-config`: shared Vale configuration, published as a Vale package
 - `@tractorbeam/vite-plugin-mcp-apps`: Vite plugin that builds filesystem-based MCP Apps

@@ -1,0 +1,30 @@
+{
+  "name": "@tractorbeam/pnpm-config",
+  "version": "0.0.0",
+  "description": "Shared pnpm configuration for Tractorbeam projects, installed as a pnpm config dependency",
+  "keywords": [
+    "config",
+    "pnpm",
+    "tractorbeam",
+    "tractorbeamai"
+  ],
+  "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/pnpm-config#readme",
+  "bugs": {
+    "url": "https://github.com/tractorbeamai/reusables/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tractorbeamai/reusables.git",
+    "directory": "packages/pnpm-config"
+  },
+  "type": "module",
+  "files": [
+    "pnpmfile.mjs",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

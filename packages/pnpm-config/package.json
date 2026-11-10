@@ -1,6 +1,6 @@
 {
   "name": "@tractorbeam/pnpm-config",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Shared pnpm configuration for Tractorbeam projects, installed as a pnpm config dependency",
   "keywords": [
     "config",

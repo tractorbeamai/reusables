@@ -22,7 +22,6 @@
     "pnpmfile.mjs",
     "README.md"
   ],
-  "type": "module",
   "publishConfig": {
     "access": "public",
     "provenance": true

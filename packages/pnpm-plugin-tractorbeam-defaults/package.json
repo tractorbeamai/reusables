@@ -1,14 +1,14 @@
 {
-  "name": "@tractorbeam/pnpm-config",
-  "version": "0.1.0",
-  "description": "Shared pnpm configuration for Tractorbeam projects, installed as a pnpm config dependency",
+  "name": "@tractorbeam/pnpm-plugin-tractorbeam-defaults",
+  "version": "0.0.0",
+  "description": "Tractorbeam's pnpm defaults, installed as a pnpm config dependency",
   "keywords": [
     "config",
     "pnpm",
     "tractorbeam",
     "tractorbeamai"
   ],
-  "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/pnpm-config#readme",
+  "homepage": "https://github.com/tractorbeamai/reusables/tree/main/packages/pnpm-plugin-tractorbeam-defaults#readme",
   "bugs": {
     "url": "https://github.com/tractorbeamai/reusables/issues"
   },
@@ -16,7 +16,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tractorbeamai/reusables.git",
-    "directory": "packages/pnpm-config"
+    "directory": "packages/pnpm-plugin-tractorbeam-defaults"
   },
   "files": [
     "pnpmfile.mjs",

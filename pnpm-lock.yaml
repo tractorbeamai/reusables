@@ -301,7 +301,7 @@ importers:
         specifier: 'catalog:'
         version: 1.5.0(@types/node@24.19.2)(@vitest/ui@5.1.0)(typescript@7.0.2)(yaml@2.9.1)
 
-  packages/pnpm-config: {}
+  packages/pnpm-plugin-tractorbeam-defaults: {}
 
   packages/typescript-config:
     dependencies:

@@ -203,8 +203,8 @@ catalogs:
       specifier: 7.0.2006
       version: 7.0.2006
     parse5:
-      specifier: 8.1.0
-      version: 8.1.0
+      specifier: 8.1.1
+      version: 8.1.1
     postcss:
       specifier: 8.5.32
       version: 8.5.32
@@ -321,7 +321,7 @@ importers:
     dependencies:
       parse5:
         specifier: 'catalog:'
-        version: 8.1.0
+        version: 8.1.1
       postcss:
         specifier: 'catalog:'
         version: 8.5.32
@@ -2143,8 +2143,8 @@ packages:
   package-manager-detector@1.9.0:
     resolution: {integrity: sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA==}
 
-  parse5@8.1.0:
-    resolution: {integrity: sha512-sq3qBFpee5jeocbFbO48VHlGr8sT7mbXS0vxlKN6sottBtJzrOG3998sr0llSZcQAGgfpdmEYAIZE0P9z0dE8w==}
+  parse5@8.1.1:
+    resolution: {integrity: sha512-EcR/6WDcU7b2N3vQSxKALCk9lXGtUMQxXio008OEMBE0kavu/7JLfBEeFPzi43nMqVDSbEn3QCK+BMCc9zO//w==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -3789,7 +3789,7 @@ snapshots:
 
   package-manager-detector@1.9.0: {}
 
-  parse5@8.1.0:
+  parse5@8.1.1:
     dependencies:
       entities: 9.0.0
 

@@ -1,7 +1,5 @@
-# Adds the Cloudflare packages to minimumReleaseAgeExclude. Pinned with its
-# integrity, so the release-age gate does not hold it back.
 configDependencies:
-  "@tractorbeam/pnpm-plugin-tractorbeam-defaults": 0.1.0+sha512-COV/ZRzrGO2ou/vWSg9OYBRVy9A8hshakc4x3+UGz3sL49F0N8syRnC92N7dzz0ZdqOYDN/WenlXWrN1Ri+Egg==
+  "@tractorbeam/pnpm-plugin-tractorbeam-defaults": latest
 packages:
   - "packages/*"
   # Deprecated: frozen at their final published versions and no longer built.
@@ -30,3 +28,5 @@ catalog:
   vite: npm:@voidzero-dev/vite-plus-core@1.5.0
   vite-plus: 1.5.0
   vite-plugin-singlefile: 2.3.4
+minimumReleaseAgeExclude:
+  - "@tractorbeam/*"

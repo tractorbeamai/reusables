@@ -18,6 +18,7 @@ export const hooks = {
     config.minimumReleaseAgeExclude = [
       ...new Set([...(config.minimumReleaseAgeExclude ?? []), ...minimumReleaseAgeExclude]),
     ];
+
     config.allowBuilds = { ...allowBuilds, ...config.allowBuilds };
 
     return config;

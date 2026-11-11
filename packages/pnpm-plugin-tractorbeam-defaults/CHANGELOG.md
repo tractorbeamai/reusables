@@ -1,5 +1,11 @@
 # @tractorbeam/pnpm-plugin-tractorbeam-defaults
 
+## 0.4.0
+
+### Minor Changes
+
+- e4a80a9: Exempt Alchemy's `@alchemy.dev/*` packages from the release-age gate, as the `@alchemy.run/*` packages are.
+
 ## 0.3.0
 
 ### Minor Changes

@@ -4,9 +4,19 @@ Tractorbeam's pnpm defaults, installed as a pnpm [config dependency](https://pnp
 
 The pnpmfile's `updateConfig` hook adds to the project's own settings and never replaces them:
 
-- [`minimumReleaseAge`](https://pnpm.io/settings#minimumreleaseage): 48 hours (2880 minutes), the age Tractorbeam's laptops require before they download a package. pnpm's own default is 24 hours, so a lockfile resolved without this setting can hold versions that laptops refuse to install. A project that sets a longer age keeps it.
-- [`minimumReleaseAgeExclude`](https://pnpm.io/settings#minimumreleaseageexclude): Tractorbeam's own packages (`@tractorbeam/*`); Cloudflare's (`@cloudflare/*`, `miniflare`, `workerd`, `wrangler`), which ship almost daily; Effect's (`effect`, `@effect/*`); Alchemy's (`alchemy`, `@alchemy.run/*`); and the Distilled SDKs (`@distilled.cloud/*`), whose releases Alchemy pins and ships with its own. Laptops (through Aikido) and Renovate exempt exactly these packages too, so a lockfile never holds a version one of them refuses. The list is defined in `tractorbeamai/infra`'s `data/package-age.json`; change it there and here together, since infra's and `tractorbeamai/.github`'s checks compare their lists with this one.
+- [`minimumReleaseAge`](https://pnpm.io/settings#minimumreleaseage): the release age in [`package-exemptions.json`](package-exemptions.json), 48 hours, which Tractorbeam's laptops require before they download a package. pnpm's own default is 24 hours, so a lockfile resolved without this setting can hold versions that laptops refuse to install. A project that sets a longer age keeps it.
+- [`minimumReleaseAgeExclude`](https://pnpm.io/settings#minimumreleaseageexclude): the packages `package-exemptions.json` exempts: Tractorbeam's own (`@tractorbeam/*`); Cloudflare's (`@cloudflare/*`, `miniflare`, `workerd`, `wrangler`), which ship almost daily; Effect's (`effect`, `@effect/*`); Alchemy's (`alchemy`, `@alchemy.run/*`); and the Distilled SDKs (`@distilled.cloud/*`), whose releases Alchemy pins and ships with its own.
 - [`allowBuilds`](https://pnpm.io/settings#allowbuilds): `esbuild` and `sharp`. A project's own entry for either, such as `sharp: false`, wins.
+
+## Tractorbeam's release-age policy
+
+`package-exemptions.json` is the one place Tractorbeam sets its release age and the packages exempt from it. Everything else reads it:
+
+- This package's pnpmfile, for every pnpm install that loads the plugin.
+- [`renovate.json`](renovate.json), a Renovate preset that `generate.mjs` writes from it, which `tractorbeamai/.github`'s shared Renovate config extends. `pnpm --filter @tractorbeam/pnpm-plugin-tractorbeam-defaults generate` rewrites it, and the package's `test` fails while it is stale.
+- `tractorbeamai/infra`, which pins a released version of this package and renders that version's file into Aikido Device Protection, the Fleet laptop setup, and hosted Renovate's pnpm config.
+
+To change the policy, edit `package-exemptions.json`, run `generate`, and add a changeset. Once the release publishes, Renovate bumps infra's pin.
 
 ## Usage
 

@@ -20,10 +20,16 @@
   },
   "files": [
     "pnpmfile.mjs",
+    "package-exemptions.json",
+    "renovate.json",
     "README.md"
   ],
   "publishConfig": {
     "access": "public",
     "provenance": true
+  },
+  "scripts": {
+    "generate": "node generate.mjs",
+    "test": "node generate.mjs --check"
   }
 }

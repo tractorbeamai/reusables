@@ -6,7 +6,12 @@ import oxlintConfig from "./packages/oxlint-config/src/index";
 export default defineConfig({
   fmt: {
     ...oxfmtConfig,
-    ignorePatterns: [...oxfmtConfig.ignorePatterns, "pnpm-lock.yaml"],
+    ignorePatterns: [
+      ...oxfmtConfig.ignorePatterns,
+      "pnpm-lock.yaml",
+      // Written by its generate.mjs, whose output its test compares exactly.
+      "packages/pnpm-plugin-tractorbeam-defaults/renovate.json",
+    ],
   },
   lint: {
     ...oxlintConfig({ react: false }),

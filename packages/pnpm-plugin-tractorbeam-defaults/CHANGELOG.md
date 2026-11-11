@@ -1,5 +1,13 @@
 # @tractorbeam/pnpm-plugin-tractorbeam-defaults
 
+## 0.3.0
+
+### Minor Changes
+
+- 8989eea: Exempt the Distilled SDKs (`@distilled.cloud/*`) from the release-age gate. Alchemy pins the Distilled release it ships with, so without the exemption a new Alchemy release could not resolve until its Distilled packages were 48 hours old.
+- 2f0991b: Ship Tractorbeam's release age and exempt packages as `package-exemptions.json`, which the pnpmfile reads, and as `renovate.json`, a Renovate preset generated from it.
+- 0c924b0: Set `minimumReleaseAge` to 48 hours, the age Tractorbeam's laptops require, instead of leaving pnpm's 24-hour default. A project that sets a longer age keeps it. Packages exempt from the age stay `@tractorbeam/*`, Cloudflare's, Effect's, and Alchemy's.
+
 ## 0.2.0
 
 ### Minor Changes

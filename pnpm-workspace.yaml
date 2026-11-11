@@ -29,4 +29,4 @@ catalog:
   vite-plus: 1.5.0
   vite-plugin-singlefile: 2.3.4
 minimumReleaseAgeExclude:
-  - "@tractorbeam/*"
+  - "@tractorbeam/pnpm-plugin-tractorbeam-defaults"

@@ -1,5 +1,11 @@
 # @tractorbeam/typescript-config
 
+## 0.7.1
+
+### Patch Changes
+
+- ac8424f: The README says the `effect` preset's settings are read by the Effect rules that Oxlint runs on the Effect-patched tsrs.
+
 ## 0.7.0
 
 ### Minor Changes

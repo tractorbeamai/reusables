@@ -1,5 +1,11 @@
 # @tractorbeam/vite-plugin-mcp-apps
 
+## 0.1.2
+
+### Patch Changes
+
+- 898c76c: Update `parse5` to 8.1.1.
+
 ## 0.1.1
 
 ### Patch Changes

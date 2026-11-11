@@ -5,7 +5,7 @@ Tractorbeam's pnpm defaults, installed as a pnpm [config dependency](https://pnp
 The pnpmfile's `updateConfig` hook adds to the project's own settings and never replaces them:
 
 - [`minimumReleaseAge`](https://pnpm.io/settings#minimumreleaseage): the release age in [`package-exemptions.json`](package-exemptions.json), 48 hours, which Tractorbeam's laptops require before they download a package. pnpm's own default is 24 hours, so a lockfile resolved without this setting can hold versions that laptops refuse to install. A project that sets a longer age keeps it.
-- [`minimumReleaseAgeExclude`](https://pnpm.io/settings#minimumreleaseageexclude): the packages `package-exemptions.json` exempts: Tractorbeam's own (`@tractorbeam/*`); Cloudflare's (`@cloudflare/*`, `miniflare`, `workerd`, `wrangler`), which ship almost daily; Effect's (`effect`, `@effect/*`); Alchemy's (`alchemy`, `@alchemy.run/*`); and the Distilled SDKs (`@distilled.cloud/*`), whose releases Alchemy pins and ships with its own.
+- [`minimumReleaseAgeExclude`](https://pnpm.io/settings#minimumreleaseageexclude): the packages `package-exemptions.json` exempts: Tractorbeam's own (`@tractorbeam/*`); Cloudflare's (`@cloudflare/*`, `miniflare`, `workerd`, `wrangler`), which ship almost daily; Effect's (`effect`, `@effect/*`); Alchemy's (`alchemy`, `@alchemy.run/*`, `@alchemy.dev/*`); and the Distilled SDKs (`@distilled.cloud/*`), whose releases Alchemy pins and ships with its own.
 - [`allowBuilds`](https://pnpm.io/settings#allowbuilds): `esbuild` and `sharp`. A project's own entry for either, such as `sharp: false`, wins.
 
 ## Tractorbeam's release-age policy

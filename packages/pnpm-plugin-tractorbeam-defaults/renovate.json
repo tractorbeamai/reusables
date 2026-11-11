@@ -18,6 +18,7 @@
         "@effect/**",
         "alchemy",
         "@alchemy.run/**",
+        "@alchemy.dev/**",
         "@distilled.cloud/**"
       ],
       "minimumReleaseAge": "0 days"

@@ -40,7 +40,8 @@ function asErrors(rules: RuleMap): RuleMap {
 }
 
 /**
- * The built-in plugins the presets' rules need, which tsgolint provides.
+ * The built-in plugins the presets' rules need, which the Effect-patched
+ * type-aware linter provides.
  */
 export function effectPlugins() {
   return loadPreset("strict").plugins;

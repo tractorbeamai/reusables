@@ -1,5 +1,11 @@
 # @tractorbeam/pnpm-plugin-tractorbeam-defaults
 
+## 0.2.0
+
+### Minor Changes
+
+- 254c259: Exempt `@tractorbeam/*`, Effect (`effect`, `@effect/*`), and Alchemy (`alchemy`, `@alchemy.run/*`) from the release-age gate, and allow `esbuild` and `sharp` to run build scripts. A project's own `allowBuilds` entries win.
+
 ## 0.1.0
 
 ### Minor Changes

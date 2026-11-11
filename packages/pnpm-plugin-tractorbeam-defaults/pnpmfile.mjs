@@ -1,7 +1,8 @@
 // The release-age gate Aikido enforces on Tractorbeam's laptops, and the
 // packages it exempts. pnpm's own default is 24 hours, so a lockfile resolved
 // without this gate can hold versions that laptops then refuse to install.
-// Mirrors tractorbeamai/infra's data/package-age.json.
+// Mirrors tractorbeamai/infra's data/package-age.json; infra's and
+// tractorbeamai/.github's checks fail when their lists differ from this one.
 const minimumReleaseAge = 48 * 60;
 
 const minimumReleaseAgeExclude = [
@@ -10,6 +11,10 @@ const minimumReleaseAgeExclude = [
   "miniflare",
   "workerd",
   "wrangler",
+  "effect",
+  "@effect/*",
+  "alchemy",
+  "@alchemy.run/*",
 ];
 
 const allowBuilds = { esbuild: true, sharp: true };

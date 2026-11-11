@@ -34,6 +34,9 @@ const globalRules = {
   "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
   "no-nested-ternary": "error",
   "no-shadow": "off",
+  // A `TODO` or `FIXME` comment marks a known gap where it lives, which a
+  // reader of that code needs to see.
+  "no-warning-comments": "off",
 } satisfies DummyRuleMap;
 
 const antiSlopRules = {

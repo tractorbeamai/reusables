@@ -35,7 +35,7 @@ export default defineConfig({
 });
 ```
 
-The shared configuration enables type-aware linting and TypeScript checking, and the stylistic rules described below.
+The shared configuration enables type-aware linting and TypeScript checking, and the stylistic rules described below. It allows `TODO`, `FIXME`, and other warning comments, so a known gap can be marked in the code it affects.
 
 ## Cyclomatic complexity
 

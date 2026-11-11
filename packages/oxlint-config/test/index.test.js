@@ -26,6 +26,7 @@ test("enables React linting by default with globally scoped rules first", () => 
     "no-inline-comments",
     "no-nested-ternary",
     "no-shadow",
+    "no-warning-comments",
     "import/max-dependencies",
     "import/no-namespace",
     "import/no-unassigned-import",
@@ -110,6 +111,7 @@ test("omits React plugins and rules when React support is disabled", () => {
   );
 
   assert.equal(config.rules["no-shadow"], "off");
+  assert.equal(config.rules["no-warning-comments"], "off");
 
   assert.deepEqual(config.jsPlugins, [
     {

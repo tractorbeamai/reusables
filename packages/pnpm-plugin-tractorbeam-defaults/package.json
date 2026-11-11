@@ -1,6 +1,6 @@
 {
   "name": "@tractorbeam/pnpm-plugin-tractorbeam-defaults",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tractorbeam's pnpm defaults, installed as a pnpm config dependency",
   "keywords": [
     "config",

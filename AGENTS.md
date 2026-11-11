@@ -2,6 +2,20 @@
 
 Shared configurations for Tractorbeam projects: Oxlint, Oxfmt, pnpm, TypeScript, and Vale configs, plus a Vite plugin for MCP Apps. The Vale config publishes to npm like the others, with its Vale package built into `dist/Tractorbeam`. The ESLint and Prettier configs in `packages/` are deprecated, excluded from the workspace, and no longer released.
 
+## Checks
+
+Run CI's checks in its order, through `pnpm exec vp`, since `vp` isn't on `PATH` outside CI:
+
+```bash
+pnpm exec vp run -r build
+pnpm exec vp run check
+pnpm exec vp run -r test
+```
+
+Build first: the root lint config loads `@tractorbeam/oxlint-config`'s rules from its `dist`, and lint stops before analysis without them.
+
+Lint through `check` (`effect-tsgo --tsrs-lint vp check`), never a bare `vp check` or `vp lint`. Vite+ always sets `OXLINT_TSGOLINT_PATH`, so without the wrapper type-aware lint runs on tsgolint instead of the Effect-patched tsrs.
+
 ## Changesets
 
 This monorepo uses [Changesets](https://github.com/changesets/changesets) for versioning and changelogs.

@@ -4,7 +4,8 @@ Tractorbeam's pnpm defaults, installed as a pnpm [config dependency](https://pnp
 
 The pnpmfile's `updateConfig` hook adds to the project's own settings and never replaces them:
 
-- [`minimumReleaseAgeExclude`](https://pnpm.io/settings#minimumreleaseageexclude): Tractorbeam's own packages (`@tractorbeam/*`); Cloudflare's (`@cloudflare/*`, `miniflare`, `workerd`, `wrangler`), which ship almost daily; Effect's (`effect`, `@effect/*`); and Alchemy's (`alchemy`, `@alchemy.run/*`).
+- [`minimumReleaseAge`](https://pnpm.io/settings#minimumreleaseage): 48 hours (2880 minutes), the age Tractorbeam's laptops require before they download a package. pnpm's own default is 24 hours, so a lockfile resolved without this setting can hold versions that laptops refuse to install. A project that sets a longer age keeps it.
+- [`minimumReleaseAgeExclude`](https://pnpm.io/settings#minimumreleaseageexclude): Tractorbeam's own packages (`@tractorbeam/*`) and Cloudflare's (`@cloudflare/*`, `miniflare`, `workerd`, `wrangler`), which ship almost daily. These are the only packages laptops exempt from the age requirement, so a broader exemption here would let a lockfile hold versions that laptops refuse.
 - [`allowBuilds`](https://pnpm.io/settings#allowbuilds): `esbuild` and `sharp`. A project's own entry for either, such as `sharp: false`, wins.
 
 ## Usage

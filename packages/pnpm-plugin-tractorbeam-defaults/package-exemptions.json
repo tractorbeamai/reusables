@@ -1,0 +1,17 @@
+{
+  "minimum_age_hours": 48,
+  "exempt_packages": {
+    "npm": [
+      "@tractorbeam/*",
+      "@cloudflare/*",
+      "miniflare",
+      "wrangler",
+      "workerd",
+      "effect",
+      "@effect/*",
+      "alchemy",
+      "@alchemy.run/*",
+      "@distilled.cloud/*"
+    ]
+  }
+}

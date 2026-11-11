@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Generated from package-exemptions.json by generate.mjs; edit that file instead.",
+  "minimumReleaseAge": "48 hours",
+  "packageRules": [
+    {
+      "description": "Packages exempt from the release-age gate.",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "@tractorbeam/**",
+        "@cloudflare/**",
+        "miniflare",
+        "wrangler",
+        "workerd",
+        "effect",
+        "@effect/**",
+        "alchemy",
+        "@alchemy.run/**",
+        "@distilled.cloud/**"
+      ],
+      "minimumReleaseAge": "0 days"
+    }
+  ]
+}

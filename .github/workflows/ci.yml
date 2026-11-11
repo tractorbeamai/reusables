@@ -31,7 +31,7 @@ jobs:
           node-version-file: package.json
 
       - run: vp run -r build
-      - run: vp check
+      - run: vp run check
       - run: vp run -r test
 
       - uses: reviewdog/action-actionlint@a7d35aaf8c309203a4ae861d32b7bd490baa7bf3 # v1.83.0

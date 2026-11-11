@@ -61,10 +61,10 @@ Matching files receive Playwright's recommended rules plus stricter errors for u
 
 ## Effect
 
-Effect linting is opt-in. Install `@effect/tsgo` and `oxlint-plugin-effect`, and turn it on:
+Effect linting is opt-in. Install `@effect/tsgo`, `oxlint-plugin-effect`, `tsrs`, and `oxlint-tsgolint`, and turn it on:
 
 ```bash
-pnpm add -D @effect/tsgo oxlint-plugin-effect
+pnpm add -D @effect/tsgo oxlint-plugin-effect tsrs oxlint-tsgolint
 ```
 
 ```typescript
@@ -72,6 +72,19 @@ export default defineConfig({
   lint: oxlintConfig({ effect: true }),
 });
 ```
+
+The Effect rules run inside Oxlint's type-aware linter, so Oxlint and tsrs need the Effect-patched builds that `@effect/tsgo` ships. Patch them on install, and run Vite+ through `effect-tsgo --tsrs-lint`, since `vp` otherwise starts tsgolint for the type-aware rules:
+
+```json
+{
+  "scripts": {
+    "prepare": "effect-tsgo patch --oxlint --tsrs",
+    "check": "effect-tsgo --tsrs-lint vp check"
+  }
+}
+```
+
+`effect-tsgo patch --oxlint` requires `oxlint-tsgolint` installed, though the rules run on tsrs. Oxlint run directly, outside Vite+, finds the patched `tsrs-lint` itself. Use the patched `tsrs --lsp` as the editor's TypeScript language server, so it reports the Effect diagnostics and quick fixes too. Check `@effect/tsgo`'s README for the tsrs and Oxlint versions each release supports.
 
 The option treats the codebase as Effect code. It enables `@effect/tsgo`'s `strict` preset, its `style`, `antipattern`, and `effect-native` presets as errors, and the rules of [oxlint-plugin-effect](https://github.com/cevr/effect-oxlint) that hold Effect's conventions, such as `effect/noSilentCatchAll`, `effect/noUnboundedConcurrency`, and `effect/requireNamedEffectFn`. The presets come from the `@effect/tsgo` your project installs, so a new release's rules arrive with it.
 

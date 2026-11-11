@@ -9,16 +9,20 @@
   "scripts": {
     "build": "vp run -r build",
     "changeset": "changeset",
-    "check": "vp check",
+    "check": "effect-tsgo --tsrs-lint vp check",
     "clean": "vp run -r --no-cache clean",
     "format": "vp fmt",
+    "prepare": "effect-tsgo patch --oxlint --tsrs",
     "release": "changeset publish",
     "test": "vp run -r test"
   },
   "devDependencies": {
     "@changesets/cli": "catalog:",
+    "@effect/tsgo": "catalog:",
     "@tractorbeam/oxlint-config": "workspace:*",
     "oxfmt": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "tsrs": "catalog:",
     "vite-plus": "catalog:"
   },
   "engines": {

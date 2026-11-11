@@ -15,6 +15,7 @@ const minimumReleaseAgeExclude = [
   "@effect/*",
   "alchemy",
   "@alchemy.run/*",
+  "@distilled.cloud/*",
 ];
 
 const allowBuilds = { esbuild: true, sharp: true };

@@ -1,7 +1,7 @@
 {
   "name": "@tractorbeam/vale-config",
   "version": "0.1.0",
-  "description": "Shared Vale configuration for Tractorbeam docs, published as a Vale package",
+  "description": "Shared Vale configuration for Tractorbeam docs and code comments, published as a Vale package",
   "keywords": [
     "config",
     "prose",

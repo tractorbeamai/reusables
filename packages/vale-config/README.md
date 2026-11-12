@@ -1,6 +1,6 @@
 # @tractorbeam/vale-config
 
-Shared [Vale](https://vale.sh) configuration for Tractorbeam docs, published to npm as a Vale package.
+Shared [Vale](https://vale.sh) configuration for Tractorbeam docs and code comments, published to npm as a Vale package.
 
 ## Usage
 
@@ -47,6 +47,10 @@ Tractorbeam.RequirementVerbs = NO
 ```
 
 GitLab doesn't publish its style as a package, and Mintlify and Red Hat don't publish their word lists as packages, so `scripts/package.sh` fetches them at the commits pinned in the script and builds `dist/Tractorbeam`, which the npm package ships; publishing runs it.
+
+## Code comments
+
+The configuration lints the comments in TypeScript (`.ts`, `.tsx`, `.mts`, `.cts`) and Rust (`.rs`) files with the same rules as Markdown, and reads each comment as Markdown, so a backtick span is code and isn't checked. It needs Vale 3.17 or later, which strips a block comment's leading asterisks before parsing it. A lint directive such as `// oxlint-disable-next-line rule -- reason` is skipped up to its `--`, so only the reason is checked. The document-level checks (`ai-tells-experimental.ContentDuplication`, `ai-tells-experimental.SentenceStartRepetition`, and the `Tractorbeam` length-variance rules) are off for code, since Vale reads a file's comments as one section.
 
 ## Development
 

@@ -1,2 +1,2 @@
 # Tractorbeam's release-age policy, which Aikido and every laptop enforce.
-/packages/pnpm-plugin-tractorbeam-defaults/package-exemptions.json @tractorbeamai/infra-admins
+/packages/pnpm-plugin-tractorbeam-defaults/package-exemptions.json @tractorbeamai/superadmins

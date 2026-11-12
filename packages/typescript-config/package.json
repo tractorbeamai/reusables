@@ -49,12 +49,7 @@
     "access": "public",
     "provenance": true
   },
-  "peerDependencies": {
-    "vitest": "*"
-  },
-  "peerDependenciesMeta": {
-    "vitest": {
-      "optional": true
-    }
+  "devDependencies": {
+    "vitest": "catalog:"
   }
 }

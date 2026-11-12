@@ -229,6 +229,9 @@ catalogs:
     vite-plus:
       specifier: 1.5.0
       version: 1.5.0
+    vitest:
+      specifier: 5.1.0
+      version: 5.1.0
 
 pnpmfileChecksum: sha256-grU81mymM4CXmEKc1oCbvWk1tvgU3flHU5dg6Ja+/+Q=
 
@@ -310,9 +313,9 @@ importers:
   packages/pnpm-plugin-tractorbeam-defaults: {}
 
   packages/typescript-config:
-    dependencies:
+    devDependencies:
       vitest:
-        specifier: '*'
+        specifier: 'catalog:'
         version: 5.1.0(@types/node@24.19.2)(@vitest/browser-preview@5.1.0)(@vitest/ui@5.1.0)(vite@8.3.6(@types/node@24.19.2)(yaml@2.9.1))
 
   packages/vale-config: {}

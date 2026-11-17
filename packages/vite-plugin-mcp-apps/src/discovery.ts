@@ -90,6 +90,72 @@ export async function discoverApps(
   return apps;
 }
 
+export async function resolveApps(
+  root: string,
+  entries: Readonly<Record<string, string>>,
+): Promise<DiscoveredApp[]> {
+  const ids = Object.keys(entries).sort((left, right) => left.localeCompare(right, "en"));
+
+  if (ids.length === 0) {
+    throw new Error("apps must name at least one MCP app.");
+  }
+
+  const projectRoot = path.resolve(root);
+  const realProjectRoot = await realpath(projectRoot);
+
+  const apps = await Promise.all(
+    ids.map(async (id, index) => {
+      assertAppId(id);
+
+      const entry = entries[id];
+
+      if (path.isAbsolute(entry)) {
+        throw new Error(`MCP app "${id}" entry must be project-relative: ${entry}`);
+      }
+
+      if (path.extname(entry) !== ".html") {
+        throw new Error(`MCP app "${id}" entry must be an HTML file: ${entry}`);
+      }
+
+      const input = path.resolve(projectRoot, entry);
+
+      assertWithinRoot(projectRoot, input, `MCP app "${id}" entry`);
+
+      const entryStats = await stat(input).catch(() => undefined);
+
+      if (!entryStats?.isFile()) {
+        throw new Error(`MCP app "${id}" entry does not exist or is not a file: ${input}`);
+      }
+
+      assertWithinRoot(realProjectRoot, await realpath(input), `resolved MCP app "${id}" entry`);
+
+      return {
+        environmentName: `mcp_apps_${index}`,
+        id,
+        input,
+        output: `${id}.html`,
+      };
+    }),
+  );
+
+  assertUniqueOutputs(apps);
+
+  return apps;
+}
+
+function assertAppId(id: string): void {
+  const segments = id.split("/");
+
+  if (
+    segments.some((segment) => segment === "" || segment === "." || segment === "..") ||
+    id.includes("\\")
+  ) {
+    throw new Error(
+      `MCP app ID must be a relative path of non-empty "/"-separated names without "." or "..": "${id}"`,
+    );
+  }
+}
+
 function assertUniqueOutputs(apps: DiscoveredApp[]): void {
   const outputOwners = new Map<string, DiscoveredApp>();
 

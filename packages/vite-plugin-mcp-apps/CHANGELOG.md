@@ -1,5 +1,11 @@
 # @tractorbeam/vite-plugin-mcp-apps
 
+## 0.2.0
+
+### Minor Changes
+
+- c31ab49: Add an `apps` option that builds a fixed list of MCP apps, mapping each app ID to its entry HTML file, instead of discovering them under `appsDirectory`.
+
 ## 0.1.2
 
 ### Patch Changes

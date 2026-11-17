@@ -11,25 +11,38 @@ import type {
 } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 
-import { discoverApps, type DiscoveredApp } from "./discovery.js";
+import { discoverApps, resolveApps, type DiscoveredApp } from "./discovery.js";
 import { finalizeBundle } from "./output.js";
 
 /**
- * Options for the filesystem-based MCP Apps build.
+ * Options for the MCP Apps build.
  */
 export interface McpAppsOptions {
   /**
-   * Project-relative directory containing MCP app directories.
+   * Project-relative directory containing MCP app directories. Cannot be
+   * combined with `apps`.
    *
    * @default "src/mcp-apps"
    */
   appsDirectory?: string;
+
+  /**
+   * MCP app IDs mapped to their project-relative entry HTML files. Each app
+   * builds to `<id>.html` in `build.outDir`. When set, the plugin builds exactly
+   * these apps and does not scan `appsDirectory`.
+   */
+  apps?: Readonly<Record<string, string>>;
 }
 
 /**
- * Builds every discovered MCP app into a self-contained HTML file.
+ * Builds every MCP app, discovered or listed in `apps`, into a self-contained
+ * HTML file.
  */
 export function mcpApps(options: McpAppsOptions = {}): Plugin {
+  if (options.apps !== undefined && options.appsDirectory !== undefined) {
+    throw new Error("mcpApps() accepts either apps or appsDirectory, not both.");
+  }
+
   let apps = new Map<string, DiscoveredApp>();
   let additionalAssetSources: Record<string, HtmlAssetSource> | undefined;
 
@@ -41,7 +54,11 @@ export function mcpApps(options: McpAppsOptions = {}): Plugin {
       assertDedicatedBuild(config);
 
       const root = await realpath(path.resolve(process.cwd(), config.root ?? "."));
-      const discoveredApps = await discoverApps(root, options.appsDirectory);
+
+      const discoveredApps =
+        options.apps === undefined
+          ? await discoverApps(root, options.appsDirectory)
+          : await resolveApps(root, options.apps);
 
       apps = new Map(discoveredApps.map((app) => [app.environmentName, app]));
       additionalAssetSources = config.html?.additionalAssetSources;

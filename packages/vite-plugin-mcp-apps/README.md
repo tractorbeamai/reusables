@@ -1,6 +1,6 @@
 # @tractorbeam/vite-plugin-mcp-apps
 
-Build a filesystem-based collection of [MCP Apps](https://modelcontextprotocol.io/extensions/apps/build) as self-contained HTML files with Vite 8 or Vite Plus.
+Build a filesystem-based or explicitly listed collection of [MCP Apps](https://modelcontextprotocol.io/extensions/apps/build) as self-contained HTML files with Vite 8 or Vite Plus.
 
 ## Installation
 
@@ -59,9 +59,28 @@ mcpApps({
 
 `appsDirectory` is project-relative and defaults to `src/mcp-apps`.
 
+### Explicit entries
+
+To build a fixed list of apps instead of scanning a directory, pass `apps`, mapping each app ID to its project-relative entry HTML file:
+
+```ts
+mcpApps({
+  apps: {
+    treasury: "src/views/treasury/index.html",
+    "reports/ledger": "src/views/ledger/index.html",
+  },
+});
+```
+
+This builds `dist/treasury.html` and `dist/reports/ledger.html` and nothing else. An app ID is one or more `/`-separated names, and becomes the output path. Each entry must be an existing `.html` file inside the Vite root; a missing entry fails the build and names the app. `apps` and `appsDirectory` cannot be combined.
+
+### Using the plugin inside another plugin
+
+`mcpApps()` can be one of the plugins that another plugin returns, alongside plugins such as `@vitejs/plugin-react` and `@tailwindcss/vite`. To learn which files the build wrote, add a `writeBundle` hook to a plugin of your own: it runs once per app environment, and its bundle holds that app's single HTML file under its final name, such as `treasury.html`.
+
 ## Build constraints
 
-The plugin owns a dedicated MCP Apps build. It creates one isolated client environment per discovered app, then builds those environments serially. Every app receives an independent dependency graph and emits exactly one HTML file containing its JavaScript, CSS, and imported assets. JavaScript and CSS inlining is delegated to [`vite-plugin-singlefile`](https://github.com/richardtallent/vite-plugin-singlefile); this plugin retains MCP app discovery, isolated builds, output naming, and strict single-file validation.
+The plugin owns a dedicated MCP Apps build. It creates one isolated client environment per app, then builds those environments serially. Every app receives an independent dependency graph and emits exactly one HTML file containing its JavaScript, CSS, and imported assets. JavaScript and CSS inlining is delegated to [`vite-plugin-singlefile`](https://github.com/richardtallent/vite-plugin-singlefile); this plugin retains MCP app discovery, isolated builds, output naming, and strict single-file validation.
 
 Normal Vite configuration continues to apply to every app, including plugins, `base`, `define`, resolution aliases, CSS and JSON handling, transforms, build targets, minification, and `build.outDir`. The default `base` is `./`, but an explicit project base is preserved.
 

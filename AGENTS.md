@@ -14,7 +14,7 @@ pnpm exec vp run -r test
 
 Build first: the root lint config loads `@tractorbeam/oxlint-config`'s rules from its `dist`, and lint stops before analysis without them.
 
-Lint through `check` (`effect-tsgo --tsrs-lint vp check`), never a bare `vp check` or `vp lint`. Vite+ always sets `OXLINT_TSGOLINT_PATH`, so without the wrapper type-aware lint runs on tsgolint instead of the Effect-patched tsrs.
+Lint through `check` (`effect-tsgo --tsrs-lint vp check`), never a bare `vp check` or `vp lint`. Vite+ always sets `OXLINT_TSGOLINT_PATH` to its own bundled tsrs, so without the wrapper type-aware lint runs on that unpatched tsrs and skips the Effect rules. Keep the `tsrs` catalog entry on a version `@effect/tsgo`'s README lists as supported, since the wrapper patches the installed one.
 
 ## Changesets
 

@@ -10,5 +10,5 @@ The presets also take on rules from Tractorbeam's applications, which `oxlintCon
 - `antiSlop` adds `no-array-filter-map`, `no-reflect-apply`, `no-reflect-get`, and `no-unknown-returns`, and turns off `typescript/consistent-indexed-object-style` and `unicorn/prefer-reflect-apply`.
 - `react` adds `ui/jsx-component-names`, `ui/no-module-jsx`, and `ui/no-hook-declarations`, as warnings.
 - `stylistic` allows an empty `case` directly above the next.
-- `effect()` adds the `effect-style` plugin's `effect-names`, `no-yield-expression-member`, and `no-array-for-each`, which replaces `unicorn/no-array-for-each`, and in `**/*.test.{ts,tsx}` its `no-focused-effect-tests` and `no-disabled-effect-tests` and `effect/noEffectRunInTests`.
+- `effect()` adds `@effect/tsgo`'s `correctness` preset as errors, which brings `effecttsgo/any-unknown-in-error-context` and `effecttsgo/unsafe-effect-type-assertion`, and the `effect-style` plugin's `effect-names`, `no-yield-expression-member`, and `no-array-for-each`, which replaces `unicorn/no-array-for-each`, and in `**/*.test.{ts,tsx}` its `no-focused-effect-tests` and `no-disabled-effect-tests` and `effect/noEffectRunInTests`.
 - `vitest` is new: Vitest's rules in test files, with the rules that misread @effect/vitest or hold a matcher or layout preference off, and `vitest-style/no-in-source-tests` everywhere.

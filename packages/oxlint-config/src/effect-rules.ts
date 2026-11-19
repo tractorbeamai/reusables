@@ -139,6 +139,10 @@ function effectRules() {
     // ships as errors, including schema-class-missing-brand, which asks a brand
     // only of the class kinds the tsconfig's `brandedSchemaClasses` lists.
     ...loadPreset("strict").rules,
+    // The correctness preset ships as warnings and adds
+    // any-unknown-in-error-context and unsafe-effect-type-assertion to the
+    // strict preset's rules; as errors, CI fails on them too.
+    ...asErrors(loadPreset("correctness").rules),
     // The style and antipattern presets ship as warnings; as errors, CI fails
     // on them as it does on the strict preset. Antipattern adds
     // effect-try-without-catch and strict-effect-provide, which an

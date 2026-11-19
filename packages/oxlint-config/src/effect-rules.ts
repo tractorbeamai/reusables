@@ -1,25 +1,9 @@
 import { createRequire } from "node:module";
 
-import type {
-  DummyRule,
-  DummyRuleMap,
-  ExternalPluginEntry,
-  OxlintConfig,
-  OxlintOverride,
-} from "vite-plus/lint";
+import type { DummyRule, DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "vite-plus/lint";
 
 /** A rule map keyed by any rule name, so declarations name no rule's options type. */
 type RuleMap = Record<string, DummyRule>;
-
-export interface EffectOptions {
-  /**
-   * Globs for code on another platform's terms, such as React components, a
-   * published SDK's plain-TypeScript API, or tool configuration. The
-   * effect-native preset's rules are off there, except the `*-in-effect`
-   * rules, since a native API inside Effect code is wrong anywhere.
-   */
-  except?: string[];
-}
 
 interface Preset {
   plugins: NonNullable<OxlintConfig["plugins"]>;
@@ -27,7 +11,7 @@ interface Preset {
 }
 
 // `@effect/tsgo` and `oxlint-plugin-effect` are optional peers, so the presets
-// load only when the `effect` option asks for them, from the version the
+// load only when `effect()` or `effectNativeOff()` asks for them, from the version the
 // project installs.
 const require = createRequire(import.meta.url);
 
@@ -39,15 +23,7 @@ function asErrors(rules: RuleMap): RuleMap {
   return Object.fromEntries(Object.keys(rules).map((rule) => [rule, "error"]));
 }
 
-/**
- * The built-in plugins the presets' rules need, which the Effect-patched
- * type-aware linter provides.
- */
-export function effectPlugins() {
-  return loadPreset("strict").plugins;
-}
-
-export const effectPlugin: ExternalPluginEntry = {
+const effectPlugin: ExternalPluginEntry = {
   name: "effect",
   specifier: "oxlint-plugin-effect/plugin",
 };
@@ -123,7 +99,7 @@ const effectPluginRules = {
   "effect/requireNamedEffectFn": "error",
 } satisfies DummyRuleMap;
 
-export function effectRules() {
+function effectRules() {
   return {
     ...effectIdiomRules,
     // Effect's rules report only on code that uses Effect. The strict preset
@@ -147,17 +123,29 @@ export function effectRules() {
 }
 
 /**
- * Turns the effect-native preset's rules off for code on another platform's
- * terms, but keeps its `*-in-effect` rules: a native API inside Effect code is
- * wrong wherever that code is.
+ * The effect-native preset's rules, off, for an override's `rules` on code on
+ * another platform's terms, such as React components, a published SDK's
+ * plain-TypeScript API, or tool configuration. Its `*-in-effect` rules stay
+ * on: a native API inside Effect code is wrong wherever that code is.
  */
-export function effectExceptOverride(files: string[]): OxlintOverride {
+export function effectNativeOff(): RuleMap {
+  return Object.fromEntries(
+    Object.keys(loadPreset("effect-native").rules)
+      .filter((rule) => !rule.endsWith("-in-effect"))
+      .map((rule) => [rule, "off"]),
+  );
+}
+
+/**
+ * Lints the codebase as Effect code, and turns off the shared rules that
+ * misread Effect's idioms. Extend it after `core`.
+ */
+export function effect() {
   return {
-    files,
-    rules: Object.fromEntries(
-      Object.keys(loadPreset("effect-native").rules)
-        .filter((rule) => !rule.endsWith("-in-effect"))
-        .map((rule) => [rule, "off"]),
-    ),
-  };
+    // The built-in plugins the presets' rules need, which the Effect-patched
+    // type-aware linter provides.
+    plugins: loadPreset("strict").plugins,
+    jsPlugins: [effectPlugin],
+    rules: effectRules(),
+  } satisfies OxlintConfig;
 }

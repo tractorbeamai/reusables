@@ -5,12 +5,13 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  # The Release workflow dispatches CI for the Changesets release PR, since pushes
-  # made with GITHUB_TOKEN don't trigger `pull_request` runs.
+  # The Release workflow dispatches CI for the Changesets release PR, whose
+  # `pull_request` run waits for a maintainer's approval because a bot pushed it.
   workflow_dispatch:
 
 permissions:
   contents: read
+  statuses: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
@@ -39,3 +40,16 @@ jobs:
           reporter: local
           filter_mode: nofilter
           fail_level: any
+
+      # A dispatched run's check isn't linked to any pull request, so it doesn't
+      # satisfy the ruleset's required `Checks`. A commit status is matched by
+      # commit alone, so report the result as one.
+      - name: Report Checks status
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
+            -f state=success -f context=Checks -f target_url="$TARGET_URL" \
+            -f description="Passed in a dispatched CI run"

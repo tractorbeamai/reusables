@@ -38,9 +38,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Pushes made with GITHUB_TOKEN don't trigger `pull_request` workflows, so the
-      # release PR would never get its required `Checks` run. GITHUB_TOKEN may
-      # dispatch workflows, so run CI on the release branch explicitly.
+      # The release PR's `pull_request` run waits for a maintainer's approval,
+      # since a bot pushed it. GITHUB_TOKEN may dispatch workflows, so run CI on
+      # the release branch explicitly; it reports the required `Checks` as a
+      # commit status.
       - name: Run CI on release PR
         if: steps.changesets.outputs.pr-number != ''
         env:

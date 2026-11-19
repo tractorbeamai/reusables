@@ -1,6 +1,12 @@
 import { createRequire } from "node:module";
 
-import type { DummyRule, DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "vite-plus/lint";
+import type {
+  DummyRule,
+  DummyRuleMap,
+  ExternalPluginEntry,
+  OxlintConfig,
+  OxlintOverride,
+} from "vite-plus/lint";
 
 /** A rule map keyed by any rule name, so declarations name no rule's options type. */
 type RuleMap = Record<string, DummyRule>;
@@ -27,6 +33,33 @@ const effectPlugin: ExternalPluginEntry = {
   name: "effect",
   specifier: "oxlint-plugin-effect/plugin",
 };
+
+const effectStylePlugin: ExternalPluginEntry = {
+  name: "effect-style",
+  specifier: "@tractorbeam/oxlint-config/effect-style",
+};
+
+/** Tractorbeam's rules for Effect code. */
+const effectStyleRules = {
+  "effect-style/effect-names": "error",
+  "effect-style/no-yield-expression-member": "error",
+  // Unicorn's version reports `Effect.forEach` too.
+  "effect-style/no-array-for-each": "error",
+  "unicorn/no-array-for-each": "off",
+} satisfies DummyRuleMap;
+
+/**
+ * The rules for Effect's test files. Oxlint's Vitest rules don't see `.only`
+ * and `.skip` on @effect/vitest's `it.effect` and `it.live`.
+ */
+const effectTestOverride = {
+  files: ["**/*.test.{ts,tsx}"],
+  rules: {
+    "effect-style/no-disabled-effect-tests": "error",
+    "effect-style/no-focused-effect-tests": "error",
+    "effect/noEffectRunInTests": "error",
+  },
+} satisfies OxlintOverride;
 
 /**
  * Exceptions to the shared rules that exist only because of Effect's idioms.
@@ -119,6 +152,7 @@ function effectRules() {
     ...effectNativeCompanionRules,
     ...effectTsgoOffRules,
     ...effectPluginRules,
+    ...effectStyleRules,
   };
 }
 
@@ -145,7 +179,8 @@ export function effect() {
     // The built-in plugins the presets' rules need, which the Effect-patched
     // type-aware linter provides.
     plugins: loadPreset("strict").plugins,
-    jsPlugins: [effectPlugin],
+    jsPlugins: [effectPlugin, effectStylePlugin],
     rules: effectRules(),
+    overrides: [effectTestOverride],
   } satisfies OxlintConfig;
 }

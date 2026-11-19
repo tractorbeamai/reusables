@@ -1,5 +1,10 @@
 import playwrightPlugin from "eslint-plugin-playwright";
-import type { DummyRuleMap, ExternalPluginEntry, OxlintConfig } from "vite-plus/lint";
+import type {
+  DummyRuleMap,
+  ExternalPluginEntry,
+  OxlintConfig,
+  OxlintOverride,
+} from "vite-plus/lint";
 
 import { effect, effectNativeOff } from "./effect-rules.ts";
 
@@ -36,9 +41,31 @@ export const core = {
     // A `TODO` or `FIXME` comment marks a known gap where it lives, which a
     // reader of that code needs to see.
     "no-warning-comments": "off",
+    // `== null` checks for null and undefined at once.
+    eqeqeq: ["error", "always", { null: "ignore" }],
     "import/max-dependencies": "off",
     "import/no-namespace": "error",
     "import/no-unassigned-import": "off",
+    // A type imported beside values from the same module is marked inline, in
+    // one import; an import of only types stays `import type`. A type
+    // annotation may name an `import("…")` type, as an ambient declaration
+    // file must.
+    "eslint/no-duplicate-imports": "off",
+    "import/no-duplicates": ["error", { preferInline: true }],
+    "typescript/consistent-type-imports": [
+      "error",
+      { fixStyle: "inline-type-imports", disallowTypeAnnotations: false },
+    ],
+    // `noImplicitReturns` already requires a value from every path of a
+    // function that returns one, and asks for the bare `return;` that
+    // `no-useless-return` removes.
+    "eslint/no-useless-return": "off",
+    "typescript/consistent-return": "off",
+    // Oxfmt writes hex digits in lowercase, and this rule, with no option to
+    // agree, wants them in uppercase.
+    "unicorn/number-literal-case": "off",
+    // `while (true)` loops on purpose, until a read reports it's done.
+    "typescript/no-unnecessary-condition": ["error", { allowConstantLoopConditions: true }],
   },
 } satisfies OxlintConfig;
 
@@ -50,13 +77,17 @@ export const antiSlop = {
   plugins: [],
   jsPlugins: [jsPlugin("anti-slop")],
   rules: {
+    "anti-slop/no-array-filter-map": "error",
     "anti-slop/no-chained-type-assertions": "error",
     "anti-slop/no-conditional-empty-object-spread": "error",
     "anti-slop/no-known-value-widening": "error",
     "anti-slop/no-object-parameters": "error",
+    "anti-slop/no-reflect-apply": "error",
+    "anti-slop/no-reflect-get": "error",
     "anti-slop/no-runtime-typeof": "error",
     "anti-slop/no-shape-in-symbol-names": "error",
     "anti-slop/no-unknown-parameters": "error",
+    "anti-slop/no-unknown-returns": "error",
     "anti-slop/no-unknown-type-aliases": "error",
     "anti-slop/no-unsafe-dictionary-type": "error",
     "anti-slop/no-widen-then-assert": "error",
@@ -89,8 +120,11 @@ export const react = {
     "react-perf/jsx-no-new-array-as-prop": "warn",
     "react-perf/jsx-no-new-function-as-prop": "warn",
     "react-perf/jsx-no-new-object-as-prop": "warn",
+    "ui/jsx-component-names": "warn",
     "ui/no-button-height-class": "warn",
+    "ui/no-hook-declarations": "warn",
     "ui/no-icon-class-in-button": "warn",
+    "ui/no-module-jsx": "warn",
     "ui/no-pages-in-components": "warn",
     "ui/route-component-names": "warn",
   },
@@ -113,27 +147,82 @@ export const stylistic = {
       "error",
       { blankLine: "always", prev: "*", next: multilineStatements },
       { blankLine: "always", prev: multilineStatements, next: "*" },
+      // Cases that share a body stay together: a blank line after an empty
+      // `case` is what `no-fallthrough` reports.
+      { blankLine: "any", prev: "case", next: ["case", "default"] },
     ],
     curly: ["error", "all"],
   },
 } satisfies OxlintConfig;
 
-const playwrightRules = {
-  ...playwrightPlugin.configs["flat/recommended"].rules,
-  "playwright/missing-playwright-await": ["error", { includePageLocatorMethods: true }],
-  "playwright/no-nth-methods": "error",
-  "playwright/no-raw-locators": "error",
-  "playwright/no-wait-for-timeout": "error",
-} satisfies DummyRuleMap;
+/**
+ * Playwright's recommended rules and stricter locator and waiting rules, for
+ * an override whose `files` match your Playwright tests:
+ * `overrides: [{ files: ["e2e/**"], ...playwright }]`.
+ */
+export const playwright = {
+  jsPlugins: [jsPlugin("playwright")],
+  rules: {
+    ...playwrightPlugin.configs["flat/recommended"].rules,
+    "playwright/missing-playwright-await": ["error", { includePageLocatorMethods: true }],
+    "playwright/no-nth-methods": "error",
+    "playwright/no-raw-locators": "error",
+    "playwright/no-wait-for-timeout": "error",
+  },
+} satisfies Omit<OxlintOverride, "files">;
 
-/** Playwright's recommended rules and stricter locator and waiting rules, in the test files `files` matches. */
-export function playwright({ files }: { files: string[] }) {
-  return {
-    plugins: [],
-    jsPlugins: [jsPlugin("playwright")],
-    overrides: [{ files, rules: playwrightRules }],
-  } satisfies OxlintConfig;
-}
+/**
+ * Vitest's rules in test files, with the ones that misread @effect/vitest's
+ * testers or hold a matcher or layout preference off, and no in-source tests
+ * anywhere.
+ */
+export const vitest = {
+  plugins: [],
+  jsPlugins: [jsPlugin("vitest-style")],
+  rules: {
+    // Vitest no longer collects `if (import.meta.vitest)` blocks, so a test
+    // left in a module never runs.
+    "vitest-style/no-in-source-tests": "error",
+  },
+  overrides: [
+    {
+      files: ["**/*.{test,spec}.{ts,tsx,mts,cts,js,jsx,mjs,cjs}"],
+      plugins: ["vitest"],
+      rules: {
+        // `expect(value, message)` labels the assertion's failure.
+        "vitest/valid-expect": ["error", { maxArgs: 2 }],
+        // Every `expect` inside @effect/vitest's `it.effect` reads as outside a test.
+        "vitest/no-standalone-expect": "off",
+        // Tests import `it` and `expect` from Vitest rather than use globals.
+        "vitest/no-importing-vitest-globals": "off",
+        // A test may branch on its case's data, as a table's cases do.
+        "vitest/no-conditional-expect": "off",
+        "vitest/no-conditional-in-test": "off",
+        // Hooks and top-level tests are how a file shares setup; a `describe`
+        // around every file adds nothing.
+        "vitest/no-hooks": "off",
+        "vitest/require-hook": "off",
+        "vitest/require-top-level-describe": "off",
+        // Matcher and layout preferences. prefer-strict-boolean-matchers and
+        // prefer-to-be-truthy/-falsy ask for opposite matchers.
+        "vitest/consistent-test-it": "off",
+        "vitest/max-expects": "off",
+        "vitest/no-large-snapshots": "off",
+        "vitest/prefer-called-once": "off",
+        "vitest/prefer-describe-function-title": "off",
+        "vitest/prefer-equality-matcher": "off",
+        "vitest/prefer-expect-assertions": "off",
+        "vitest/prefer-expect-resolves": "off",
+        "vitest/prefer-import-in-mock": "off",
+        "vitest/prefer-lowercase-title": "off",
+        "vitest/prefer-strict-boolean-matchers": "off",
+        "vitest/prefer-to-be-falsy": "off",
+        "vitest/prefer-to-be-truthy": "off",
+        "vitest/prefer-to-have-length": "off",
+      },
+    },
+  ],
+} satisfies OxlintConfig;
 
 export interface EffectOptions {
   /**
@@ -179,7 +268,14 @@ export default function oxlintConfig({
       : [{ rules: { complexity: ["warn", complexity] } } satisfies OxlintConfig]),
     ...(reactOption ? [react] : []),
     ...(stylisticOption ? [stylistic] : []),
-    ...(playwrightOption ? [playwright(playwrightOption)] : []),
+    ...(playwrightOption
+      ? [
+          {
+            jsPlugins: playwright.jsPlugins,
+            overrides: [{ files: playwrightOption.files, rules: playwright.rules }],
+          } satisfies OxlintConfig,
+        ]
+      : []),
     ...(effectOption ? [effect()] : []),
     ...(effectOption === false || effectOption === true || !effectOption.except?.length
       ? []

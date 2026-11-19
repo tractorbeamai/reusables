@@ -125,3 +125,51 @@ tester.run("ui/route-component-names", uiPlugin.rules["route-component-names"], 
     },
   ],
 });
+
+tester.run("ui/jsx-component-names", uiPlugin.rules["jsx-component-names"], {
+  valid: [
+    "function Header() { return <h1 />; }",
+    "const label = (name) => `${name}!`;",
+    "function header() { const Inner = () => <h1 />; return Inner; }",
+    "const items = list.map((item) => <li>{item}</li>);",
+  ],
+  invalid: [
+    { code: "function header() { return <h1 />; }", errors: [{ messageId: "lowercase" }] },
+    { code: "const header = () => (ok ? <h1 /> : null);", errors: [{ messageId: "lowercase" }] },
+    { code: "const renderRow = (row) => row.id;", errors: [{ messageId: "render" }] },
+  ],
+});
+
+tester.run("ui/no-module-jsx", uiPlugin.rules["no-module-jsx"], {
+  valid: [
+    "function Header() { const icon = <svg />; return icon; }",
+    'export const Route = createFileRoute("/")({ staticData: { label: <b /> } });',
+    "const Header = () => <h1 />;",
+  ],
+  invalid: [
+    { code: "const icon = <svg />;", errors: [{ messageId: "module" }] },
+    {
+      code: "export const items = [<li key={1} />, <li key={2} />];",
+      errors: [{ messageId: "module" }],
+    },
+  ],
+});
+
+tester.run("ui/no-hook-declarations", uiPlugin.rules["no-hook-declarations"], {
+  valid: [
+    { code: "function useTheme() {}", filename: "src/hooks/use-theme.ts" },
+    {
+      code: "function useTheme() {}",
+      filename: "src/components/theme.tsx",
+      options: [{ allow: ["useTheme"] }],
+    },
+    { code: "function user() {}", filename: "src/components/user.tsx" },
+  ],
+  invalid: [
+    {
+      code: "const useTheme = () => null;",
+      filename: "src/components/theme.tsx",
+      errors: [{ messageId: "hookDeclaration" }],
+    },
+  ],
+});

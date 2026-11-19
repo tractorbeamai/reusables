@@ -20,8 +20,10 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 | `antiSlop` | A selected set of anti-slop's rules, as errors |
 | `react` | React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules |
 | `stylistic` | Braces on every block and blank lines around multiline statements |
-| `playwright({ files })` | Playwright's rules, in the test files `files` matches |
-| `effect({ except })` | `@effect/tsgo`'s and oxlint-plugin-effect's rules, for an Effect codebase |
+| `vitest` | Vitest's rules in test files, and no in-source tests |
+| `effect()` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
+
+Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff()`, which lifts Effect's native-API rules from code that isn't Effect.
 
 ```typescript
 import { antiSlop, core, options, react, stylistic } from "@tractorbeam/oxlint-config";
@@ -46,9 +48,11 @@ Each preset brings the plugins, JS plugins, and rules it needs, and turns off th
 
 The UI rules in `react` warn when a `Button` uses fixed Tailwind sizing utilities instead of its `size` prop, or when an icon nested inside a `Button` has its own `className`. Icon detection supports `*Icon` component names, `Icons.*` members, Lucide, and imports from packages or local modules whose specifier contains `icon`.
 
+The UI rules also ask that a function returning JSX be a PascalCase component rendered as an element, not a lowercase helper or a `render*` function (`ui/jsx-component-names`); that JSX be created in the component that renders it, not in a module-level constant every render shares (`ui/no-module-jsx`); and that hooks be declared outside `components/` (`ui/no-hook-declarations`, whose `allow` option lists the hooks a component module may declare).
+
 The UI rules also keep application entry points out of reusable component directories. They warn when a file under `components/` is named `page`, `route`, `*-page`, or `*-route`, or declares a function component named `*Page` or `*Route`; implement those screens in the router's route files instead. Files elsewhere, such as Next.js `app/**/page.tsx` or Playwright page objects, are unaffected. For TanStack Router, they warn when a route factory registers an inline or otherwise named `component`; register a named `*Route` component, or `Outlet` for a layout with nothing of its own.
 
-`core` allows `TODO`, `FIXME`, and other warning comments, so a known gap can be marked in the code it affects.
+`core` allows `TODO`, `FIXME`, and other warning comments, so a known gap can be marked in the code it affects. It also agrees with Oxfmt and with TypeScript's `noImplicitReturns`: `unicorn/number-literal-case`, `eslint/no-useless-return`, and `typescript/consistent-return` are off. It asks for one import per module, with types marked inline (`import/no-duplicates` with `preferInline`, `typescript/consistent-type-imports` with `inline-type-imports`), allows `== null` (`eqeqeq` with `null: "ignore"`), and allows `while (true)` (`typescript/no-unnecessary-condition` with `allowConstantLoopConditions`). Its `typescript/*` rules run only where your configuration enables the `typescript` plugin.
 
 ## Cyclomatic complexity
 
@@ -67,19 +71,36 @@ export default defineConfig({
 
 ## Playwright tests
 
-Extend `playwright` with the globs that match your Playwright tests, written the same way as an Oxlint override's `files`:
+Spread `playwright` into an override whose `files` match your Playwright tests:
 
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, playwright({ files: ["e2e/**/*.ts"] })],
+    extends: [core, antiSlop, stylistic],
+    options,
+    plugins: [],
+    overrides: [{ files: ["e2e/**/*.ts"], ...playwright }],
+  },
+});
+```
+
+Matching files receive Playwright's recommended rules plus stricter errors for unawaited Playwright calls (including locator methods), `nth()`-style positional locators, raw CSS or XPath locators, and `waitForTimeout`. The override loads the Playwright plugin itself, so its rules never reach application source. Set Playwright's `settings` (for example, `globalAliases` for custom fixtures) in your own configuration.
+
+## Vitest
+
+Extend `vitest` to lint test files, `**/*.{test,spec}.*`, with Oxlint's `vitest` plugin:
+
+```typescript
+export default defineConfig({
+  lint: {
+    extends: [core, antiSlop, stylistic, vitest],
     options,
     plugins: [],
   },
 });
 ```
 
-Matching files receive Playwright's recommended rules plus stricter errors for unawaited Playwright calls (including locator methods), `nth()`-style positional locators, raw CSS or XPath locators, and `waitForTimeout`. The preset applies them in an override, so they never reach application source. Set Playwright's `settings` (for example, `globalAliases` for custom fixtures) in your own configuration.
+`vitest/valid-expect` allows a second argument, the message that labels an assertion's failure. Rules that misread @effect/vitest's `it.effect`, such as `no-standalone-expect`, are off, as are the hook, conditional-expect, and global-import rules and the matcher and layout preferences. Everywhere else, `vitest-style/no-in-source-tests` reports `if (import.meta.vitest)` blocks: Vitest no longer collects them, so a test left in a module never runs.
 
 ## Effect
 
@@ -167,13 +188,15 @@ export default defineConfig({
 });
 ```
 
+The preset adds Tractorbeam's Effect rules. `effect-style/effect-names` names services and layers as Effect's own examples do: a service in PascalCase, a service's layers `layer` or `layerTest`, and other layers in PascalCase, as `ObservabilityLayer`. `effect-style/no-yield-expression-member` asks for `(yield* stage).console` to bind the yielded value first, as unicorn's `no-await-expression-member` does for `await`. `effect-style/no-array-for-each` replaces `unicorn/no-array-for-each`, which also reports `Effect.forEach`. In `**/*.test.{ts,tsx}`, `effect-style/no-focused-effect-tests` and `effect-style/no-disabled-effect-tests` report `.only` and `.skip` on `it.effect` and `it.live`, which Oxlint's Vitest rules don't see, and `effect/noEffectRunInTests` asks for `it.effect` over `Effect.run*`.
+
 A few of `@effect/tsgo`'s rules are off: `strict-boolean-expressions`, which TypeScript's narrowing covers; `missing-pipeable-signature`, since a data-last overload is for a library's pipeline API and most exported functions take every argument at once; and `unstable-api-usage`, so Effect's unstable modules, such as HttpApi and RPC, are fair to use. The preset relaxes the shared rules that flag Effect's own idioms: namespace imports, `_tag`, a schema and its type sharing a name, Effect's constructors called without `new`, and its combinators taking a `this`-like argument or a function reference.
 
 Two rules read their settings from the tsconfig's `@effect/language-service` plugin entry, never from Oxlint's rule options, so extend `@tractorbeam/typescript-config/effect` in every tsconfig that covers Effect code. `effecttsgo/schema-class-missing-brand` then asks only untagged Schema classes for a brand; without the preset, tagged classes and errors are asked too. `effecttsgo/prefer-namespace-import` then asks for `import * as Effect from "effect/Effect"` over named imports from `"effect"`.
 
 ## Stylistic rules
 
-`stylistic` requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`, and a blank line before and after multiline statements, declarations, and blocks.
+`stylistic` requires braces on every block (`curly: all`), so `if (done) return;` must be written as `if (done) { return; }`, and a blank line before and after multiline statements, declarations, and blocks. Cases that share a body stay together: the blank-line rule allows an empty `case` directly above the next, where a blank line is what `no-fallthrough` reports.
 
 Both rules are autofixable: repeat `vp check --fix`, which lints with fixes and then formats, until it passes, usually three runs. Braces on nested blocks are added one level per pass, and the formatter expands one-line `{ return; }` bodies, which the blank-line rule then pads. Without Vite+, alternate `oxlint --fix` and your formatter the same way.
 
@@ -196,7 +219,7 @@ export default defineConfig({
 
 ## `oxlintConfig`
 
-The default export, `oxlintConfig(options)`, merges the presets into one configuration whose fields you spread into your own. It takes `complexity`, `effect` (`true`, or `{ except }`, the globs that get `effectNativeOff()`), `playwright` (`{ files }`), `react` (on by default), and `stylistic` (on by default), and sets `options` to type-aware linting and checking:
+The default export, `oxlintConfig(options)`, merges the presets into one configuration whose fields you spread into your own. It takes `complexity`, `effect` (`true`, or `{ except }`, the globs that get `effectNativeOff()`), `playwright` (`{ files }`, the globs that get the Playwright rules), `react` (on by default), and `stylistic` (on by default), and sets `options` to type-aware linting and checking. It has no Vitest option; extend `vitest` for that. Spread its fields into your own configuration:
 
 ```typescript
 import oxlintConfig from "@tractorbeam/oxlint-config";

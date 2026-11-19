@@ -21,9 +21,9 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 | `react` | React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules |
 | `stylistic` | Braces on every block and blank lines around multiline statements |
 | `vitest` | Vitest's rules in test files, and no in-source tests |
-| `effect()` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
+| `effect`, from `@tractorbeam/oxlint-config/effect` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
 
-Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff()`, which lifts Effect's native-API rules from code that isn't Effect.
+Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff`, from `@tractorbeam/oxlint-config/effect`, which lifts Effect's native-API rules from code that isn't Effect.
 
 ```typescript
 import { antiSlop, core, options, react, stylistic } from "@tractorbeam/oxlint-config";
@@ -104,16 +104,19 @@ export default defineConfig({
 
 ## Effect
 
-Install `@effect/tsgo`, `oxlint-plugin-effect`, `tsrs`, and `oxlint-tsgolint`, and extend `effect` after `core`:
+Install `@effect/tsgo`, `oxlint-plugin-effect`, `tsrs`, and `oxlint-tsgolint`, and extend `effect` after `core`. It comes from its own subpath, `@tractorbeam/oxlint-config/effect`, which reads its rules from `@effect/tsgo` and `oxlint-plugin-effect` as it loads; the package root never loads them, so projects without Effect don't install them:
 
 ```bash
 pnpm add -D @effect/tsgo oxlint-plugin-effect tsrs oxlint-tsgolint
 ```
 
 ```typescript
+import { antiSlop, core, options, stylistic } from "@tractorbeam/oxlint-config";
+import { effect } from "@tractorbeam/oxlint-config/effect";
+
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect()],
+    extends: [core, antiSlop, stylistic, effect],
     options,
     plugins: [],
   },
@@ -139,21 +142,15 @@ The effect-native preset holds every file to Effect's own services: `fetch`, `Da
 
 The preset's `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-string` are off. Native Array, Object, and String methods are house style; `effect/Array`, `effect/Record`, and `effect/String` are for what the native methods lack. `effect/String`'s functions also take their string last, so each native call would become a pipe. `unicorn/no-array-sort` is off too, since it mistakes `effect/Array`'s `sort`, which copies, for `Array#sort`.
 
-Turn the effect-native rules off for code on another platform's terms with an override whose `rules` are `effectNativeOff()`: React and browser code, a published SDK whose API is plain TypeScript, or tool configuration that the tool loads and calls. Comment why each glob is there:
+Turn the effect-native rules off for code on another platform's terms with an override whose `rules` are `effectNativeOff`: React and browser code, a published SDK whose API is plain TypeScript, or tool configuration that the tool loads and calls. Comment why each glob is there:
 
 ```typescript
-import {
-  antiSlop,
-  core,
-  effect,
-  effectNativeOff,
-  options,
-  stylistic,
-} from "@tractorbeam/oxlint-config";
+import { antiSlop, core, options, stylistic } from "@tractorbeam/oxlint-config";
+import { effect, effectNativeOff } from "@tractorbeam/oxlint-config/effect";
 
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect()],
+    extends: [core, antiSlop, stylistic, effect],
     options,
     plugins: [],
     overrides: [
@@ -166,21 +163,21 @@ export default defineConfig({
           // Tool configuration, which the tool loads and calls.
           "**/*.config.ts",
         ],
-        rules: effectNativeOff(),
+        rules: effectNativeOff,
       },
     ],
   },
 });
 ```
 
-`effectNativeOff()` keeps the preset's `*-in-effect` rules: a native API inside Effect code, such as `fetch` in `Effect.gen`, is wrong wherever the code lives.
+`effectNativeOff` keeps the preset's `*-in-effect` rules: a native API inside Effect code, such as `fetch` in `Effect.gen`, is wrong wherever the code lives.
 
 `antipattern` includes `effecttsgo/strict-effect-provide`, which reports providing a layer anywhere but an application's entry point, such as its `main`, its Worker, or a test that builds a runtime. Turn it off for your own entry points in an override:
 
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect()],
+    extends: [core, antiSlop, stylistic, effect],
     options,
     plugins: [],
     overrides: [{ files: ["src/main.ts"], rules: { "effecttsgo/strict-effect-provide": "off" } }],
@@ -219,7 +216,7 @@ export default defineConfig({
 
 ## `oxlintConfig`
 
-The default export, `oxlintConfig(options)`, merges the presets into one configuration whose fields you spread into your own. It takes `complexity`, `effect` (`true`, or `{ except }`, the globs that get `effectNativeOff()`), `playwright` (`{ files }`, the globs that get the Playwright rules), `react` (on by default), and `stylistic` (on by default), and sets `options` to type-aware linting and checking. It has no Vitest option; extend `vitest` for that. Spread its fields into your own configuration:
+The default export, `oxlintConfig(options)`, merges the presets into one configuration whose fields you spread into your own. It takes `complexity`, `effect` (`true`, or `{ except }`, the globs that get `effectNativeOff`), `playwright` (`{ files }`, the globs that get the Playwright rules), `react` (on by default), and `stylistic` (on by default), and sets `options` to type-aware linting and checking. It has no Vitest option; extend `vitest` for that. Spread its fields into your own configuration:
 
 ```typescript
 import oxlintConfig from "@tractorbeam/oxlint-config";

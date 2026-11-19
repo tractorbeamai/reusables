@@ -6,9 +6,7 @@ import type {
   OxlintOverride,
 } from "vite-plus/lint";
 
-import { effect, effectNativeOff } from "./effect-rules.ts";
-
-export { effect, effectNativeOff };
+import { effectNativeOffRules, effectPreset } from "./effect-rules.ts";
 
 function jsPlugin(name: string, path = name): ExternalPluginEntry {
   return { name, specifier: `@tractorbeam/oxlint-config/${path}` };
@@ -226,7 +224,7 @@ export const vitest = {
 
 export interface EffectOptions {
   /**
-   * Globs for code on another platform's terms, which get `effectNativeOff()`
+   * Globs for code on another platform's terms, which get `effectNativeOff`
    * in an override.
    */
   except?: string[];
@@ -276,10 +274,10 @@ export default function oxlintConfig({
           } satisfies OxlintConfig,
         ]
       : []),
-    ...(effectOption ? [effect()] : []),
+    ...(effectOption ? [effectPreset()] : []),
     ...(effectOption === false || effectOption === true || !effectOption.except?.length
       ? []
-      : [{ overrides: [{ files: effectOption.except, rules: effectNativeOff() }] }]),
+      : [{ overrides: [{ files: effectOption.except, rules: effectNativeOffRules() }] }]),
   ];
 
   const rules: DummyRuleMap = Object.fromEntries(

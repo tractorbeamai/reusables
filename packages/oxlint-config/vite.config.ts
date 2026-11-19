@@ -9,6 +9,12 @@ export default defineConfig({
       target: "node20.19.0",
     },
     {
+      dts: true,
+      entry: "src/effect.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
       deps: {
         onlyBundle: ["@oxlint/plugins", "oxlint-plugin-anti-slop"],
       },

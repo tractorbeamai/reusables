@@ -17,7 +17,8 @@ interface Preset {
 }
 
 // `@effect/tsgo` and `oxlint-plugin-effect` are optional peers, so the presets
-// load only when `effect()` or `effectNativeOff()` asks for them, from the version the
+// load only when `@tractorbeam/oxlint-config/effect` or `oxlintConfig({ effect })`
+// asks for them, from the version the
 // project installs.
 const require = createRequire(import.meta.url);
 
@@ -166,7 +167,7 @@ function effectRules() {
  * plain-TypeScript API, or tool configuration. Its `*-in-effect` rules stay
  * on: a native API inside Effect code is wrong wherever that code is.
  */
-export function effectNativeOff(): RuleMap {
+export function effectNativeOffRules(): RuleMap {
   return Object.fromEntries(
     Object.keys(loadPreset("effect-native").rules)
       .filter((rule) => !rule.endsWith("-in-effect"))
@@ -178,7 +179,7 @@ export function effectNativeOff(): RuleMap {
  * Lints the codebase as Effect code, and turns off the shared rules that
  * misread Effect's idioms. Extend it after `core`.
  */
-export function effect() {
+export function effectPreset() {
   return {
     // The built-in plugins the presets' rules need, which the Effect-patched
     // type-aware linter provides.

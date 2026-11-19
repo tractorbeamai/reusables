@@ -1,7 +1,7 @@
 import { defineConfig } from "vite-plus";
 
 import oxfmtConfig from "./packages/oxfmt-config/src/index";
-import oxlintConfig from "./packages/oxlint-config/src/index";
+import { antiSlop, core, options, stylistic } from "./packages/oxlint-config/src/index";
 
 export default defineConfig({
   fmt: {
@@ -14,7 +14,9 @@ export default defineConfig({
     ],
   },
   lint: {
-    ...oxlintConfig({ react: false }),
+    extends: [core, antiSlop, stylistic],
+    options,
+    plugins: [],
     ignorePatterns: ["**/dist/**", "packages/eslint-config/**", "packages/prettier-config/**"],
   },
   run: {

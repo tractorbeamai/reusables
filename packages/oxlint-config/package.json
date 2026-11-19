@@ -32,6 +32,9 @@
     "./anti-slop": {
       "default": "./dist/anti-slop.mjs"
     },
+    "./effect-style": {
+      "default": "./dist/effect-style.mjs"
+    },
     "./ui": {
       "default": "./dist/ui.mjs"
     },
@@ -40,6 +43,9 @@
     },
     "./stylistic": {
       "default": "./dist/stylistic.mjs"
+    },
+    "./vitest-style": {
+      "default": "./dist/vitest-style.mjs"
     }
   },
   "publishConfig": {

@@ -181,9 +181,11 @@ function parseSrcset(value: string): string[] {
     .replace(/,\s+/u, ", ")
     .replaceAll(/\s+/gu, " ");
 
-  return [...normalized.matchAll(IMAGE_CANDIDATE_PATTERN)]
-    .map((match) => stripQuotes(match.groups?.url?.trim() ?? ""))
-    .filter((reference) => reference.length > 0);
+  return [...normalized.matchAll(IMAGE_CANDIDATE_PATTERN)].flatMap((match) => {
+    const reference = stripQuotes(match.groups?.url?.trim() ?? "");
+
+    return reference.length > 0 ? [reference] : [];
+  });
 }
 
 function stripQuotes(value: string): string {

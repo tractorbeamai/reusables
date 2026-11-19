@@ -27,6 +27,42 @@ export default defineConfig({
       target: "node20.19.0",
     },
     {
+      deps: {
+        onlyBundle: ["@oxlint/plugins"],
+      },
+      dts: false,
+      entry: "src/effect-style.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
+      deps: {
+        onlyBundle: ["@oxlint/plugins"],
+      },
+      dts: false,
+      entry: "src/vitest-style.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
+      deps: {
+        onlyBundle: ["@oxlint/plugins"],
+      },
+      dts: false,
+      entry: "src/effect-style.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
+      deps: {
+        onlyBundle: ["@oxlint/plugins"],
+      },
+      dts: false,
+      entry: "src/vitest-style.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
       dts: false,
       entry: "src/playwright.ts",
       sourcemap: true,

@@ -22,7 +22,7 @@ export default defineConfig({
       {
         // `walk` reads every property of an AST node, whose children have no
         // static type, so a `typeof` check is its parse.
-        files: ["packages/oxlint-config/src/effect-style/shared/effect-modules.ts"],
+        files: ["packages/oxlint-config/src/rules/effect-style/shared/effect-modules.ts"],
         rules: { "quality/no-runtime-typeof": "off" },
       },
     ],

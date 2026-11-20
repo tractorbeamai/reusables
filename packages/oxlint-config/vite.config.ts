@@ -1,99 +1,36 @@
 import { defineConfig } from "vite-plus";
 
+const target = "node20.19.0";
+
+/** The JS plugins, each published on the `@tractorbeam/oxlint-config/<name>` subpath. */
+const plugins = [
+  "effect-style",
+  "landmines-testing",
+  "playwright",
+  "quality",
+  "stylistic",
+  "ui",
+  "vitest-style",
+];
+
 export default defineConfig({
   pack: [
     {
+      // The presets, with declarations for the configs that extend them.
       dts: true,
-      entry: "src/index.ts",
+      entry: { index: "src/index.ts", effect: "src/effect.ts" },
       sourcemap: true,
-      target: "node20.19.0",
+      target,
     },
     {
-      dts: true,
-      entry: "src/effect.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      deps: {
-        onlyBundle: ["@oxlint/plugins", "@nkzw/oxlint-config", "oxlint-plugin-anti-slop"],
-      },
+      // Our own plugins bundle the rule sources they build on, so consumers
+      // install none of them; `landmines-testing`, `playwright`, and
+      // `stylistic` re-export a dependency, which stays external.
+      deps: { onlyBundle: ["@oxlint/plugins", "@nkzw/oxlint-config", "oxlint-plugin-anti-slop"] },
       dts: false,
-      entry: "src/quality.ts",
+      entry: Object.fromEntries(plugins.map((name) => [name, `src/plugins/${name}.ts`])),
       sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      deps: {
-        onlyBundle: ["@oxlint/plugins"],
-      },
-      dts: false,
-      entry: "src/ui.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      deps: {
-        onlyBundle: ["@oxlint/plugins"],
-      },
-      dts: false,
-      entry: "src/effect-style.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      deps: {
-        onlyBundle: ["@oxlint/plugins"],
-      },
-      dts: false,
-      entry: "src/vitest-style.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      deps: {
-        onlyBundle: ["@oxlint/plugins"],
-      },
-      dts: false,
-      entry: "src/effect-style.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      deps: {
-        onlyBundle: ["@oxlint/plugins"],
-      },
-      dts: false,
-      entry: "src/vitest-style.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      dts: false,
-      entry: "src/landmines-testing.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      dts: false,
-      entry: "src/playwright.ts",
-      sourcemap: true,
-      target: "node20.19.0",
-    },
-    {
-      dts: false,
-      entry: "src/stylistic.ts",
-      sourcemap: true,
-      target: "node20.19.0",
+      target,
     },
   ],
-  run: {
-    tasks: {
-      test: {
-        command: "node --test test/*.test.js",
-        dependsOn: ["build"],
-        cache: { output: [] },
-      },
-    },
-  },
 });

@@ -15,7 +15,7 @@ import {
   unwrapNode,
   type EffectModuleNames,
   type FunctionNode,
-} from "../shared/effect-modules.ts";
+} from "./shared/effect-modules.ts";
 
 /** `Effect` constructors whose generator body runs as the Effect program. */
 const generatorConstructors: ReadonlySet<string> = new Set(["fn", "fnUntraced", "gen"]);

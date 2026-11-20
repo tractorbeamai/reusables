@@ -1,7 +1,7 @@
 // The Effect preset lives on its own subpath because it reads its rules from
 // the optional peers `@effect/tsgo` and `oxlint-plugin-effect`, which only
 // Effect projects install.
-import { effectNativeOffRules, effectPreset } from "./effect-rules.ts";
+import { effectNativeOffRules, effectPreset } from "./presets/effect.ts";
 
 /**
  * Lints the codebase as Effect code, and turns off the shared rules that

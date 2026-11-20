@@ -8,7 +8,7 @@ import {
   isReasonTagMember,
   isTagMember,
   tagMemberFromComparison,
-} from "../shared/tagged-values.ts";
+} from "./shared/tagged-values.ts";
 
 export const noManualEffectErrorTagRule = defineRule({
   meta: {

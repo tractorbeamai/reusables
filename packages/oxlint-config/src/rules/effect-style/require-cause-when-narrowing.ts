@@ -16,7 +16,7 @@ import {
   walk,
   type EffectModuleNames,
   type FunctionNode,
-} from "../shared/effect-modules.ts";
+} from "./shared/effect-modules.ts";
 
 const narrowingOperators: ReadonlySet<string> = new Set([
   "mapError",

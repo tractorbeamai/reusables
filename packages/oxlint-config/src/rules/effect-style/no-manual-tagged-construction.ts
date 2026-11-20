@@ -3,7 +3,7 @@
 
 import { defineRule } from "@oxlint/plugins";
 
-import { isMatchPatternObject, isStringLiteral, propertyName } from "../shared/tagged-values.ts";
+import { isMatchPatternObject, isStringLiteral, propertyName } from "./shared/tagged-values.ts";
 
 export const noManualTaggedConstructionRule = defineRule({
   meta: {

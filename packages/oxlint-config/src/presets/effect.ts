@@ -17,9 +17,8 @@ interface Preset {
 }
 
 // `@effect/tsgo` and `oxlint-plugin-effect` are optional peers, so the presets
-// load only when `@tractorbeam/oxlint-config/effect` or `oxlintConfig({ effect })`
-// asks for them, from the version the
-// project installs.
+// load only when `effect()`, `effectNativeOff()`, or `oxlintConfig({ effect })`
+// is called, from the version the project installs.
 const require = createRequire(import.meta.url);
 
 function loadPreset(name: string): Preset {
@@ -40,6 +39,11 @@ const effectStylePlugin: ExternalPluginEntry = {
   specifier: "@tractorbeam/oxlint-config/effect-style",
 };
 
+const antiSlopEffectPlugin: ExternalPluginEntry = {
+  name: "anti-slop-effect",
+  specifier: "@tractorbeam/oxlint-config/anti-slop-effect",
+};
+
 /** Tractorbeam's rules for Effect code. */
 const effectStyleRules = {
   "effect-style/effect-names": "error",
@@ -47,6 +51,18 @@ const effectStyleRules = {
   // Unicorn's version reports `Effect.forEach` too.
   "effect-style/no-array-for-each": "error",
   "unicorn/no-array-for-each": "off",
+} satisfies DummyRuleMap;
+
+/** anti-slop's Effect rules. */
+const antiSlopEffectRules = {
+  "anti-slop-effect/no-manual-effect-error-tag": "error",
+  "anti-slop-effect/no-manual-tag-comparison": "error",
+  "anti-slop-effect/no-manual-tagged-construction": "error",
+  "anti-slop-effect/no-service-constructor-imports": "error",
+  "anti-slop-effect/prefer-effect-match": "error",
+  // From K-Mistele's anti-slop fork.
+  "anti-slop-effect/require-cause-when-narrowing": "error",
+  "anti-slop-effect/throw-in-effect-gen": "error",
 } satisfies DummyRuleMap;
 
 /**
@@ -158,6 +174,7 @@ function effectRules() {
     ...effectTsgoOffRules,
     ...effectPluginRules,
     ...effectStyleRules,
+    ...antiSlopEffectRules,
   };
 }
 
@@ -167,7 +184,7 @@ function effectRules() {
  * plain-TypeScript API, or tool configuration. Its `*-in-effect` rules stay
  * on: a native API inside Effect code is wrong wherever that code is.
  */
-export function effectNativeOffRules(): RuleMap {
+export function effectNativeOff(): RuleMap {
   return Object.fromEntries(
     Object.keys(loadPreset("effect-native").rules)
       .filter((rule) => !rule.endsWith("-in-effect"))
@@ -179,12 +196,12 @@ export function effectNativeOffRules(): RuleMap {
  * Lints the codebase as Effect code, and turns off the shared rules that
  * misread Effect's idioms. Extend it after `core`.
  */
-export function effectPreset() {
+export function effect() {
   return {
     // The built-in plugins the presets' rules need, which the Effect-patched
     // type-aware linter provides.
     plugins: loadPreset("strict").plugins,
-    jsPlugins: [effectPlugin, effectStylePlugin],
+    jsPlugins: [effectPlugin, effectStylePlugin, antiSlopEffectPlugin],
     rules: effectRules(),
     overrides: [effectTestOverride],
   } satisfies OxlintConfig;

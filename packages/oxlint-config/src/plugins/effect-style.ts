@@ -1,12 +1,12 @@
 import { definePlugin } from "@oxlint/plugins";
 
-import { effectNamesRule } from "./effect-style/rules/effect-names.ts";
+import { effectNamesRule } from "../rules/effect-style/effect-names.ts";
 import {
   noDisabledEffectTestsRule,
   noFocusedEffectTestsRule,
-} from "./effect-style/rules/effect-test-modifiers.ts";
-import { noArrayForEachRule } from "./effect-style/rules/no-array-for-each.ts";
-import { noYieldExpressionMemberRule } from "./effect-style/rules/no-yield-expression-member.ts";
+} from "../rules/effect-style/effect-test-modifiers.ts";
+import { noArrayForEachRule } from "../rules/effect-style/no-array-for-each.ts";
+import { noYieldExpressionMemberRule } from "../rules/effect-style/no-yield-expression-member.ts";
 
 export default definePlugin({
   meta: { name: "effect-style" },

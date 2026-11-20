@@ -1,10 +1,10 @@
-import { defineRule, definePlugin } from "@oxlint/plugins";
+import { defineRule } from "@oxlint/plugins";
 
 /**
  * Vitest no longer collects `if (import.meta.vitest)` blocks, so a test left
  * in a module never runs.
  */
-const noInSourceTestsRule = defineRule({
+export const noInSourceTestsRule = defineRule({
   meta: {
     type: "problem",
     docs: { description: "Disallow Vitest in-source test blocks." },
@@ -23,12 +23,5 @@ const noInSourceTestsRule = defineRule({
         }
       },
     };
-  },
-});
-
-export default definePlugin({
-  meta: { name: "vitest-style" },
-  rules: {
-    "no-in-source-tests": noInSourceTestsRule,
   },
 });

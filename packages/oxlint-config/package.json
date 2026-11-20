@@ -29,12 +29,11 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     },
-    "./effect": {
-      "types": "./dist/effect.d.mts",
-      "default": "./dist/effect.mjs"
-    },
     "./anti-slop": {
       "default": "./dist/anti-slop.mjs"
+    },
+    "./anti-slop-effect": {
+      "default": "./dist/anti-slop-effect.mjs"
     },
     "./effect-style": {
       "default": "./dist/effect-style.mjs"
@@ -42,8 +41,17 @@
     "./ui": {
       "default": "./dist/ui.mjs"
     },
+    "./landmines-structure": {
+      "default": "./dist/landmines-structure.mjs"
+    },
+    "./landmines-testing": {
+      "default": "./dist/landmines-testing.mjs"
+    },
     "./playwright": {
       "default": "./dist/playwright.mjs"
+    },
+    "./react-doctor": {
+      "default": "./dist/react-doctor.mjs"
     },
     "./stylistic": {
       "default": "./dist/stylistic.mjs"
@@ -62,10 +70,13 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@interfere/landmines": "catalog:",
     "@stylistic/eslint-plugin": "catalog:",
-    "eslint-plugin-playwright": "catalog:"
+    "eslint-plugin-playwright": "catalog:",
+    "oxlint-plugin-react-doctor": "catalog:"
   },
   "devDependencies": {
+    "@nkzw/oxlint-config": "catalog:",
     "@oxlint/plugins": "catalog:",
     "@tractorbeam/typescript-config": "workspace:*",
     "@types/node": "catalog:",
@@ -76,10 +87,14 @@
   },
   "peerDependencies": {
     "@effect/tsgo": ">=0.64.1",
+    "@shadcn/lint": ">=0.2.5",
     "oxlint-plugin-effect": ">=0.29.0"
   },
   "peerDependenciesMeta": {
     "@effect/tsgo": {
+      "optional": true
+    },
+    "@shadcn/lint": {
       "optional": true
     },
     "oxlint-plugin-effect": {

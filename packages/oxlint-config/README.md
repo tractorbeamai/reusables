@@ -2,7 +2,7 @@
 
 Shared Oxlint configuration for Tractorbeam projects.
 
-The `antiSlop` preset enables a selected set of [anti-slop](https://github.com/dmmulroy/anti-slop) rules at error severity. The plugin is built from a pinned GitHub dependency and registered automatically; its source is not vendored into this repository.
+The `antiSlop` preset enables a selected set of [anti-slop](https://github.com/dmmulroy/anti-slop)'s generic rules at error severity. They come from the `quality` plugin of [`@nkzw/oxlint-config`](https://github.com/nkzw-tech/oxlint-config), which maintains them, and three that nkzw's plugin left out, `no-runtime-typeof`, `no-shape-in-symbol-names`, and `no-unknown-parameters`, come from [K-Mistele's fork](https://github.com/k-mistele/anti-slop) of anti-slop, pinned to a commit since it has no releases. The `anti-slop` plugin that holds them is bundled and registered automatically.
 
 ## Install
 
@@ -16,14 +16,15 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 
 | Preset | What it brings |
 | --- | --- |
-| `core` | The `correctness`, `suspicious`, and `perf` categories as errors and `pedantic` as warnings, the `import` and `promise` plugins, and the shared rules |
-| `antiSlop` | A selected set of anti-slop's rules, as errors |
-| `react` | React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules |
+| `core` | The `correctness`, `suspicious`, and `perf` categories as errors and `pedantic` as warnings, the `import` and `promise` plugins, Landmines' `package-exports`, and the shared rules |
+| `antiSlop` | A selected set of anti-slop's generic rules, as errors |
+| `react` | React, React Performance, and JSX accessibility rules, Tractorbeam's UI rules, and React Doctor's rules in JSX files |
 | `stylistic` | Braces on every block and blank lines around multiline statements |
-| `vitest` | Vitest's rules in test files, and no in-source tests |
-| `effect`, from `@tractorbeam/oxlint-config/effect` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
+| `vitest` | Vitest's and Landmines' rules in test files, and no in-source tests |
+| `shadcn` | `@shadcn/lint`'s design-system rules, for a Tailwind v4 component library |
+| `effect()` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
 
-Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff`, from `@tractorbeam/oxlint-config/effect`, which lifts Effect's native-API rules from code that isn't Effect.
+Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff()`, which lifts Effect's native-API rules from code that isn't Effect.
 
 ```typescript
 import { antiSlop, core, options, react, stylistic } from "@tractorbeam/oxlint-config";
@@ -38,7 +39,7 @@ export default defineConfig({
 });
 ```
 
-Each preset brings the plugins, JS plugins, and rules it needs, and turns off the rules it clashes with. `antiSlop`, for example, turns off `typescript/consistent-indexed-object-style`, whose fix creates the `Record` aliases that `anti-slop/no-known-value-widening` reports, and `unicorn/prefer-reflect-apply`, which asks for the `Reflect.apply` that anti-slop bans. Extend `core` first; a later preset's rules override an earlier one's, and your own `rules` and `overrides` override them all.
+Each preset brings the plugins, JS plugins, and rules it needs, and turns off the rules it clashes with. `antiSlop`, for example, turns off `typescript/consistent-indexed-object-style`, whose fix creates the `Record` aliases that `anti-slop/no-known-value-widening` reports, and `unicorn/prefer-reflect-apply`, which asks for the `Reflect.apply` that `anti-slop/no-reflect-apply` bans. Extend `core` first; a later preset's rules override an earlier one's, and your own `rules` and `overrides` override them all.
 
 `extends` carries a preset's `plugins`, `jsPlugins`, `categories`, `rules`, and `overrides`, but not every field, so set these in your own configuration:
 
@@ -100,23 +101,64 @@ export default defineConfig({
 });
 ```
 
-`vitest/valid-expect` allows a second argument, the message that labels an assertion's failure. Rules that misread @effect/vitest's `it.effect`, such as `no-standalone-expect`, are off, as are the hook, conditional-expect, and global-import rules and the matcher and layout preferences. Everywhere else, `vitest-style/no-in-source-tests` reports `if (import.meta.vitest)` blocks: Vitest no longer collects them, so a test left in a module never runs.
+`vitest/valid-expect` allows a second argument, the message that labels an assertion's failure. Rules that misread @effect/vitest's `it.effect`, such as `no-standalone-expect`, are off, as are the hook, conditional-expect, and global-import rules and the matcher and layout preferences. In test files, two rules from [Landmines](https://github.com/interfere-inc/landmines) keep tests honest: `landmines-testing/no-test-doubles` reports module mocks, stubbed globals, and fake implementations, which replace the behavior a test should exercise, and `landmines-testing/no-flake-masking` reports test retries and raised timeouts. `landmines-testing/no-fixed-sleep` and `landmines-testing/no-unsignaled-poll` report a test that sleeps a fixed time or polls without a signal to wait on, and `landmines-testing/strict-msw` an MSW server that lets unhandled requests through. `landmines-structure/test-file-names` asks tests, fixtures, and test helpers to end in `.test.ts`, `.fixture.ts`, and `.test-utils.ts`; Landmines' `colocated-tests` is off, so tests may live in a package's own `test/` directory. `no-flake-masking` accepts a per-file allowlist with an exact count, `{ allow: { "test/live/slow.test.ts": 2 } }`, for adopting it in an existing codebase; a file with fewer violations than its allowance is reported too, so the list only shrinks. Everywhere else, `vitest-style/no-in-source-tests` reports `if (import.meta.vitest)` blocks: Vitest no longer collects them, so a test left in a module never runs.
+
+## React
+
+The `react` preset enables [React Doctor](https://github.com/millionco/react-doctor)'s recommended rules and its TanStack Query and Start rules as errors, without its copies of Oxlint's own `react` and `jsx-a11y` rules, which the preset runs natively, or `async-await-in-loop`, which `no-await-in-loop` covers. React Doctor runs single-threaded, so the preset gives its rules only to `**/*.{jsx,tsx}`. To check other React code, such as hooks in `.ts` files, add an override with the same rules:
+
+```typescript
+overrides: [{ files: ["packages/web/src/**/*.ts"], rules: react.overrides[0].rules }],
+```
+
+## shadcn
+
+The `shadcn` preset enables [`@shadcn/lint`](https://github.com/shadcn-ui/lint)'s rules as [Ultracite](https://www.ultracite.ai/docs/provider/oxlint)'s preset does: `no-restyle`, `no-raw-colors`, `no-arbitrary-values`, `no-inline-styles`, `no-unknown-classes`, and `require-static-classes`, all as errors. `no-restyle` and `no-arbitrary-values` allow layout classes, so a page may place a component, as with `mt-4` or `w-full`, while its padding, colors, typography, and shape stay in its variants. In `**/components/ui/**`, where components style themselves, `no-restyle`, `no-arbitrary-values`, and `require-static-classes` are off. The plugin reads the components and theme from `components.json`, and works with any Tailwind v4 design system. Install it, and extend `shadcn`:
+
+```bash
+pnpm add -D @shadcn/lint
+```
+
+```typescript
+import { antiSlop, core, options, react, shadcn, stylistic } from "@tractorbeam/oxlint-config";
+import { defineConfig } from "vite-plus";
+
+export default defineConfig({
+  lint: {
+    extends: [core, antiSlop, react, stylistic, shadcn],
+    options,
+    plugins: [],
+    // Oxlint doesn't merge `settings` from extended configurations, so set the plugin's here.
+    settings: { shadcn: { componentImports: ["^@acme/ui"] } },
+    overrides: [
+      {
+        // A component library outside `components/ui` needs the same override.
+        files: ["packages/ui/src/components/**"],
+        rules: {
+          "shadcn/no-arbitrary-values": "off",
+          "shadcn/no-restyle": "off",
+          "shadcn/require-static-classes": "off",
+        },
+      },
+    ],
+  },
+});
+```
 
 ## Effect
 
-Install `@effect/tsgo`, `oxlint-plugin-effect`, `tsrs`, and `oxlint-tsgolint`, and extend `effect` after `core`. It comes from its own subpath, `@tractorbeam/oxlint-config/effect`, which reads its rules from `@effect/tsgo` and `oxlint-plugin-effect` as it loads; the package root never loads them, so projects without Effect don't install them:
+Install `@effect/tsgo`, `oxlint-plugin-effect`, `tsrs`, and `oxlint-tsgolint`, and extend `effect()` after `core`. It's a function because it reads its rules from `@effect/tsgo` and `oxlint-plugin-effect` when called; nothing loads them otherwise, so projects without Effect don't install them:
 
 ```bash
 pnpm add -D @effect/tsgo oxlint-plugin-effect tsrs oxlint-tsgolint
 ```
 
 ```typescript
-import { antiSlop, core, options, stylistic } from "@tractorbeam/oxlint-config";
-import { effect } from "@tractorbeam/oxlint-config/effect";
+import { antiSlop, core, effect, options, stylistic } from "@tractorbeam/oxlint-config";
 
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect],
+    extends: [core, antiSlop, stylistic, effect()],
     options,
     plugins: [],
   },
@@ -142,15 +184,21 @@ The effect-native preset holds every file to Effect's own services: `fetch`, `Da
 
 The preset's `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-string` are off. Native Array, Object, and String methods are house style; `effect/Array`, `effect/Record`, and `effect/String` are for what the native methods lack. `effect/String`'s functions also take their string last, so each native call would become a pipe. `unicorn/no-array-sort` is off too, since it mistakes `effect/Array`'s `sort`, which copies, for `Array#sort`.
 
-Turn the effect-native rules off for code on another platform's terms with an override whose `rules` are `effectNativeOff`: React and browser code, a published SDK whose API is plain TypeScript, or tool configuration that the tool loads and calls. Comment why each glob is there:
+Turn the effect-native rules off for code on another platform's terms with an override whose `rules` are `effectNativeOff()`: React and browser code, a published SDK whose API is plain TypeScript, or tool configuration that the tool loads and calls. Comment why each glob is there:
 
 ```typescript
-import { antiSlop, core, options, stylistic } from "@tractorbeam/oxlint-config";
-import { effect, effectNativeOff } from "@tractorbeam/oxlint-config/effect";
+import {
+  antiSlop,
+  core,
+  effect,
+  effectNativeOff,
+  options,
+  stylistic,
+} from "@tractorbeam/oxlint-config";
 
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect],
+    extends: [core, antiSlop, stylistic, effect()],
     options,
     plugins: [],
     overrides: [
@@ -163,21 +211,21 @@ export default defineConfig({
           // Tool configuration, which the tool loads and calls.
           "**/*.config.ts",
         ],
-        rules: effectNativeOff,
+        rules: effectNativeOff(),
       },
     ],
   },
 });
 ```
 
-`effectNativeOff` keeps the preset's `*-in-effect` rules: a native API inside Effect code, such as `fetch` in `Effect.gen`, is wrong wherever the code lives.
+`effectNativeOff()` keeps the preset's `*-in-effect` rules: a native API inside Effect code, such as `fetch` in `Effect.gen`, is wrong wherever the code lives.
 
 `antipattern` includes `effecttsgo/strict-effect-provide`, which reports providing a layer anywhere but an application's entry point, such as its `main`, its Worker, or a test that builds a runtime. Turn it off for your own entry points in an override:
 
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect],
+    extends: [core, antiSlop, stylistic, effect()],
     options,
     plugins: [],
     overrides: [{ files: ["src/main.ts"], rules: { "effecttsgo/strict-effect-provide": "off" } }],
@@ -185,7 +233,7 @@ export default defineConfig({
 });
 ```
 
-The preset adds Tractorbeam's Effect rules. `effect-style/effect-names` names services and layers as Effect's own examples do: a service in PascalCase, a service's layers `layer` or `layerTest`, and other layers in PascalCase, as `ObservabilityLayer`. `effect-style/no-yield-expression-member` asks for `(yield* stage).console` to bind the yielded value first, as unicorn's `no-await-expression-member` does for `await`. `effect-style/no-array-for-each` replaces `unicorn/no-array-for-each`, which also reports `Effect.forEach`. In `**/*.test.{ts,tsx}`, `effect-style/no-focused-effect-tests` and `effect-style/no-disabled-effect-tests` report `.only` and `.skip` on `it.effect` and `it.live`, which Oxlint's Vitest rules don't see, and `effect/noEffectRunInTests` asks for `it.effect` over `Effect.run*`.
+The preset adds Tractorbeam's Effect rules. `effect-style/effect-names` names services and layers as Effect's own examples do: a service in PascalCase, a service's layers `layer` or `layerTest`, and other layers in PascalCase, as `ObservabilityLayer`. `effect-style/no-yield-expression-member` asks for `(yield* stage).console` to bind the yielded value first, as unicorn's `no-await-expression-member` does for `await`. `effect-style/no-array-for-each` replaces `unicorn/no-array-for-each`, which also reports `Effect.forEach`. The `anti-slop-effect` plugin holds [anti-slop](https://github.com/dmmulroy/anti-slop)'s Effect rules, vendored since neither anti-slop nor its fork exports them. Five come from anti-slop's Effect group: `anti-slop-effect/no-manual-effect-error-tag` asks for `Effect.catchTag` over branching on `_tag` inside `Effect.catch`, `anti-slop-effect/no-manual-tag-comparison` asks for `Match` or `Predicate.isTagged` over comparing or switching on `_tag`, `anti-slop-effect/no-manual-tagged-construction` asks for a tagged value's constructor over an object literal with a `_tag`, `anti-slop-effect/no-service-constructor-imports` keeps a service's project-local `make*` constructor out of runtime imports, and `anti-slop-effect/prefer-effect-match` asks for `Match` over a chained ternary of literals compared to one value. Two more come from [K-Mistele's fork](https://github.com/k-mistele/anti-slop) of anti-slop: `anti-slop-effect/require-cause-when-narrowing` asks a `mapError` or `catch` handler that builds a new error to keep the original as its `cause`, and `anti-slop-effect/throw-in-effect-gen` reports a `throw` in an `Effect.gen` or `Effect.fn` generator, where it becomes a defect instead of a typed failure. In `**/*.test.{ts,tsx}`, `effect-style/no-focused-effect-tests` and `effect-style/no-disabled-effect-tests` report `.only` and `.skip` on `it.effect` and `it.live`, which Oxlint's Vitest rules don't see, and `effect/noEffectRunInTests` asks for `it.effect` over `Effect.run*`.
 
 A few of `@effect/tsgo`'s rules are off: `strict-boolean-expressions`, which TypeScript's narrowing covers; `missing-pipeable-signature`, since a data-last overload is for a library's pipeline API and most exported functions take every argument at once; and `unstable-api-usage`, so Effect's unstable modules, such as HttpApi and RPC, are fair to use. The preset relaxes the shared rules that flag Effect's own idioms: namespace imports, `_tag`, a schema and its type sharing a name, Effect's constructors called without `new`, and its combinators taking a `this`-like argument or a function reference.
 
@@ -216,7 +264,7 @@ export default defineConfig({
 
 ## `oxlintConfig`
 
-The default export, `oxlintConfig(options)`, merges the presets into one configuration whose fields you spread into your own. It takes `complexity`, `effect` (`true`, or `{ except }`, the globs that get `effectNativeOff`), `playwright` (`{ files }`, the globs that get the Playwright rules), `react` (on by default), and `stylistic` (on by default), and sets `options` to type-aware linting and checking. It has no Vitest option; extend `vitest` for that. Spread its fields into your own configuration:
+The default export, `oxlintConfig(options)`, merges the presets into one configuration whose fields you spread into your own. It takes `complexity`, `effect` (`true`, or `{ except }`, the globs that get `effectNativeOff()`), `playwright` (`{ files }`, the globs that get the Playwright rules), `react` (on by default), and `stylistic` (on by default), and sets `options` to type-aware linting and checking. It has no Vitest option; extend `vitest` for that. Spread its fields into your own configuration:
 
 ```typescript
 import oxlintConfig from "@tractorbeam/oxlint-config";

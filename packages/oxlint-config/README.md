@@ -21,6 +21,7 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 | `react` | React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules |
 | `stylistic` | Braces on every block and blank lines around multiline statements |
 | `vitest` | Vitest's and Landmines' rules in test files, and no in-source tests |
+| `shadcn` | `@shadcn/lint`'s design-system rules, for a Tailwind v4 component library |
 | `effect()` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
 
 Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff()`, which lifts Effect's native-API rules from code that isn't Effect.
@@ -101,6 +102,40 @@ export default defineConfig({
 ```
 
 `vitest/valid-expect` allows a second argument, the message that labels an assertion's failure. Rules that misread @effect/vitest's `it.effect`, such as `no-standalone-expect`, are off, as are the hook, conditional-expect, and global-import rules and the matcher and layout preferences. In test files, two rules from [Landmines](https://github.com/interfere-inc/landmines) keep tests honest: `landmines-testing/no-test-doubles` reports module mocks, stubbed globals, and fake implementations, which replace the behavior a test should exercise, and `landmines-testing/no-flake-masking` reports test retries and raised timeouts. `no-flake-masking` accepts a per-file allowlist with an exact count, `{ allow: { "test/live/slow.test.ts": 2 } }`, for adopting it in an existing codebase; a file with fewer violations than its allowance is reported too, so the list only shrinks. Everywhere else, `vitest-style/no-in-source-tests` reports `if (import.meta.vitest)` blocks: Vitest no longer collects them, so a test left in a module never runs.
+
+## shadcn
+
+The `shadcn` preset enables [`@shadcn/lint`](https://github.com/shadcn-ui/lint)'s rules as [Ultracite](https://www.ultracite.ai/docs/provider/oxlint)'s preset does: `no-restyle`, `no-raw-colors`, `no-arbitrary-values`, `no-inline-styles`, `no-unknown-classes`, and `require-static-classes`, all as errors. `no-restyle` and `no-arbitrary-values` allow layout classes, so a page may place a component, as with `mt-4` or `w-full`, while its padding, colors, typography, and shape stay in its variants. In `**/components/ui/**`, where components style themselves, `no-restyle`, `no-arbitrary-values`, and `require-static-classes` are off. The plugin reads the components and theme from `components.json`, and works with any Tailwind v4 design system. Install it, and extend `shadcn`:
+
+```bash
+pnpm add -D @shadcn/lint
+```
+
+```typescript
+import { antiSlop, core, options, react, shadcn, stylistic } from "@tractorbeam/oxlint-config";
+import { defineConfig } from "vite-plus";
+
+export default defineConfig({
+  lint: {
+    extends: [core, antiSlop, react, stylistic, shadcn],
+    options,
+    plugins: [],
+    // Oxlint doesn't merge `settings` from extended configurations, so set the plugin's here.
+    settings: { shadcn: { componentImports: ["^@acme/ui"] } },
+    overrides: [
+      {
+        // A component library outside `components/ui` needs the same override.
+        files: ["packages/ui/src/components/**"],
+        rules: {
+          "shadcn/no-arbitrary-values": "off",
+          "shadcn/no-restyle": "off",
+          "shadcn/require-static-classes": "off",
+        },
+      },
+    ],
+  },
+});
+```
 
 ## Effect
 

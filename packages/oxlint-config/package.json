@@ -80,10 +80,14 @@
   },
   "peerDependencies": {
     "@effect/tsgo": ">=0.64.1",
+    "@shadcn/lint": ">=0.2.5",
     "oxlint-plugin-effect": ">=0.29.0"
   },
   "peerDependenciesMeta": {
     "@effect/tsgo": {
+      "optional": true
+    },
+    "@shadcn/lint": {
       "optional": true
     },
     "oxlint-plugin-effect": {

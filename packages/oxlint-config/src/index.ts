@@ -12,6 +12,7 @@ export { effect, effectNativeOff } from "./presets/effect.ts";
 export { playwright } from "./presets/playwright.ts";
 export { antiSlop } from "./presets/anti-slop.ts";
 export { react } from "./presets/react.ts";
+export { shadcn } from "./presets/shadcn.ts";
 export { stylistic } from "./presets/stylistic.ts";
 export { vitest } from "./presets/vitest.ts";
 

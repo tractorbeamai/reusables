@@ -1,15 +1,15 @@
 import type { DummyRuleMap, OxlintConfig } from "vite-plus/lint";
 
+import { antiSlop } from "./presets/anti-slop.ts";
 import { core, options } from "./presets/core.ts";
 import { effectNativeOffRules, effectPreset } from "./presets/effect.ts";
 import { playwright } from "./presets/playwright.ts";
-import { quality } from "./presets/quality.ts";
 import { react } from "./presets/react.ts";
 import { stylistic } from "./presets/stylistic.ts";
 
 export { core, options } from "./presets/core.ts";
 export { playwright } from "./presets/playwright.ts";
-export { quality } from "./presets/quality.ts";
+export { antiSlop } from "./presets/anti-slop.ts";
 export { react } from "./presets/react.ts";
 export { stylistic } from "./presets/stylistic.ts";
 export { vitest } from "./presets/vitest.ts";
@@ -52,7 +52,7 @@ export default function oxlintConfig({
 }: OxlintConfigOptions = {}) {
   const presets: OxlintConfig[] = [
     core,
-    quality,
+    antiSlop,
     ...(complexity === undefined
       ? []
       : [{ rules: { complexity: ["warn", complexity] } } satisfies OxlintConfig]),

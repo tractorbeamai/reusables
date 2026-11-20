@@ -7,7 +7,7 @@ const plugins = [
   "effect-style",
   "landmines-testing",
   "playwright",
-  "quality",
+  "anti-slop",
   "stylistic",
   "ui",
   "vitest-style",

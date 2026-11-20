@@ -1,7 +1,7 @@
 import { defineConfig } from "vite-plus";
 
 import oxfmtConfig from "./packages/oxfmt-config/src/index";
-import { core, options, quality, stylistic } from "./packages/oxlint-config/src/index";
+import { antiSlop, core, options, stylistic } from "./packages/oxlint-config/src/index";
 
 export default defineConfig({
   fmt: {
@@ -14,7 +14,7 @@ export default defineConfig({
     ],
   },
   lint: {
-    extends: [core, quality, stylistic],
+    extends: [core, antiSlop, stylistic],
     options,
     plugins: [],
     ignorePatterns: ["**/dist/**", "packages/eslint-config/**", "packages/prettier-config/**"],
@@ -23,7 +23,7 @@ export default defineConfig({
         // `walk` reads every property of an AST node, whose children have no
         // static type, so a `typeof` check is its parse.
         files: ["packages/oxlint-config/src/rules/effect-style/shared/effect-modules.ts"],
-        rules: { "quality/no-runtime-typeof": "off" },
+        rules: { "anti-slop/no-runtime-typeof": "off" },
       },
     ],
   },

@@ -53,6 +53,9 @@ const effectStyleRules = {
   "effect-style/no-manual-tagged-construction": "error",
   "effect-style/no-service-constructor-imports": "error",
   "effect-style/prefer-effect-match": "error",
+  // From K-Mistele's anti-slop fork.
+  "effect-style/require-cause-when-narrowing": "error",
+  "effect-style/throw-in-effect-gen": "error",
 } satisfies DummyRuleMap;
 
 /**

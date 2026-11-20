@@ -42,6 +42,9 @@
     "./ui": {
       "default": "./dist/ui.mjs"
     },
+    "./landmines-testing": {
+      "default": "./dist/landmines-testing.mjs"
+    },
     "./playwright": {
       "default": "./dist/playwright.mjs"
     },
@@ -62,6 +65,7 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@interfere/landmines": "catalog:",
     "@stylistic/eslint-plugin": "catalog:",
     "eslint-plugin-playwright": "catalog:"
   },

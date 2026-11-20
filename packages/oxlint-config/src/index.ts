@@ -178,7 +178,7 @@ export const playwright = {
  */
 export const vitest = {
   plugins: [],
-  jsPlugins: [jsPlugin("vitest-style")],
+  jsPlugins: [jsPlugin("vitest-style"), jsPlugin("landmines-testing")],
   rules: {
     // Vitest no longer collects `if (import.meta.vitest)` blocks, so a test
     // left in a module never runs.
@@ -189,6 +189,10 @@ export const vitest = {
       files: ["**/*.{test,spec}.{ts,tsx,mts,cts,js,jsx,mjs,cjs}"],
       plugins: ["vitest"],
       rules: {
+        // A test exercises the real dependency, not a mock of it, and a flaky
+        // test is fixed, not retried or given longer to pass.
+        "landmines-testing/no-test-doubles": "error",
+        "landmines-testing/no-flake-masking": "error",
         // `expect(value, message)` labels the assertion's failure.
         "vitest/valid-expect": ["error", { maxArgs: 2 }],
         // Every `expect` inside @effect/vitest's `it.effect` reads as outside a test.

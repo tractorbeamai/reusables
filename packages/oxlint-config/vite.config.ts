@@ -70,6 +70,12 @@ export default defineConfig({
     },
     {
       dts: false,
+      entry: "src/landmines-testing.ts",
+      sourcemap: true,
+      target: "node20.19.0",
+    },
+    {
+      dts: false,
       entry: "src/playwright.ts",
       sourcemap: true,
       target: "node20.19.0",

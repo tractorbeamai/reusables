@@ -20,7 +20,7 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 | `quality` | A selected set of the `quality` plugin's rules, as errors |
 | `react` | React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules |
 | `stylistic` | Braces on every block and blank lines around multiline statements |
-| `vitest` | Vitest's rules in test files, and no in-source tests |
+| `vitest` | Vitest's and Landmines' rules in test files, and no in-source tests |
 | `effect`, from `@tractorbeam/oxlint-config/effect` | `@effect/tsgo`'s and oxlint-plugin-effect's rules and Tractorbeam's Effect rules, for an Effect codebase |
 
 Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff`, from `@tractorbeam/oxlint-config/effect`, which lifts Effect's native-API rules from code that isn't Effect.
@@ -100,7 +100,7 @@ export default defineConfig({
 });
 ```
 
-`vitest/valid-expect` allows a second argument, the message that labels an assertion's failure. Rules that misread @effect/vitest's `it.effect`, such as `no-standalone-expect`, are off, as are the hook, conditional-expect, and global-import rules and the matcher and layout preferences. Everywhere else, `vitest-style/no-in-source-tests` reports `if (import.meta.vitest)` blocks: Vitest no longer collects them, so a test left in a module never runs.
+`vitest/valid-expect` allows a second argument, the message that labels an assertion's failure. Rules that misread @effect/vitest's `it.effect`, such as `no-standalone-expect`, are off, as are the hook, conditional-expect, and global-import rules and the matcher and layout preferences. In test files, two rules from [Landmines](https://github.com/interfere-inc/landmines) keep tests honest: `landmines-testing/no-test-doubles` reports module mocks, stubbed globals, and fake implementations, which replace the behavior a test should exercise, and `landmines-testing/no-flake-masking` reports test retries and raised timeouts. `no-flake-masking` accepts a per-file allowlist with an exact count, `{ allow: { "test/live/slow.test.ts": 2 } }`, for adopting it in an existing codebase; a file with fewer violations than its allowance is reported too, so the list only shrinks. Everywhere else, `vitest-style/no-in-source-tests` reports `if (import.meta.vitest)` blocks: Vitest no longer collects them, so a test left in a module never runs.
 
 ## Effect
 

@@ -47,6 +47,9 @@
     "./playwright": {
       "default": "./dist/playwright.mjs"
     },
+    "./react-doctor": {
+      "default": "./dist/react-doctor.mjs"
+    },
     "./stylistic": {
       "default": "./dist/stylistic.mjs"
     },
@@ -66,7 +69,8 @@
   "dependencies": {
     "@interfere/landmines": "catalog:",
     "@stylistic/eslint-plugin": "catalog:",
-    "eslint-plugin-playwright": "catalog:"
+    "eslint-plugin-playwright": "catalog:",
+    "oxlint-plugin-react-doctor": "catalog:"
   },
   "devDependencies": {
     "@nkzw/oxlint-config": "catalog:",

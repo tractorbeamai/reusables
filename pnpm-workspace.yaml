@@ -22,6 +22,7 @@ catalog:
   oxfmt: 0.79.0
   oxlint: 1.94.0
   # K-Mistele's anti-slop fork, which has no releases; bump the commit by hand.
+  oxlint-plugin-react-doctor: 0.9.23
   oxlint-plugin-anti-slop: github:k-mistele/anti-slop#13b020367525e8c6efe6cede8f387697b2a8d907
   # Type-aware rules run on tsrs; `effect-tsgo patch --oxlint` still requires
   # tsgolint installed.

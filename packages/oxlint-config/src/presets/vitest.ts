@@ -22,9 +22,14 @@ export const vitest = {
       plugins: ["vitest"],
       rules: {
         // A test exercises the real dependency, not a mock of it, and a flaky
-        // test is fixed, not retried or given longer to pass.
+        // test is fixed, not retried, given longer to pass, or made to sleep
+        // or poll without a signal to wait on.
         "landmines-testing/no-test-doubles": "error",
         "landmines-testing/no-flake-masking": "error",
+        "landmines-testing/no-fixed-sleep": "error",
+        "landmines-testing/no-unsignaled-poll": "error",
+        // An MSW server fails on a request no handler matches.
+        "landmines-testing/strict-msw": "error",
         // `expect(value, message)` labels the assertion's failure.
         "vitest/valid-expect": ["error", { maxArgs: 2 }],
         // Every `expect` inside @effect/vitest's `it.effect` reads as outside a test.

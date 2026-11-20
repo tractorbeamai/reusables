@@ -1,5 +1,17 @@
 # @tractorbeam/oxlint-config
 
+## 0.12.0
+
+### Minor Changes
+
+- 252faf6: Add an `anti-slop-effect` plugin with anti-slop's Effect rules, and enable all seven in the Effect preset: `no-manual-effect-error-tag`, `no-manual-tag-comparison`, `no-manual-tagged-construction`, `no-service-constructor-imports`, and `prefer-effect-match` from anti-slop, and `require-cause-when-narrowing`, which asks an error handler that builds a new error to keep the original as its `cause`, and `throw-in-effect-gen`, which reports a `throw` in an Effect generator, where it becomes a defect instead of a typed failure, from K-Mistele's fork.
+- 252faf6: Build the `anti-slop` plugin from `@nkzw/oxlint-config`'s maintained `quality` rules, since anti-slop now recommends `@cloudflare/oxlint-config` instead. The `antiSlop` preset also enables `no-reduce-accumulator-copy`, which reports a `reduce` that copies its accumulator on every step. The plugin keeps `no-runtime-typeof`, `no-shape-in-symbol-names`, and `no-unknown-parameters`, and no longer has anti-slop's `no-module-mocking`, `require-readable-spacing`, or `require-safety-comment-for-type-assertion`, which the preset never enabled.
+- 252faf6: Export the Effect preset from the package root again, as functions: `import { effect, effectNativeOff } from "@tractorbeam/oxlint-config"`, then `extends: [core, …, effect()]` and `{ files, rules: effectNativeOff() }` in an override. They read `@effect/tsgo` and `oxlint-plugin-effect` only when called, so a project without Effect still never loads them. The `@tractorbeam/oxlint-config/effect` subpath is gone; to migrate, import both from the package root and call them. `oxlintConfig({ effect })` is unchanged.
+- 252faf6: The `vitest` preset enables Landmines' `no-test-doubles` and `no-flake-masking` in test files, which report mocks and stubbed globals, and test retries and raised timeouts, and `no-fixed-sleep`, `no-unsignaled-poll`, and `strict-msw`, which report fixed sleeps, polling without a signal to wait on, and an MSW server that lets unhandled requests through. The `vitest` preset also enables Landmines' `test-file-names`, which asks for `.test.ts`, `.fixture.ts`, and `.test-utils.ts` over names such as `.spec.ts`, `helpers.ts`, or `mocks.ts`, and `core` enables its `package-exports`, which reports a wildcard export such as `"./*": "./src/*.ts"` in `package.json`.
+- 252faf6: Enable `unicorn/no-abusive-eslint-disable` in the `core` preset, so a disable comment must name the rules it turns off.
+- 252faf6: The `react` preset enables React Doctor's recommended rules and its TanStack Query and Start rules as errors in `**/*.{jsx,tsx}`, leaving out its copies of Oxlint's own React and JSX accessibility rules and `async-await-in-loop`, which `no-await-in-loop` covers. The plugin comes with the package.
+- 252faf6: Add a `shadcn` preset with `@shadcn/lint`'s design-system rules, set as Ultracite's are: `no-restyle`, `no-raw-colors`, `no-arbitrary-values`, `no-inline-styles`, `no-unknown-classes`, and `require-static-classes` as errors, with layout classes allowed on components, and `no-restyle`, `no-arbitrary-values`, and `require-static-classes` off in `**/components/ui/**`. Install `@shadcn/lint` to use it.
+
 ## 0.11.0
 
 ### Minor Changes

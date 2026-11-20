@@ -1,6 +1,6 @@
 {
   "name": "@tractorbeam/oxlint-config",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Shared Oxlint configuration for Tractorbeam projects",
   "keywords": [
     "config",

@@ -41,6 +41,9 @@
     "./ui": {
       "default": "./dist/ui.mjs"
     },
+    "./landmines-structure": {
+      "default": "./dist/landmines-structure.mjs"
+    },
     "./landmines-testing": {
       "default": "./dist/landmines-testing.mjs"
     },

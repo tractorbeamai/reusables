@@ -12,6 +12,9 @@ export const options = {
 /** The categories, import and promise rules, and shared rules every project gets. */
 export const core = {
   plugins: ["import", "promise"],
+  jsPlugins: [
+    { name: "landmines-structure", specifier: "@tractorbeam/oxlint-config/landmines-structure" },
+  ],
   categories: {
     correctness: "error",
     suspicious: "error",
@@ -19,6 +22,8 @@ export const core = {
     pedantic: "warn",
   },
   rules: {
+    // A package declares its entry points instead of exporting `./src/*`.
+    "landmines-structure/package-exports": "error",
     "max-lines": "off",
     "max-lines-per-function": "off",
     "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],

@@ -10,11 +10,16 @@ export const vitest = {
   jsPlugins: [
     { name: "vitest-style", specifier: "@tractorbeam/oxlint-config/vitest-style" },
     { name: "landmines-testing", specifier: "@tractorbeam/oxlint-config/landmines-testing" },
+    { name: "landmines-structure", specifier: "@tractorbeam/oxlint-config/landmines-structure" },
   ],
   rules: {
     // Vitest no longer collects `if (import.meta.vitest)` blocks, so a test
     // left in a module never runs.
     "vitest-style/no-in-source-tests": "error",
+    // Tests, fixtures, and test helpers end in `.test.ts`, `.fixture.ts`, and
+    // `.test-utils.ts`. Landmines' `colocated-tests` stays off: tests may live
+    // in a package's own `test/` directory.
+    "landmines-structure/test-file-names": "error",
   },
   overrides: [
     {

@@ -7,6 +7,7 @@ const plugins = [
   "anti-slop",
   "anti-slop-effect",
   "effect-style",
+  "landmines-structure",
   "landmines-testing",
   "playwright",
   "react-doctor",
@@ -26,8 +27,8 @@ export default defineConfig({
     },
     {
       // Our own plugins bundle the rule sources they build on, so consumers
-      // install none of them; `landmines-testing`, `playwright`,
-      // `react-doctor`, and `stylistic` re-export a dependency, which stays external.
+      // install none of them; `landmines-structure`, `landmines-testing`,
+      // `playwright`, `react-doctor`, and `stylistic` re-export a dependency, which stays external.
       deps: { onlyBundle: ["@oxlint/plugins", "@nkzw/oxlint-config", "oxlint-plugin-anti-slop"] },
       dts: false,
       entry: Object.fromEntries(plugins.map((name) => [name, `src/plugins/${name}.ts`])),

@@ -39,6 +39,11 @@ const effectStylePlugin: ExternalPluginEntry = {
   specifier: "@tractorbeam/oxlint-config/effect-style",
 };
 
+const antiSlopEffectPlugin: ExternalPluginEntry = {
+  name: "anti-slop-effect",
+  specifier: "@tractorbeam/oxlint-config/anti-slop-effect",
+};
+
 /** Tractorbeam's rules for Effect code. */
 const effectStyleRules = {
   "effect-style/effect-names": "error",
@@ -46,15 +51,18 @@ const effectStyleRules = {
   // Unicorn's version reports `Effect.forEach` too.
   "effect-style/no-array-for-each": "error",
   "unicorn/no-array-for-each": "off",
-  // Anti-slop's Effect rules.
-  "effect-style/no-manual-effect-error-tag": "error",
-  "effect-style/no-manual-tag-comparison": "error",
-  "effect-style/no-manual-tagged-construction": "error",
-  "effect-style/no-service-constructor-imports": "error",
-  "effect-style/prefer-effect-match": "error",
+} satisfies DummyRuleMap;
+
+/** anti-slop's Effect rules. */
+const antiSlopEffectRules = {
+  "anti-slop-effect/no-manual-effect-error-tag": "error",
+  "anti-slop-effect/no-manual-tag-comparison": "error",
+  "anti-slop-effect/no-manual-tagged-construction": "error",
+  "anti-slop-effect/no-service-constructor-imports": "error",
+  "anti-slop-effect/prefer-effect-match": "error",
   // From K-Mistele's anti-slop fork.
-  "effect-style/require-cause-when-narrowing": "error",
-  "effect-style/throw-in-effect-gen": "error",
+  "anti-slop-effect/require-cause-when-narrowing": "error",
+  "anti-slop-effect/throw-in-effect-gen": "error",
 } satisfies DummyRuleMap;
 
 /**
@@ -166,6 +174,7 @@ function effectRules() {
     ...effectTsgoOffRules,
     ...effectPluginRules,
     ...effectStyleRules,
+    ...antiSlopEffectRules,
   };
 }
 
@@ -192,7 +201,7 @@ export function effect() {
     // The built-in plugins the presets' rules need, which the Effect-patched
     // type-aware linter provides.
     plugins: loadPreset("strict").plugins,
-    jsPlugins: [effectPlugin, effectStylePlugin],
+    jsPlugins: [effectPlugin, effectStylePlugin, antiSlopEffectPlugin],
     rules: effectRules(),
     overrides: [effectTestOverride],
   } satisfies OxlintConfig;

@@ -32,6 +32,9 @@
     "./anti-slop": {
       "default": "./dist/anti-slop.mjs"
     },
+    "./anti-slop-effect": {
+      "default": "./dist/anti-slop-effect.mjs"
+    },
     "./effect-style": {
       "default": "./dist/effect-style.mjs"
     },

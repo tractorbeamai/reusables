@@ -4,10 +4,11 @@ const target = "node20.19.0";
 
 /** The JS plugins, each published on the `@tractorbeam/oxlint-config/<name>` subpath. */
 const plugins = [
+  "anti-slop",
+  "anti-slop-effect",
   "effect-style",
   "landmines-testing",
   "playwright",
-  "anti-slop",
   "stylistic",
   "ui",
   "vitest-style",

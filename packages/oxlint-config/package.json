@@ -29,10 +29,6 @@
       "types": "./dist/index.d.mts",
       "default": "./dist/index.mjs"
     },
-    "./effect": {
-      "types": "./dist/effect.d.mts",
-      "default": "./dist/effect.mjs"
-    },
     "./anti-slop": {
       "default": "./dist/anti-slop.mjs"
     },

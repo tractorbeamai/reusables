@@ -1,15 +1,13 @@
 import playwrightPlugin from "eslint-plugin-playwright";
 import type { OxlintOverride } from "vite-plus/lint";
 
-import { jsPlugin } from "./js-plugin.ts";
-
 /**
  * Playwright's recommended rules and stricter locator and waiting rules, for
  * an override whose `files` match your Playwright tests:
  * `overrides: [{ files: ["e2e/**"], ...playwright }]`.
  */
 export const playwright = {
-  jsPlugins: [jsPlugin("playwright")],
+  jsPlugins: [{ name: "playwright", specifier: "@tractorbeam/oxlint-config/playwright" }],
   rules: {
     ...playwrightPlugin.configs["flat/recommended"].rules,
     "playwright/missing-playwright-await": ["error", { includePageLocatorMethods: true }],

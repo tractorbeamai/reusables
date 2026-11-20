@@ -1,7 +1,5 @@
 import type { OxlintConfig } from "vite-plus/lint";
 
-import { jsPlugin } from "./js-plugin.ts";
-
 const multilineStatements = [
   "multiline-block-like",
   "multiline-expression",
@@ -13,7 +11,7 @@ const multilineStatements = [
 /** Braces on every block, and blank lines around multiline statements. */
 export const stylistic = {
   plugins: [],
-  jsPlugins: [jsPlugin("@stylistic", "stylistic")],
+  jsPlugins: [{ name: "@stylistic", specifier: "@tractorbeam/oxlint-config/stylistic" }],
   rules: {
     "@stylistic/padding-line-between-statements": [
       "error",

@@ -1,11 +1,9 @@
 import type { OxlintConfig } from "vite-plus/lint";
 
-import { jsPlugin } from "./js-plugin.ts";
-
 /** React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules. */
 export const react = {
   plugins: ["jsx-a11y", "react", "react-perf"],
-  jsPlugins: [jsPlugin("ui")],
+  jsPlugins: [{ name: "ui", specifier: "@tractorbeam/oxlint-config/ui" }],
   rules: {
     "jsx-a11y/anchor-has-content": "warn",
     "jsx-a11y/autocomplete-valid": "warn",

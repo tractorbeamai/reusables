@@ -1,7 +1,5 @@
 import type { OxlintConfig } from "vite-plus/lint";
 
-import { jsPlugin } from "./js-plugin.ts";
-
 /**
  * Vitest's rules in test files, with the ones that misread @effect/vitest's
  * testers or hold a matcher or layout preference off, and no in-source tests
@@ -9,7 +7,10 @@ import { jsPlugin } from "./js-plugin.ts";
  */
 export const vitest = {
   plugins: [],
-  jsPlugins: [jsPlugin("vitest-style"), jsPlugin("landmines-testing")],
+  jsPlugins: [
+    { name: "vitest-style", specifier: "@tractorbeam/oxlint-config/vitest-style" },
+    { name: "landmines-testing", specifier: "@tractorbeam/oxlint-config/landmines-testing" },
+  ],
   rules: {
     // Vitest no longer collects `if (import.meta.vitest)` blocks, so a test
     // left in a module never runs.

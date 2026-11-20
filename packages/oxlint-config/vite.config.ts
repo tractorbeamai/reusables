@@ -18,7 +18,7 @@ export default defineConfig({
     {
       // The presets, with declarations for the configs that extend them.
       dts: true,
-      entry: { index: "src/index.ts", effect: "src/effect.ts" },
+      entry: { index: "src/index.ts" },
       sourcemap: true,
       target,
     },

@@ -1,14 +1,12 @@
 import type { OxlintConfig } from "vite-plus/lint";
 
-import { jsPlugin } from "./js-plugin.ts";
-
 /** A selected set of the `anti-slop` plugin's rules, as errors. */
 export const antiSlop = {
   // Each preset lists its `plugins`, even none: `extends` takes the union of
   // its configurations' plugins, and a configuration without `plugins` adds
   // Oxlint's defaults, `typescript`, `unicorn`, and `oxc`.
   plugins: [],
-  jsPlugins: [jsPlugin("anti-slop")],
+  jsPlugins: [{ name: "anti-slop", specifier: "@tractorbeam/oxlint-config/anti-slop" }],
   rules: {
     "anti-slop/no-array-filter-map": "error",
     "anti-slop/no-chained-type-assertions": "error",

@@ -2,12 +2,13 @@ import type { DummyRuleMap, OxlintConfig } from "vite-plus/lint";
 
 import { antiSlop } from "./presets/anti-slop.ts";
 import { core, options } from "./presets/core.ts";
-import { effectNativeOffRules, effectPreset } from "./presets/effect.ts";
+import { effect, effectNativeOff } from "./presets/effect.ts";
 import { playwright } from "./presets/playwright.ts";
 import { react } from "./presets/react.ts";
 import { stylistic } from "./presets/stylistic.ts";
 
 export { core, options } from "./presets/core.ts";
+export { effect, effectNativeOff } from "./presets/effect.ts";
 export { playwright } from "./presets/playwright.ts";
 export { antiSlop } from "./presets/anti-slop.ts";
 export { react } from "./presets/react.ts";
@@ -66,10 +67,10 @@ export default function oxlintConfig({
           } satisfies OxlintConfig,
         ]
       : []),
-    ...(effectOption ? [effectPreset()] : []),
+    ...(effectOption ? [effect()] : []),
     ...(effectOption === false || effectOption === true || !effectOption.except?.length
       ? []
-      : [{ overrides: [{ files: effectOption.except, rules: effectNativeOffRules() }] }]),
+      : [{ overrides: [{ files: effectOption.except, rules: effectNativeOff() }] }]),
   ];
 
   const rules: DummyRuleMap = Object.fromEntries(

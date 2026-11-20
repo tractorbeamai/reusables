@@ -47,6 +47,12 @@ const effectStyleRules = {
   // Unicorn's version reports `Effect.forEach` too.
   "effect-style/no-array-for-each": "error",
   "unicorn/no-array-for-each": "off",
+  // Anti-slop's Effect rules.
+  "effect-style/no-manual-effect-error-tag": "error",
+  "effect-style/no-manual-tag-comparison": "error",
+  "effect-style/no-manual-tagged-construction": "error",
+  "effect-style/no-service-constructor-imports": "error",
+  "effect-style/prefer-effect-match": "error",
 } satisfies DummyRuleMap;
 
 /**

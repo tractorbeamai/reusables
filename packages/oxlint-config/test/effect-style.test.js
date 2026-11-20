@@ -77,6 +77,137 @@ tester.run(
   },
 );
 
+// The anti-slop rules' upstream cases, at the vendored revision.
+tester.run(
+  "effect-style/no-manual-effect-error-tag",
+  effectStylePlugin.rules["no-manual-effect-error-tag"],
+  {
+    valid: [
+      'error._tag === "NotFound";',
+      'Effect.catchTag("NotFound", recover);',
+      'Effect.catchTag("Wrapper", (error) => error.reason._tag === "Timeout" ? retry : fail);',
+    ],
+    invalid: [
+      {
+        code: 'Effect.catch((error) => error._tag === "NotFound" ? recover : fail);',
+        errors: [{ messageId: "tag" }],
+      },
+      {
+        code: 'Effect.catchAll(function (error) { return error.reason._tag === "Timeout" ? retry : fail; });',
+        errors: [{ messageId: "reason" }],
+      },
+      {
+        code: 'Effect.catchIf(predicate, (error) => { switch (error._tag) { case "NotFound": return recover; } });',
+        errors: [{ messageId: "tag" }],
+      },
+    ],
+  },
+);
+
+tester.run(
+  "effect-style/no-manual-tag-comparison",
+  effectStylePlugin.rules["no-manual-tag-comparison"],
+  {
+    valid: [
+      'Predicate.isTagged("Ready")(value);',
+      'Match.value(value).pipe(Match.tag("Ready", handleReady));',
+      'if (value.status === "Ready") handleReady(value);',
+      'Effect.catch((error) => error._tag === "NotFound" ? recover : fail);',
+    ],
+    invalid: [
+      { code: 'value._tag === "Ready";', errors: [{ messageId: "manualComparison" }] },
+      { code: '"Ready" !== value["_tag"];', errors: [{ messageId: "manualComparison" }] },
+      {
+        code: 'switch (value._tag) { case "Ready": handleReady(value); }',
+        errors: [{ messageId: "manualSwitch" }],
+      },
+    ],
+  },
+);
+
+tester.run(
+  "effect-style/no-manual-tagged-construction",
+  effectStylePlugin.rules["no-manual-tagged-construction"],
+  {
+    valid: [
+      'Match.when({ _tag: "Ready" }, handleReady);',
+      'Match.not({ "_tag": "Pending" });',
+      "Ready.make({ value });",
+      "new NotFound({ id });",
+      "({ _tag: tag, value });",
+    ],
+    invalid: [
+      {
+        code: 'const value = { _tag: "Ready", payload };',
+        errors: [{ messageId: "manualConstruction" }],
+      },
+      {
+        code: 'const value = { ["_tag"]: "Ready" };',
+        errors: [{ messageId: "manualConstruction" }],
+      },
+    ],
+  },
+);
+
+tester.run(
+  "effect-style/no-service-constructor-imports",
+  effectStylePlugin.rules["no-service-constructor-imports"],
+  {
+    valid: [
+      {
+        filename: "src/issue-service.test.ts",
+        code: 'import { makeIssueService } from "./issue-service.ts";',
+      },
+      {
+        filename: "src/issue-service.spec.tsx",
+        code: 'import { makeIssueService } from "../issue-service.ts";',
+      },
+      {
+        filename: "src/runtime.ts",
+        code: 'import { makeExecutionMemo } from "alchemy/Runtime/ExecutionMemo";',
+      },
+      {
+        filename: "src/runtime.ts",
+        code: 'import { makeissueService } from "./issue-service.ts";',
+      },
+      {
+        filename: "src/runtime.ts",
+        code: 'import { issueServiceLayer } from "./issue-service.ts";\nWorkspaceName.make("name");',
+      },
+    ],
+    invalid: [
+      {
+        filename: "src/runtime.ts",
+        code: 'import { makeIssueService } from "./issue-service.ts";',
+        errors: [{ messageId: "serviceConstructorImport", data: { name: "makeIssueService" } }],
+      },
+      {
+        filename: "src/runtime.ts",
+        code: 'import { makeIssueService as createIssueService } from "../issue-service.ts";',
+        errors: [{ messageId: "serviceConstructorImport", data: { name: "makeIssueService" } }],
+      },
+    ],
+  },
+);
+
+tester.run("effect-style/prefer-effect-match", effectStylePlugin.rules["prefer-effect-match"], {
+  valid: [
+    'kind === "a" ? first : fallback;',
+    'kind === "a" ? first : other === "b" ? second : fallback;',
+    "condition ? first : otherCondition ? second : fallback;",
+  ],
+  invalid: [
+    {
+      code: 'kind === "a" ? first : kind === "b" ? second : fallback;',
+      errors: [{ messageId: "preferMatch" }],
+    },
+    {
+      code: "`a` !== kind ? first : `b` === kind ? second : fallback;",
+      errors: [{ messageId: "preferMatch" }],
+    },
+  ],
+});
+
 tester.run("vitest-style/no-in-source-tests", vitestStylePlugin.rules["no-in-source-tests"], {
   valid: ["const url = import.meta.url;"],
   invalid: [{ code: "if (import.meta.vitest) { test(); }", errors: [{ messageId: "inSource" }] }],

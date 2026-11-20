@@ -36,6 +36,8 @@ export const core = {
     "no-inline-comments": ["warn", { ignorePattern: "#__PURE__|@__PURE__" }],
     "no-nested-ternary": "error",
     "no-shadow": "off",
+    // A disable comment names the rules it turns off.
+    "unicorn/no-abusive-eslint-disable": "error",
     // A `TODO` or `FIXME` comment marks a known gap where it lives, which a
     // reader of that code needs to see.
     "no-warning-comments": "off",

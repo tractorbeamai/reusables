@@ -208,6 +208,9 @@ catalogs:
     oxlint:
       specifier: 1.94.0
       version: 1.94.0
+    oxlint-plugin-anti-slop:
+      specifier: github:k-mistele/anti-slop#13b020367525e8c6efe6cede8f387697b2a8d907
+      version: https://codeload.github.com/k-mistele/anti-slop/tar.gz/13b020367525e8c6efe6cede8f387697b2a8d907
     oxlint-tsgolint:
       specifier: 7.0.2007
       version: 7.0.2007
@@ -324,6 +327,9 @@ importers:
       oxlint:
         specifier: 'catalog:'
         version: 1.94.0(oxlint-tsgolint@7.0.2007)(vite-plus@1.7.0(@types/node@26.6.6)(@vitest/ui@5.1.0)(jiti@2.7.0)(oxlint-tsgolint@7.0.2007)(typescript@7.0.2)(yaml@2.9.1))
+      oxlint-plugin-anti-slop:
+        specifier: 'catalog:'
+        version: https://codeload.github.com/k-mistele/anti-slop/tar.gz/13b020367525e8c6efe6cede8f387697b2a8d907
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
@@ -2236,6 +2242,10 @@ packages:
       vite-plus:
         optional: true
 
+  oxlint-plugin-anti-slop@https://codeload.github.com/k-mistele/anti-slop/tar.gz/13b020367525e8c6efe6cede8f387697b2a8d907:
+    resolution: {gitHosted: true, integrity: sha512-Rw4RWcwjpqYvZ2QOjP+T1/a/C97QAWp4FQbpAUnELUQSPRHLG/wqhaN3lhZUpJOW+O6AFMM6CVMWCUlFj7E3wg==, tarball: https://codeload.github.com/k-mistele/anti-slop/tar.gz/13b020367525e8c6efe6cede8f387697b2a8d907}
+    version: 0.1.2
+
   oxlint-plugin-effect@0.32.1:
     resolution: {integrity: sha512-nqCPTaU2yX0VJ4yoIvsIQJos4hJdGvGKbartR3dpX8UkQY7+5wJQkaRNwKZyWeKZnfr0V2rZxaLOF8mOE9LKfQ==}
     peerDependencies:
@@ -4044,6 +4054,10 @@ snapshots:
       '@oxfmt/binding-win32-ia32-msvc': 0.79.0
       '@oxfmt/binding-win32-x64-msvc': 0.79.0
       vite-plus: 1.7.0(@types/node@26.6.6)(@vitest/ui@5.1.0)(jiti@2.7.0)(oxlint-tsgolint@7.0.2007)(typescript@7.0.2)(yaml@2.9.1)
+
+  oxlint-plugin-anti-slop@https://codeload.github.com/k-mistele/anti-slop/tar.gz/13b020367525e8c6efe6cede8f387697b2a8d907:
+    dependencies:
+      '@oxlint/plugins': 1.94.0
 
   oxlint-plugin-effect@0.32.1(effect@4.1.2):
     dependencies:

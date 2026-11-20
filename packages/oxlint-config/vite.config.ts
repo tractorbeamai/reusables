@@ -16,7 +16,7 @@ export default defineConfig({
     },
     {
       deps: {
-        onlyBundle: ["@oxlint/plugins", "@nkzw/oxlint-config"],
+        onlyBundle: ["@oxlint/plugins", "@nkzw/oxlint-config", "oxlint-plugin-anti-slop"],
       },
       dts: false,
       entry: "src/quality.ts",

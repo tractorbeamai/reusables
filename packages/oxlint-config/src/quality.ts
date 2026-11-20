@@ -1,20 +1,17 @@
 import quality from "@nkzw/oxlint-config/quality/index.js";
 import { definePlugin } from "@oxlint/plugins";
-
-import { noRuntimeTypeofRule } from "./quality/rules/no-runtime-typeof.ts";
-import { noForbiddenTermInSymbolNamesRule } from "./quality/rules/no-shape-in-symbol-names.ts";
-import { noUnknownParametersRule } from "./quality/rules/no-unknown-parameters.ts";
+import antiSlop from "oxlint-plugin-anti-slop";
 
 /**
- * nkzw's `quality` plugin, which maintains anti-slop's generic rules, and three
- * anti-slop rules it dropped, vendored.
+ * nkzw's `quality` plugin, which maintains anti-slop's generic rules, and
+ * three anti-slop rules it dropped, from K-Mistele's anti-slop fork.
  */
 export default definePlugin({
   meta: { name: "quality" },
   rules: {
     ...quality.rules,
-    "no-runtime-typeof": noRuntimeTypeofRule,
-    "no-shape-in-symbol-names": noForbiddenTermInSymbolNamesRule,
-    "no-unknown-parameters": noUnknownParametersRule,
+    "no-runtime-typeof": antiSlop.rules["no-runtime-typeof"],
+    "no-shape-in-symbol-names": antiSlop.rules["no-shape-in-symbol-names"],
+    "no-unknown-parameters": antiSlop.rules["no-unknown-parameters"],
   },
 });

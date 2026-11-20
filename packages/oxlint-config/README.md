@@ -2,7 +2,7 @@
 
 Shared Oxlint configuration for Tractorbeam projects.
 
-The `quality` preset enables a selected set of rules from the `quality` plugin of [`@nkzw/oxlint-config`](https://github.com/nkzw-tech/oxlint-config), which maintains [anti-slop](https://github.com/dmmulroy/anti-slop)'s generic rules, at error severity. Three anti-slop rules that nkzw's plugin left out, `no-runtime-typeof`, `no-shape-in-symbol-names`, and `no-unknown-parameters`, are vendored into `src/quality/` and added to the same plugin. The plugin is bundled and registered automatically.
+The `quality` preset enables a selected set of rules from the `quality` plugin of [`@nkzw/oxlint-config`](https://github.com/nkzw-tech/oxlint-config), which maintains [anti-slop](https://github.com/dmmulroy/anti-slop)'s generic rules, at error severity. Three anti-slop rules that nkzw's plugin left out, `no-runtime-typeof`, `no-shape-in-symbol-names`, and `no-unknown-parameters`, come from [K-Mistele's fork](https://github.com/k-mistele/anti-slop) of anti-slop, pinned to a commit since it has no releases, and join the same plugin. The plugin is bundled and registered automatically.
 
 ## Install
 

@@ -25,7 +25,7 @@ Install the packages a preset names in `types`, such as `@types/node`, too.
 
 Extend exactly one.
 
-The four bundler presets type-check code that a bundler or a type-stripping runner resolves. They emit nothing, preserve import syntax, allow `.ts` extensions in imports, and report unused locals and parameters. They share one `lib`, ES2023 with the DOM library for web-standard APIs such as `fetch` and `URL`, and differ only in the ambient `types` each environment needs:
+The four bundler presets type-check code that a bundler or a type-stripping runner resolves. They emit nothing, preserve import syntax, allow `.ts` extensions in imports, and report unused locals and parameters. They share one `lib`, ES2025 with the DOM library for web-standard APIs such as `fetch` and `URL`, and differ only in the ambient `types` each environment needs. ES2025 is what Workers, current browsers, and Node 24 and later run, `Float16Array` included:
 
 | Preset | For | `types` |
 | --- | --- | --- |

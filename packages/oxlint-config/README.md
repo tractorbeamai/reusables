@@ -2,7 +2,7 @@
 
 Shared Oxlint configuration for Tractorbeam projects.
 
-The `antiSlop` preset enables a selected set of [anti-slop](https://github.com/dmmulroy/anti-slop) rules at error severity. The plugin is built from a pinned GitHub dependency and registered automatically; its source is not vendored into this repository.
+The `quality` preset enables a selected set of rules from the `quality` plugin of [`@nkzw/oxlint-config`](https://github.com/nkzw-tech/oxlint-config), which maintains [anti-slop](https://github.com/dmmulroy/anti-slop)'s generic rules, at error severity. Three anti-slop rules that nkzw's plugin left out, `no-runtime-typeof`, `no-shape-in-symbol-names`, and `no-unknown-parameters`, are vendored into `src/quality/` and added to the same plugin. The plugin is bundled and registered automatically.
 
 ## Install
 
@@ -17,7 +17,7 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 | Preset | What it brings |
 | --- | --- |
 | `core` | The `correctness`, `suspicious`, and `perf` categories as errors and `pedantic` as warnings, the `import` and `promise` plugins, and the shared rules |
-| `antiSlop` | A selected set of anti-slop's rules, as errors |
+| `quality` | A selected set of the `quality` plugin's rules, as errors |
 | `react` | React, React Performance, and JSX accessibility rules, and Tractorbeam's UI rules |
 | `stylistic` | Braces on every block and blank lines around multiline statements |
 | `vitest` | Vitest's rules in test files, and no in-source tests |
@@ -26,19 +26,19 @@ The package exports presets that you combine with Oxlint's `extends`, one per co
 Two more exports are rule sets for an override's `files`, not presets: `playwright`, Playwright's rules, and `effectNativeOff`, from `@tractorbeam/oxlint-config/effect`, which lifts Effect's native-API rules from code that isn't Effect.
 
 ```typescript
-import { antiSlop, core, options, react, stylistic } from "@tractorbeam/oxlint-config";
+import { core, quality, options, react, stylistic } from "@tractorbeam/oxlint-config";
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, react, stylistic],
+    extends: [core, quality, react, stylistic],
     options,
     plugins: [],
   },
 });
 ```
 
-Each preset brings the plugins, JS plugins, and rules it needs, and turns off the rules it clashes with. `antiSlop`, for example, turns off `typescript/consistent-indexed-object-style`, whose fix creates the `Record` aliases that `anti-slop/no-known-value-widening` reports, and `unicorn/prefer-reflect-apply`, which asks for the `Reflect.apply` that anti-slop bans. Extend `core` first; a later preset's rules override an earlier one's, and your own `rules` and `overrides` override them all.
+Each preset brings the plugins, JS plugins, and rules it needs, and turns off the rules it clashes with. `quality`, for example, turns off `typescript/consistent-indexed-object-style`, whose fix creates the `Record` aliases that `quality/no-known-value-widening` reports, and `unicorn/prefer-reflect-apply`, which asks for the `Reflect.apply` that `quality/no-reflect-apply` bans. Extend `core` first; a later preset's rules override an earlier one's, and your own `rules` and `overrides` override them all.
 
 `extends` carries a preset's `plugins`, `jsPlugins`, `categories`, `rules`, and `overrides`, but not every field, so set these in your own configuration:
 
@@ -61,7 +61,7 @@ Cyclomatic complexity linting is opt-in. Set the maximum allowed complexity in y
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic],
+    extends: [core, quality, stylistic],
     options,
     plugins: [],
     rules: { complexity: ["warn", 15] },
@@ -76,7 +76,7 @@ Spread `playwright` into an override whose `files` match your Playwright tests:
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic],
+    extends: [core, quality, stylistic],
     options,
     plugins: [],
     overrides: [{ files: ["e2e/**/*.ts"], ...playwright }],
@@ -93,7 +93,7 @@ Extend `vitest` to lint test files, `**/*.{test,spec}.*`, with Oxlint's `vitest`
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, vitest],
+    extends: [core, quality, stylistic, vitest],
     options,
     plugins: [],
   },
@@ -111,12 +111,12 @@ pnpm add -D @effect/tsgo oxlint-plugin-effect tsrs oxlint-tsgolint
 ```
 
 ```typescript
-import { antiSlop, core, options, stylistic } from "@tractorbeam/oxlint-config";
+import { core, quality, options, stylistic } from "@tractorbeam/oxlint-config";
 import { effect } from "@tractorbeam/oxlint-config/effect";
 
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect],
+    extends: [core, quality, stylistic, effect],
     options,
     plugins: [],
   },
@@ -145,12 +145,12 @@ The preset's `prefer-effect-array`, `prefer-effect-record`, and `prefer-effect-s
 Turn the effect-native rules off for code on another platform's terms with an override whose `rules` are `effectNativeOff`: React and browser code, a published SDK whose API is plain TypeScript, or tool configuration that the tool loads and calls. Comment why each glob is there:
 
 ```typescript
-import { antiSlop, core, options, stylistic } from "@tractorbeam/oxlint-config";
+import { core, quality, options, stylistic } from "@tractorbeam/oxlint-config";
 import { effect, effectNativeOff } from "@tractorbeam/oxlint-config/effect";
 
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect],
+    extends: [core, quality, stylistic, effect],
     options,
     plugins: [],
     overrides: [
@@ -177,7 +177,7 @@ export default defineConfig({
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, stylistic, effect],
+    extends: [core, quality, stylistic, effect],
     options,
     plugins: [],
     overrides: [{ files: ["src/main.ts"], rules: { "effecttsgo/strict-effect-provide": "off" } }],
@@ -204,7 +204,7 @@ Set repository-specific rules, ignores, and overrides next to `extends`:
 ```typescript
 export default defineConfig({
   lint: {
-    extends: [core, antiSlop, react, stylistic],
+    extends: [core, quality, react, stylistic],
     ignorePatterns: ["generated/**"],
     options,
     overrides: [{ files: ["scripts/**"], rules: { "no-inline-comments": "off" } }],

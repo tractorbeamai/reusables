@@ -23,10 +23,10 @@ function printConfig(config) {
 
 test("extending the presets enables only the plugins they list", () => {
   const config = printConfig(`
-    import { antiSlop, core, playwright, react, stylistic, vitest } from "@tractorbeam/oxlint-config";
+    import { core, quality, playwright, react, stylistic, vitest } from "@tractorbeam/oxlint-config";
 
     export default {
-      extends: [core, antiSlop, react, stylistic, vitest],
+      extends: [core, quality, react, stylistic, vitest],
       plugins: [],
       overrides: [{ files: ["e2e/**"], ...playwright }],
     };

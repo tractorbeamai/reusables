@@ -67,32 +67,32 @@ export const core = {
   },
 } satisfies OxlintConfig;
 
-/** A selected set of anti-slop's rules, as errors. */
-export const antiSlop = {
+/** A selected set of the `quality` plugin's rules, as errors. */
+export const quality = {
   // Each preset lists its `plugins`, even none: `extends` takes the union of
   // its configurations' plugins, and a configuration without `plugins` adds
   // Oxlint's defaults, `typescript`, `unicorn`, and `oxc`.
   plugins: [],
-  jsPlugins: [jsPlugin("anti-slop")],
+  jsPlugins: [jsPlugin("quality")],
   rules: {
-    "anti-slop/no-array-filter-map": "error",
-    "anti-slop/no-chained-type-assertions": "error",
-    "anti-slop/no-conditional-empty-object-spread": "error",
-    "anti-slop/no-known-value-widening": "error",
-    "anti-slop/no-object-parameters": "error",
-    "anti-slop/no-reflect-apply": "error",
-    "anti-slop/no-reflect-get": "error",
-    "anti-slop/no-runtime-typeof": "error",
-    "anti-slop/no-shape-in-symbol-names": "error",
-    "anti-slop/no-unknown-parameters": "error",
-    "anti-slop/no-unknown-returns": "error",
-    "anti-slop/no-unknown-type-aliases": "error",
-    "anti-slop/no-unsafe-dictionary-type": "error",
-    "anti-slop/no-widen-then-assert": "error",
+    "quality/no-array-filter-map": "error",
+    "quality/no-chained-type-assertions": "error",
+    "quality/no-conditional-empty-object-spread": "error",
+    "quality/no-known-value-widening": "error",
+    "quality/no-object-parameters": "error",
+    "quality/no-reflect-apply": "error",
+    "quality/no-reflect-get": "error",
+    "quality/no-runtime-typeof": "error",
+    "quality/no-shape-in-symbol-names": "error",
+    "quality/no-unknown-parameters": "error",
+    "quality/no-unknown-returns": "error",
+    "quality/no-unknown-type-aliases": "error",
+    "quality/no-unsafe-dictionary-type": "error",
+    "quality/no-widen-then-assert": "error",
     // `consistent-indexed-object-style`'s fix rewrites an index-signature
     // interface into a `Record` alias, which `no-known-value-widening` then
     // reports, and `prefer-reflect-apply` asks for the `Reflect.apply` that
-    // anti-slop's `no-reflect-apply` bans.
+    // `quality/no-reflect-apply` bans.
     "typescript/consistent-indexed-object-style": "off",
     "unicorn/prefer-reflect-apply": "off",
   },
@@ -260,7 +260,7 @@ export default function oxlintConfig({
 }: OxlintConfigOptions = {}) {
   const presets: OxlintConfig[] = [
     core,
-    antiSlop,
+    quality,
     ...(complexity === undefined
       ? []
       : [{ rules: { complexity: ["warn", complexity] } } satisfies OxlintConfig]),

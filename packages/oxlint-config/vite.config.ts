@@ -16,10 +16,10 @@ export default defineConfig({
     },
     {
       deps: {
-        onlyBundle: ["@oxlint/plugins", "oxlint-plugin-anti-slop"],
+        onlyBundle: ["@oxlint/plugins", "@nkzw/oxlint-config"],
       },
       dts: false,
-      entry: "src/anti-slop.ts",
+      entry: "src/quality.ts",
       sourcemap: true,
       target: "node20.19.0",
     },

@@ -13,13 +13,13 @@ catalog:
   "@tailwindcss/vite": 4.3.5
   "@vitejs/plugin-react": 6.3.0
   "@effect/tsgo": 0.70.0
+  "@nkzw/oxlint-config": 3.0.1
   "@stylistic/eslint-plugin": 6.0.1
   "@oxlint/plugins": 1.94.0
   "@types/node": 26.6.6
   eslint-plugin-playwright: 2.12.2
   oxfmt: 0.79.0
   oxlint: 1.94.0
-  oxlint-plugin-anti-slop: github:dmmulroy/anti-slop#13909c9e07590f5a85d93c62712259fe14a883f7
   # Type-aware rules run on tsrs; `effect-tsgo patch --oxlint` still requires
   # tsgolint installed.
   oxlint-tsgolint: 7.0.2007
@@ -38,3 +38,4 @@ catalog:
   vite-plugin-singlefile: 2.3.4
 minimumReleaseAgeExclude:
   - "@tractorbeam/pnpm-plugin-tractorbeam-defaults"
+  - "@nkzw/oxlint-config@3.0.1"
